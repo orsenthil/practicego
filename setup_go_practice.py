@@ -7,6 +7,8 @@ Creates directories with Go modules, each containing a template .go file and go.
 import os
 import re
 import sys
+import argparse
+import shutil
 
 # List of Go concepts to create practice modules for
 TOPICS = [
@@ -186,25 +188,95 @@ def create_go_workspace(base_dir, topics):
     
     print("  Created go.work (enables multi-module workspace)")
 
+def clean_modules(base_dir, topics):
+    """Remove all practice modules and the go.work file."""
+    print(f"🧹 Cleaning up Go practice modules in: {base_dir}")
+    
+    removed_count = 0
+    
+    # Remove all module directories
+    for topic in topics:
+        package_name = topic_to_package_name(topic)
+        directory = os.path.join(base_dir, package_name)
+        
+        if os.path.exists(directory):
+            try:
+                shutil.rmtree(directory)
+                print(f"  Removed {package_name}/")
+                removed_count += 1
+            except Exception as e:
+                print(f"  ❌ Failed to remove {package_name}/: {e}")
+        else:
+            print(f"  ⏭️  {package_name}/ doesn't exist")
+    
+    # Remove go.work file
+    go_work_path = os.path.join(base_dir, "go.work")
+    if os.path.exists(go_work_path):
+        try:
+            os.remove(go_work_path)
+            print("  Removed go.work")
+        except Exception as e:
+            print(f"  ❌ Failed to remove go.work: {e}")
+    else:
+        print("  ⏭️  go.work doesn't exist")
+    
+    print(f"\n✅ Cleanup complete! Removed {removed_count} modules.")
+
 def main():
-    """Main function to set up all Go practice modules."""
+    """Main function to handle command line arguments and operations."""
+    parser = argparse.ArgumentParser(
+        description="Set up or clean up Go practice modules for learning",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Create all practice modules
+  python3 setup_go_practice.py
+  
+  # Clean up all modules for fresh start
+  python3 setup_go_practice.py --clean
+  
+  # Create modules (same as no arguments)
+  python3 setup_go_practice.py --create
+        """
+    )
+    
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        '--clean', '-c',
+        action='store_true',
+        help='Remove all practice modules and go.work file'
+    )
+    group.add_argument(
+        '--create',
+        action='store_true',
+        help='Create practice modules (default action)'
+    )
+    
+    args = parser.parse_args()
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    print(f"Setting up Go practice modules in: {script_dir}")
-    print(f"Total modules to create: {len(TOPICS)}")
     
-    # Create all modules
-    for topic in TOPICS:
-        create_practice_module(topic, script_dir)
-    
-    # Create Go workspace file
-    create_go_workspace(script_dir, TOPICS)
-    
-    print(f"\n✅ Successfully created {len(TOPICS)} Go practice modules!")
-    print("\nTo run a specific module:")
-    print("  From terminal: cd <module_directory> && go run <module_name>.go")
-    print("  From editor: Open any .go file and use the Run/Debug buttons")
-    print("\nThe go.work file enables multi-module support in your editor.")
-    print("Happy coding! 🚀")
+    if args.clean:
+        # Clean up modules
+        clean_modules(script_dir, TOPICS)
+    else:
+        # Create modules (default behavior)
+        print(f"🚀 Setting up Go practice modules in: {script_dir}")
+        print(f"Total modules to create: {len(TOPICS)}")
+        
+        # Create all modules
+        for topic in TOPICS:
+            create_practice_module(topic, script_dir)
+        
+        # Create Go workspace file
+        create_go_workspace(script_dir, TOPICS)
+        
+        print(f"\n✅ Successfully created {len(TOPICS)} Go practice modules!")
+        print("\nTo run a specific module:")
+        print("  From terminal: cd <module_directory> && go run <module_name>.go")
+        print("  From editor: Open any .go file and use the Run/Debug buttons")
+        print("\nThe go.work file enables multi-module support in your editor.")
+        print("Happy coding! 🚀")
+        print(f"\n💡 Tip: Use '{sys.argv[0]} --clean' to remove all modules for fresh practice")
 
 if __name__ == "__main__":
     main()
