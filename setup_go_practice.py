@@ -126,13 +126,11 @@ def create_go_file(directory, package_name, topic):
     go_content = f'''package main
 
 // {topic}
-// Practice exercises for learning Go programming concepts
 
 import "fmt"
 
 func main() {{
     fmt.Println("Learning: {topic}")
-    // TODO: Add your practice code here
 }}
 '''
     
