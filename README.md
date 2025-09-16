@@ -5,8 +5,6 @@ https://gobyexample.com/
 
 # Practice Log
 
-||||
-
 # Keyboards
 
-To run the task, run command+shift+d
+To run the task, run command+shift+b
