@@ -179,23 +179,63 @@ import "fmt"
 
 func main() {
 
-	// Here's a basic example.
-	// Check if 7%2 == 0, if so print "7 is even", otherwise print "7 is odd"
+	// Write a basic example 
+	if 7%2 == 0 {
+		fmt.Println("7 is even")
+	} else {
+		fmt.Println("7 is odd")
+	}
 
-	// You can have an `if` statement without an else.
-	// Check if 8%4 == 0, if so print "8 is divisible by 4"
+	//  Write an `if` statement without an else.
+
 
 	// Logical operators like `&&` and `||` are often
 	// useful in conditions.
-	// Check if either 8%2 == 0 OR 7%2 == 0, if so print "either 8 or 7 are even"
 
 	// A statement can precede conditionals; any variables
 	// declared in this statement are available in the current
 	// and all subsequent branches.
-	// Use if num := 9; to declare num, then check if num < 0
-	// If true, print num + " is negative"
-	// Else if num < 10, print num + " has 1 digit"
-	// Else print num + " has multiple digits"
+
+        // Note that you don't need parentheses around conditions
+        // in Go, but that the braces are required.
+
+}"""
+    },
+
+    "switch": {
+        "display_name": "Switch",
+        "template": """// _Switch statements_ express conditionals across many
+// branches.
+
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+
+	//  Write  basic `switch` statement
+	i := 2
+	fmt.Print("Write ", i, " as ")
+
+
+	// You can use commas to separate multiple expressions
+	// in the same `case` statement. We use the optional
+	// `default` case in this example as well.
+
+
+	// `switch` without an expression is an alternate way
+	// to express if/else logic. Here we also show how the
+	// `case` expressions can be non-constants.
+
+
+	// A type `switch` compares types instead of values.  You
+	// can use this to discover the type of an interface
+	// value.  In this example, the variable `t` will have the
+	// type corresponding to its clause.
+
 }"""
     },
 
