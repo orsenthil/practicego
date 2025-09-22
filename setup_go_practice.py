@@ -252,49 +252,67 @@ import "fmt"
 
 func main() {
 
-	// Here we create an array `a` that will hold exactly
-	// 5 `int`s. The type of elements and length are both
-	// part of the array's type. By default an array is
-	// zero-valued, which for `int`s means `0`s.
-	var a [5]int
+	// Create an array `a` that will hold exactly 5 `int`s.
+	// The type of elements and length are both part of the 
+	// array's type. By default an array is zero-valued, 
+	// which for `int`s means `0`s.
+
+
 	// Print "emp:" followed by the array a
 
-	// We can set a value at an index using the
-	// `array[index] = value` syntax, and get a value with
-	// `array[index]`.
+
+	// Set a value at an index using the `array[index] = value` 
+	// syntax, and get a value with `array[index]`.
 	// Set a[4] to 100
+
+
 	// Print "set:" followed by the array a
+
+
 	// Print "get:" followed by a[4]
 
-	// The builtin `len` returns the length of an array.
+
+	// Use the builtin `len` to get the length of an array.
 	// Print "len:" followed by the length of a
 
-	// Use this syntax to declare and initialize an array
-	// in one line.
+
+	// Declare and initialize an array in one line.
 	// Create array b with values [1, 2, 3, 4, 5]
+
+
 	// Print "dcl:" followed by b
 
-	// You can also have the compiler count the number of
-	// elements for you with `...`
-	// Create array b using [...] syntax with same values
+
+	// Have the compiler count the number of elements for you with `...`
+	// Create array b using [...] syntax with values [1, 2, 3, 4, 5]
+
+
 	// Print "dcl:" followed by b
 
-	// If you specify the index with `:`, the elements in
-	// between will be zeroed.
-	// Create array b using [...] with 100 at index 0, 400 at index 3, and 500 at index 4
-	// Print "idx:" followed by b
 
-	// Array types are one-dimensional, but you can
-	// compose types to build multi-dimensional data
-	// structures.
-	var twoD [2][3]int
-	// Use nested loops to populate twoD[i][j] = i + j
+	// Specify the index with `:`, the elements in between will be zeroed.
+	// Create array c using [...] with 100 at index 0, 400 at index 3, and 500 at index 4
+
+
+	// Print "idx:" followed by c
+
+
+	// Compose array types to build multi-dimensional data structures.
+	// Declare a two-dimensional array twoD of size [2][3]int
+
+
+	// Use nested loops (range 2, range 3) to populate twoD[i][j] = i + j
+
+
 	// Print "2d: " followed by twoD
 
-	// You can create and initialize multi-dimensional
-	// arrays at once too.
-	// Create and initialize twoD with {{1, 2, 3}, {1, 2, 3}}
-	// Print "2d: " followed by twoD
+
+	// Create and initialize multi-dimensional arrays at once too.
+	// Create and initialize twoD2 with {{1, 2, 3}, {1, 2, 3}}
+
+
+	// Print "2d: " followed by twoD2
+
 }"""
     },
 
