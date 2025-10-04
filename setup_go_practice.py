@@ -106,29 +106,32 @@ import (
 )
 
 // `const` declares a constant value.
-// Declare constant s with value "constant"
+const s string = "constant"
 
 func main() {
-	fmt.Println(s)
+	// TODO: Print constant s from declaration
 
 	// A `const` statement can appear anywhere a `var`
 	// statement can.
-	// Declare constant n with value 500000000
+
+	// TODO: Declare constant n with value 500000000
 
 	// Constant expressions perform arithmetic with
 	// arbitrary precision.
-	// Declare constant d as 3e20 / n
-	fmt.Println(d)
+
+	// TODO: Declare constant d as 3e20 / n and print it
 
 	// A numeric constant has no type until it's given
 	// one, such as by an explicit conversion.
-	// Print d converted to int64
+
+	// TODO: Print d converted to int64
 
 	// A number can be given a type by using it in a
 	// context that requires one, such as a variable
 	// assignment or function call. For example, here
 	// `math.Sin` expects a `float64`.
-	// Print the result of math.Sin(n)
+
+	// TODO: Print the result of math.Sin(n)
 }"""
     },
     {
@@ -144,28 +147,30 @@ import "fmt"
 func main() {
 
 	// The most basic type, with a single condition.
-	// Initialize i := 1
-	// Create a for loop that runs while i <= 3
-	// In each iteration: print i, then increment i
+
+	// TODO: Initialize i := 1 and create a for loop that runs for i <= 3 and prints i in each iteration
 
 	// A classic initial/condition/after `for` loop.
-	// Create a for loop with j := 0; j < 3; j++
-	// Print j in each iteration
 
+	// TODO: Create a for loop with j := 0; j < 3; j++ and print j in each iteration
+	
 	// Another way of accomplishing the basic "do this
 	// N times" iteration is `range` over an integer.
-	// Use range 3 to iterate, printing "range" and the index
+
+	// TODO: Use range 3 to iterate, printing "range" and the index
 
 	// `for` without a condition will loop repeatedly
 	// until you `break` out of the loop or `return` from
 	// the enclosing function.
-	// Create an infinite for loop that prints "loop" then breaks
+
+	// TODO: Create an infinite for loop that prints "loop" then breaks
 
 	// You can also `continue` to the next iteration of
 	// the loop.
-	// Use range 6 to iterate through numbers 0-5
-	// If the number is even, continue to next iteration
-	// Otherwise print the number
+
+	// TODO: Use range 6 to iterate through numbers 0-5, if the number is even, continue to next iteration, 
+	// otherwise print the number
+	
 }"""
     },
     {
@@ -174,29 +179,39 @@ func main() {
         "template": """// Branching with `if` and `else` in Go is
 // straight-forward.
 
+// Note that you don't need parentheses around conditions
+// in Go, but that the braces are required.
 package main
 
 import "fmt"
 
 func main() {
 
-	// Write a basic if/else statement
-	// Check if 7%2 == 0, print "7 is even" or "7 is odd"
+	// Here's a basic example.
 
-	// Write an `if` statement without an else.
-	// Check if 8%4 == 0, print "8 is divisible by 4"
+	// TODO: Check if 7%2 == 0, print "7 is even" or "7 is odd"
+
+	
+
+	// You can have an `if` statement without an else.
+
+	// TODO: Check if 8%4 == 0, print "8 is divisible by 4"
+
 
 	// Logical operators like `&&` and `||` are often
 	// useful in conditions.
-	// Check if 7%2 == 0 || 8%4 == 0, print "either 7 or 8 are even"
+
+	// TODO: Check if 8%2 == 0 || 7%2 == 0, print "either 8 or 7 are even"
 
 	// A statement can precede conditionals; any variables
 	// declared in this statement are available in the current
 	// and all subsequent branches.
-	// Use if num := 9; num < 0 to check and print if negative
+	
+	// TODO: Assign num := 9 and check if num < 0, print num "is negative"
+	// otherwise if num < 10, print num "has 1 digit"
+	// otherwise print num "has multiple digits"
 
-	// Note that you don't need parentheses around conditions
-	// in Go, but that the braces are required.
+	
 }"""
     },
     {
@@ -214,26 +229,37 @@ import (
 
 func main() {
 
-	// Write a basic `switch` statement
-	// Set i := 2, switch on i with cases for 1, 2, 3
+	// Here's a basic `switch`.
+
+	// TODO: Set i := 2, switch on i with cases for 1, 2, 3
+	i := 2
 	fmt.Print("Write ", i, " as ")
 
 	// You can use commas to separate multiple expressions
 	// in the same `case` statement. We use the optional
 	// `default` case in this example as well.
-	// Switch on time.Now().Weekday() with cases for Saturday/Sunday and default
+
+	// TODO: Switch on time.Now().Weekday() with cases for Saturday/Sunday and default
+
 
 	// `switch` without an expression is an alternate way
 	// to express if/else logic. Here we also show how the
 	// `case` expressions can be non-constants.
-	// Create a switch with no expression, check time conditions
-	t := time.Now()
 
-	// A type `switch` compares types instead of values. You
+	// TODO: Create a switch with no expression, check time conditions. Set t := time.Now()
+	// If t.Hour() < 12, print "It's before noon"
+	// Otherwise print "It's after noon"
+	
+
+	// A type `switch` compares types instead of values.  You
 	// can use this to discover the type of an interface
-	// value. In this example, the variable `t` will have the
+	// value.  In this example, the variable `t` will have the
 	// type corresponding to its clause.
-	// Create a function that uses type switch on interface{}
+
+	// TODO: Create a function that uses type switch on interface{}
+	// Function WhatAmI takes an argument i of type interface{} and extracts the type of i.
+	// Uses switch to print the type of i
+
 }"""
     },
     {
@@ -250,86 +276,97 @@ import "fmt"
 
 func main() {
 
-	// Create an array `a` that will hold exactly 5 `int`s.
-	// The type of elements and length are both part of the 
-	// array's type. By default an array is zero-valued, 
-	// which for `int`s means `0`s.
+	// Here we create an array `a` that will hold exactly
+	// 5 `int`s. The type of elements and length are both
+	// part of the array's type. By default an array is
+	// zero-valued, which for `int`s means `0`s.
 
-	fmt.Println("emp:", a)
+	// TODO: Create an array `a` that will hold exactly 5 `int`s and print it
 
-	// Set a value at an index using the `array[index] = value` 
-	// syntax, and get a value with `array[index]`.
-	// Set a[4] to 100
+	// We can set a value at an index using the
+	// `array[index] = value` syntax, and get a value with
+	// `array[index]`.
 
-	fmt.Println("set:", a)
-	fmt.Println("get:", a[4])
+	// TODO: Set a[4] to 100 and print the array
 
-	// Use the builtin `len` to get the length of an array.
+	// The builtin `len` returns the length of an array.
 
-	fmt.Println("len:", len(a))
+	// TODO: Print the length of the array
 
-	// Declare and initialize an array in one line.
-	// Create array b with values [1, 2, 3, 4, 5]
 
-	fmt.Println("dcl:", b)
+	// Use this syntax to declare and initialize an array
+	// in one line.
 
-	// Have the compiler count the number of elements for you with `...`
-	// Create array b using [...] syntax with values [1, 2, 3, 4, 5]
+	// TODO: Declare and initialize an array `b` with values [1, 2, 3, 4, 5] and print it
 
-	fmt.Println("dcl:", b)
+	// You can also have the compiler count the number of
+	// elements for you with `...`
 
-	// Specify the index with `:`, the elements in between will be zeroed.
-	// Create array c using [...] with 100 at index 0, 400 at index 3, and 500 at index 4
+	// TODO: Intialize an array `b` with using [...] syntax with values [1, 2, 3, 4, 5] and print it
 
-	fmt.Println("idx:", c)
+	// If you specify the index with `:`, the elements in
+	// between will be zeroed.
 
-	// Compose array types to build multi-dimensional data structures.
-	// Declare a two-dimensional array twoD of size [2][3]int
+	// TODO: Intialize an array `b` with using [...] syntax with values [100, 3: 400, 500] and print it
 
+	// Array types are one-dimensional, but you can
+	// compose types to build multi-dimensional data
+	// structures.
+
+	// TODO: Create a two-dimensional array `twoD` of size [2][3]int and print it
 	// Use nested loops (range 2, range 3) to populate twoD[i][j] = i + j
 
-	fmt.Println("2d: ", twoD)
 
-	// Create and initialize multi-dimensional arrays at once too.
-	// Create and initialize twoD2 with {{1, 2, 3}, {1, 2, 3}}
+	// You can create and initialize multi-dimensional
+	// arrays at once too.
 
-	fmt.Println("2d: ", twoD2)
+	// TODO: Create and initialize a two-dimensional array `twoD2` with values {{1, 2, 3}, {1, 2, 3}} and print it
+
 }"""
     },
     {
         "key": "slices",
         "display_name": "Slices",
-        "template": """// Slices are an important data type in Go, giving a more
-// powerful interface to sequences than arrays.
+        "template": """// _Slices_ are an important data type in Go, giving
+// a more powerful interface to sequences than arrays.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"slices"
+)
 
 func main() {
 
-	// Unlike arrays, slices are typed only by the elements
-	// they contain (not the number of elements). An uninitialized
-	// slice equals to nil and has length 0.
-	// Declare slice s of strings
+	// Unlike arrays, slices are typed only by the
+	// elements they contain (not the number of elements).
+	// An uninitialized slice equals to nil and has
+	// length 0.
 
-	fmt.Println("uninit:", s, s == nil, len(s) == 0)
+	// TODO: Declare slice s of strings
+	// Print uninit: s, s == nil, len(s) == 0
 
-	// To create an empty slice with non-zero length, use
+	// To create a slice with non-zero length, use
 	// the builtin `make`. Here we make a slice of
 	// `string`s of length `3` (initially zero-valued).
-	// Create slice s with make, length 3
+	// By default a new slice's capacity is equal to its
+	// length; if we know the slice is going to grow ahead
+	// of time, it's possible to pass a capacity explicitly
+	// as an additional parameter to `make`.
 
-	fmt.Println("emp:", s, "len:", len(s), "cap:", cap(s))
+	// TODO: Create slice s with make, length 3
+	// Print emp: s, len: len(s), cap: cap(s)
 
 	// We can set and get just like with arrays.
-	// Set s[0] = "a", s[1] = "b", s[2] = "c"
 
-	fmt.Println("set:", s)
-	fmt.Println("get:", s[2])
+	// TODO: Set s[0] = "a", s[1] = "b", s[2] = "c"
+	// Print set: s, get: s[2]
+	
+
 
 	// `len` returns the length of the slice as expected.
-	fmt.Println("len:", len(s))
+	// Print len: len(s)
 
 	// In addition to these basic operations, slices
 	// support several more that make them richer than
@@ -337,117 +374,146 @@ func main() {
 	// returns a slice containing one or more new values.
 	// Note that we need to accept a return value from
 	// `append` as we may get a new slice value.
-	// Append "d" to s, then append "e" and "f"
 
-	fmt.Println("apd:", s)
+	// TODO: Append "d" to s.
+	// TODO: Then append "e" and "f" to s and print slice
+
+
 
 	// Slices can also be `copy`'d. Here we create an
 	// empty slice `c` of the same length as `s` and copy
 	// into `c` from `s`.
-	// Create slice c with make, same length as s
-	// Copy s into c
 
-	fmt.Println("cpy:", c)
+	// TODO: Create slice c with make, same length as s
+	// TODO: Copy s into c
+	// Print cpy: c
+
 
 	// Slices support a "slice" operator with the syntax
 	// `slice[low:high]`. For example, this gets a slice
 	// of the elements `s[2]`, `s[3]`, and `s[4]`.
-	// Create slice l := s[2:5]
 
-	fmt.Println("sl1:", l)
+	// TODO: Create slice l := s[2:5]
+	// Print sl1: l
 
 	// This slices up to (but excluding) `s[5]`.
-	// Create slice l := s[:5]
 
-	fmt.Println("sl2:", l)
+	// TODO: Create slice l := s[:5]
+	// Print sl2: l
+	
 
 	// And this slices up from (and including) `s[2]`.
-	// Create slice l := s[2:]
 
-	fmt.Println("sl3:", l)
+	// TODO: Create slice l := s[2:]
+	// Print sl3: l
+	
 
 	// We can declare and initialize a variable for slice
 	// in a single line as well.
-	// Create slice t := []string{"g", "h", "i"}
 
-	fmt.Println("dcl:", t)
+	// TODO: Create slice t := []string{"g", "h", "i"}
+	// Print dcl: t
 
-	// The builtin copy function copies elements between slices.
-	// If the slices have different lengths, copy will use the
-	// smaller of the two slice lengths.
-	// Create slice c2 := make([]string, len(t))
-	// Copy t to c2
+	// The `slices` package contains a number of useful
+	// utility functions for slices.
 
-	fmt.Println("cpy:", c2)
+	// TODO: Create slice t2 := []string{"g", "h", "i"}
+	// TODO: Use slices.Equal to compare t and t2
+	// Print t == t2
+
 
 	// Slices can be composed into multi-dimensional data
 	// structures. The length of the inner slices can
 	// vary, unlike with multi-dimensional arrays.
-	// Create 2D slice twoD := make([][]int, 3)
-	// Use loop to populate each inner slice with different lengths
 
-	fmt.Println("2d: ", twoD)
+	// TODO: Create 2D slice twoD := make([][]int, 3)
+	// TODO: Use loop to populate each inner slice with different lengths
+	// Print 2d: twoD
+	
 }"""
     },
     {
         "key": "maps",
         "display_name": "Maps",
-        "template": """// _Maps_ are Go's built-in associative data type
+        "template": """// _Maps_ are Go's built-in [associative data type](https://en.wikipedia.org/wiki/Associative_array)
 // (sometimes called _hashes_ or _dicts_ in other languages).
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"maps"
+)
 
 func main() {
 
 	// To create an empty map, use the builtin `make`:
 	// `make(map[key-type]val-type)`.
-	// Create map m := make(map[string]int)
+
+	// TODO: Create map m  with key-type string and val-type int
 
 	// Set key/value pairs using typical `name[key] = val`
 	// syntax.
-	// Set m["k1"] = 7 and m["k2"] = 13
+
+	// TODO: set k1 to 7 and k2 to 13
+
 
 	// Printing a map with e.g. `fmt.Println` will show all of
 	// its key/value pairs.
-	fmt.Println("map:", m)
+
+	// TODO: Print map
 
 	// Get a value for a key with `name[key]`.
-	// Get and print value for key "k1"
 
-	// If the key doesn't exist, the zero value of the
+	// TODO: Get and print value for key "k1"
+
+	// If the key doesn't exist, the
+	// [zero value](https://go.dev/ref/spec#The_zero_value) of the
 	// value type is returned.
-	// Get and print value for key "k3"
+
+	// TODO: Get and print value for key "k3"
 
 	// The builtin `len` returns the number of key/value
 	// pairs when called on a map.
-	fmt.Println("len:", len(m))
+
+	// TODO: Print the length of the map
 
 	// The builtin `delete` removes key/value pairs from
 	// a map.
-	// Delete key "k2" from map m
 
-	// Clear removes all key/value pairs from a map.
-	// Clear map m (Go 1.21+)
+	// TODO: Delete key "k2" from map
+	// TODO: Print the map
+
+	// To remove *all* key/value pairs from a map, use
+	// the `clear` builtin.
+
+	// TODO: Clear the map
+	// TODO: Print the map
 
 	// The optional second return value when getting a
 	// value from a map indicates if the key was present
 	// in the map. This can be used to disambiguate
 	// between missing keys and keys with zero values
 	// like `0` or `""`. Here we didn't need the value
-	// itself, so we ignored it with the _blank identifier_ `_`.
-	// Check if key "k2" exists in map m
+	// itself, so we ignored it with the _blank identifier_
+	// `_`.
+
+	// TODO: Check if key "k2" exists in map
+	// TODO: Print the result
 
 	// You can also declare and initialize a new map in
 	// the same line with this syntax.
-	// Create map n := map[string]int{"foo": 1, "bar": 2}
 
-	fmt.Println("map:", n)
+	// TODO: Create map n with key-type string and val-type int with initial values {"foo": 1, "bar": 2}
+	// TODO: Print the map
 
 	// The `maps` package contains a number of useful
 	// utility functions for maps.
-	// Use maps.Equal to compare maps m and n (need to import maps)
+
+	// TODO: Create map n2 with key-type string and val-type int with initial values {"foo": 1, "bar": 2}
+	// TODO: Use maps.Equal to compare n and n2
+	// TODO: Print the result
+
 }"""
     },
     {
@@ -462,25 +528,32 @@ import "fmt"
 
 // Here's a function that takes two `int`s and returns
 // their sum as an `int`.
-// Create function plus(a, b int) int that returns a + b
+
+// Go requires explicit returns, i.e. it won't
+// automatically return the value of the last
+// expression.
+
+
+// TODO: Create function plus(a, b int) int that returns a + b
+
 
 // When you have multiple consecutive parameters of
 // the same type, you may omit the type name for the
 // like-typed parameters up to the final parameter that
 // declares the type.
-// Create function plusPlus(a, b, c int) int that returns a + b + c
+
+// TODO: Create function plusPlus(a, b, c int) int that returns a + b + c
+
 
 func main() {
 
 	// Call a function just as you'd expect, with
 	// `name(args)`.
-	// Call plus(1, 2) and store in res
 
-	fmt.Println("1+2 =", res)
+	// TODO: Call plus(1, 2) and store in res and print result
 
-	// Call plusPlus(1, 2, 3) and store in res
+	// TODO: Call plusPlus(1, 2, 3) and store in res and print result
 
-	fmt.Println("1+2+3 =", res)
 }"""
     },
     {
@@ -494,24 +567,21 @@ package main
 
 import "fmt"
 
-// The `(int, int)` in this function signature shows that
-// the function returns 2 `int`s.
-// Create function vals() (int, int) that returns 3, 7
+// TODO: Create function vals() (int, int) that returns 3, 7
+
 
 func main() {
 
 	// Here we use the 2 different return values from the
 	// call with _multiple assignment_.
-	// Call vals() and assign to a, b
 
-	fmt.Println(a)
-	fmt.Println(b)
+	// TODO: Call vals() and assign to a, b
+	// TODO: Print a and b
 
 	// If you only want a subset of the returned values,
 	// use the blank identifier `_`.
-	// Call vals() and only use the second return value
-
-	fmt.Println(c)
+	// TODO: Call vals() and only use the second return value
+	// TODO: Print c
 }"""
     },
     {
@@ -528,26 +598,33 @@ import "fmt"
 
 // Here's a function that will take an arbitrary number
 // of `int`s as arguments.
-// Create function sum(nums ...int) that calculates sum of all nums
+
+// TODO: Create function sum(nums ...int) that calculates sum of all nums
+// Within the function, the type of `nums` is equivalent to `[]int`. We can call `len(nums)`,
+// We can iterate over it with `range`, etc.
+
 
 func main() {
 
 	// Variadic functions can be called in the usual way
 	// with individual arguments.
-	// Call sum(1, 2) and sum(1, 2, 3)
+
+	// TODO: Call sum(1, 2) and sum(1, 2, 3)
 
 	// If you already have multiple args in a slice,
 	// apply them to a variadic function using
 	// `func(slice...)` like this.
-	// Create slice nums := []int{1, 2, 3, 4}
-	// Call sum(nums...)
+
+	// TODO: Create slice nums := []int{1, 2, 3, 4}
+	// TODO: Call sum(nums...)
+
 }"""
     },
     {
         "key": "closures",
         "display_name": "Closures",
         "template": """// Go supports [_anonymous functions_](https://en.wikipedia.org/wiki/Anonymous_function),
-// which can form [_closures_](https://en.wikipedia.org/wiki/Closure_(computer_science)).
+// which can form <a href="https://en.wikipedia.org/wiki/Closure_(computer_science)"><em>closures</em></a>.
 // Anonymous functions are useful when you want to define
 // a function inline without having to name it.
 
@@ -559,9 +636,11 @@ import "fmt"
 // we define anonymously in the body of `intSeq`. The
 // returned function _closes over_ the variable `i` to
 // form a closure.
-// Create function intSeq() func() int
+
+// TODO: Create function intSeq() func() int
 // Inside, create variable i := 0
 // Return anonymous function that increments i and returns it
+
 
 func main() {
 
@@ -569,21 +648,25 @@ func main() {
 	// to `nextInt`. This function value captures its
 	// own `i` value, which will be updated each time
 	// we call `nextInt`.
-	// Call intSeq() and assign to nextInt
 
-	// Call nextInt a few times to see the closure in action
-	// Call nextInt() multiple times and print results
+	// TODO: Call intSeq() and assign to nextInt
+
+	// See the effect of the closure by calling `nextInt`
+	// a few times.
+
+	// TODO: Call nextInt() multiple times and print results for each call
 
 	// To confirm that the state is unique to that
 	// particular function, create and test a new one.
-	// Create newInts := intSeq() and call it to show separate state
+
+	// TODO: Create newInts := intSeq() and call it to show separate state
 }"""
     },
     {
         "key": "recursion",
         "display_name": "Recursion",
         "template": """// Go supports
-// [_recursive functions_](https://en.wikipedia.org/wiki/Recursion_(computer_science)).
+// <a href="https://en.wikipedia.org/wiki/Recursion_(computer_science)"><em>recursive functions</em></a>.
 // Here's a classic example.
 
 package main
@@ -592,28 +675,34 @@ import "fmt"
 
 // This `fact` function calls itself until it reaches the
 // base case of `fact(0)`.
-// Create recursive function fact(n int) int
+// TODO: Create recursive function fact(n int) int
 // Base case: if n == 0 return 1
 // Recursive case: return n * fact(n-1)
 
-// Closures can also be recursive, but this requires the
-// closure to be declared with a typed `var` explicitly
-// before it's defined.
-// Create variable fib of type func(int) int
-// Assign anonymous function that calculates fibonacci recursively
-
 func main() {
-	// Call fact(7) and print result
+	
+	// TODO: Call fact(7) and print result
 
-	// Call fib(7) and print result
+	// Anonymous functions can also be recursive, but this requires
+	// explicitly declaring a variable with `var` to store
+	// the function before it's defined.
+
+	// TODO: Create variable fib of type func(int) int
+	// Assign anonymous function that calculates fibonacci recursively
+
+	// Since `fib` was previously declared, you can call that with the anonymous function
+
+
+	// TODO: Call fib(7) and print result
 }"""
     },
     {
         "key": "range",
         "display_name": "Range over Built-in Types",
-        "template": """// _Range_ iterates over elements in a variety of data
-// structures. Let's see how to use `range` with some
-// of the data structures we've already learned.
+        "template": """// _range_ iterates over elements in a variety of
+// built-in data structures. Let's see how to
+// use `range` with some of the data structures
+// we've already learned.
 
 package main
 
@@ -623,41 +712,45 @@ func main() {
 
 	// Here we use `range` to sum the numbers in a slice.
 	// Arrays work like this too.
-	// Create slice nums := []int{2, 3, 4}
-	// Use range to sum all numbers in nums
 
-	fmt.Println("sum:", sum)
+	// TODO: Create slice nums := []int{2, 3, 4}
+
+	// TODO: Use range to sum all numbers in nums
+	// TODO: Print sum
 
 	// `range` on arrays and slices provides both the
 	// index and value for each entry. Above we didn't
 	// need the index, so we ignored it with the
-	// _blank identifier_ `_`. Sometimes we actually want
+	// blank identifier `_`. Sometimes we actually want
 	// the indexes though.
-	// Use range over nums to print index and value
 
-	// `range` without a value on slices iterates over just
-	// the indexes.
-	// Use range to iterate over just indices of nums
+	// TODO: Use range over nums to print index and value
 
-	// `range` on a map iterates over key/value pairs.
-	// Create map kvs := map[string]string{"a": "apple", "b": "banana"}
-	// Use range to iterate over kvs
+	// `range` on map iterates over key/value pairs.
+
+	// TODO: Create map kvs := map[string]string{"a": "apple", "b": "banana"}
+
+	// TODO: Use range to iterate over kvs to print key and value
+
 
 	// `range` can also iterate over just the keys of a map.
-	// Use range to iterate over just keys of kvs
+	// TODO: Use range to iterate over just keys of kvs
+
 
 	// `range` on strings iterates over Unicode code
 	// points. The first value is the starting byte index
 	// of the `rune` and the second the `rune` itself.
 	// See [Strings and Runes](strings-and-runes) for more
 	// details.
-	// Use range over string "go" to print index and rune
+
+	// TODO: Use range over string "go" to print index and rune value
+
 }"""
     },
     {
         "key": "pointers",
         "display_name": "Pointers", 
-        "template": """// Go supports [_pointers_](https://en.wikipedia.org/wiki/Pointer_(computer_programming)),
+        "template": """// Go supports <em><a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)">pointers</a></em>,
 // allowing you to pass references to values and records
 // within your program.
 
@@ -670,7 +763,8 @@ import "fmt"
 // `int` parameter, so arguments will be passed to it by
 // value. `zeroval` will get a copy of `ival` distinct
 // from the one in the calling function.
-// Create function zeroval(ival int) that sets ival = 0
+
+// TODO: Create function zeroval(ival int) that sets ival = 0
 
 // `zeroptr` in contrast has an `*int` parameter, meaning
 // that it takes an `int` pointer. The `*iptr` code in the
@@ -678,24 +772,23 @@ import "fmt"
 // memory address to the current value at that address.
 // Assigning a value to a dereferenced pointer changes the
 // value at the referenced address.
-// Create function zeroptr(iptr *int) that sets *iptr = 0
+
+// TODO: Create function zeroptr(iptr *int) that sets *iptr = 0
+
 
 func main() {
-	i := 1
-	fmt.Println("initial:", i)
 
-	// Call zeroval with i
+	// TODO: Create variable i := 1
 
-	fmt.Println("zeroval:", i)
+	// TODO: Call zeroval(i) and print result
 
 	// The `&i` syntax gives the memory address of `i`,
 	// i.e. a pointer to `i`.
-	// Call zeroptr with &i
 
-	fmt.Println("zeroptr:", i)
+	// TODO: Call zeroptr(&i) and print result
 
-	// Pointers can be printed too.
-	// Print the address of i using &i
+	// Pointers can be printed too
+	// TODO: Print pointer of i using &i
 }"""
     },
     {
@@ -705,9 +798,9 @@ func main() {
 // and the standard library treat strings specially - as
 // containers of text encoded in [UTF-8](https://en.wikipedia.org/wiki/UTF-8).
 // In other languages, strings are made of "characters".
-// In Go, the concept of a character is called a `rune` -
-// it's an integer that represents a Unicode code point.
-// [This Go blog post](https://blog.golang.org/strings) is a good
+// In Go, the concept of a character is called a `rune` - it's
+// an integer that represents a Unicode code point.
+// [This Go blog post](https://go.dev/blog/strings) is a good
 // introduction to the topic.
 
 package main
@@ -727,36 +820,44 @@ func main() {
 
 	// Since strings are equivalent to `[]byte`, this
 	// will produce the length of the raw bytes stored within.
-	// Print len(s)
+
+	// TODO: Print length of s
 
 	// Indexing into a string produces the raw byte values at
 	// each index. This loop generates the hex values of all
 	// the bytes that constitute the code points in `s`.
-	// Loop through range len(s) and print hex values
+
+	// TODO: Loop through s and print hex values
 
 	// To count how many _runes_ are in a string, we can use
 	// the `utf8` package. Note that the run-time of
 	// `RuneCountInString` depends on the size of the string,
 	// because it has to decode each UTF-8 rune sequentially.
-	// Some Thai characters are represented by multiple UTF-8
-	// code points, so the result of this count may be surprising.
-	// Print utf8.RuneCountInString(s)
+	// Some Thai characters are represented by UTF-8 code points
+	// that can span multiple bytes, so the result of this count
+	// may be surprising.
 
-	// A `range` loop handles strings specially and decodes each
-	// `rune` along with its offset in the string.
-	// Use range over s to print index and rune value
+	// TODO: Print rune count of s. Use utf8.RuneCountInString
+
+	// A `range` loop handles strings specially and decodes
+	// each `rune` along with its offset in the string.
+
+	// TODO: Loop through s and print index and rune value
 
 	// We can achieve the same iteration by using the
 	// `utf8.DecodeRuneInString` function explicitly.
-	// Use utf8.DecodeRuneInString to manually decode runes
 
-	// We can also examine individual runes by converting
-	// the string to a slice of runes.
-	// Print individual runes by converting s to []rune
 
-	// This demonstrates passing a `rune` value to a function.
-	// Create function examineRune(r rune) and call it with runes from s
-}"""
+	// TODO: Loop through s and print index and rune value using utf8.DecodeRuneInString
+	// Use for loop and i, w := 0, 0; i < len(s); i += w, where w is the width of the rune
+
+	// Also demonstrate passing a `rune` value to a function, examineRune
+
+	fmt.Println("\\nUsing DecodeRuneInString")
+
+}
+
+// TODO: Create function examineRune(r rune) that prints "found tee" if r is 't' and "found so sua" if r is 'ส'"""
     }
 ]
 
