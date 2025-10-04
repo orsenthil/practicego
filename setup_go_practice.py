@@ -858,6 +858,1081 @@ func main() {
 }
 
 // TODO: Create function examineRune(r rune) that prints "found tee" if r is 't' and "found so sua" if r is 'ส'"""
+    },
+    {
+        "key": "structs",
+        "display_name": "Structs",
+        "template": """// Go's _structs_ are typed collections of fields.
+// They're useful for grouping data together to form
+// records.
+
+package main
+
+import "fmt"
+
+// This `person` struct type has `name` and `age` fields.
+
+// TODO: Define struct person with name (string) and age (int) fields
+
+// `newPerson` constructs a new person struct with the given name.
+
+// TODO: Create function newPerson(name string) *person
+// Go is a garbage collected language; you can safely
+// return a pointer to a local variable - it will only
+// be cleaned up by the garbage collector when there
+// are no active references to it.
+// Create person p with the given name, set p.age = 42, return &p
+
+func main() {
+
+	// This syntax creates a new struct.
+
+	// TODO: Print person{"Bob", 20}
+
+	// You can name the fields when initializing a struct.
+
+	// TODO: Print person{name: "Alice", age: 30}
+
+	// Omitted fields will be zero-valued.
+
+	// TODO: Print person{name: "Fred"}
+
+	// An `&` prefix yields a pointer to the struct.
+
+	// TODO: Print &person{name: "Ann", age: 40}
+
+	// It's idiomatic to encapsulate new struct creation in constructor functions
+
+	// TODO: Print newPerson("Jon")
+
+	// Access struct fields with a dot.
+
+	// TODO: Create s := person{name: "Sean", age: 50}
+	// TODO: Print s.name
+
+	// You can also use dots with struct pointers - the
+	// pointers are automatically dereferenced.
+
+	// TODO: Create sp := &s
+	// TODO: Print sp.age
+
+	// Structs are mutable.
+
+	// TODO: Set sp.age = 51
+	// TODO: Print sp.age
+
+	// If a struct type is only used for a single value, we don't
+	// have to give it a name. The value can have an anonymous
+	// struct type. This technique is commonly used for
+	// [table-driven tests](testing-and-benchmarking).
+
+	// TODO: Create anonymous struct dog with name (string) and isGood (bool) fields
+	// Initialize with "Rex" and true, then print it
+
+}"""
+    },
+    {
+        "key": "methods",
+        "display_name": "Methods",
+        "template": """// Go supports _methods_ defined on struct types.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement methods concepts
+	fmt.Println("Practicing: Methods")
+}"""
+    },
+    {
+        "key": "interfaces",
+        "display_name": "Interfaces",
+        "template": """// _Interfaces_ are named collections of method
+// signatures.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement interfaces concepts
+	fmt.Println("Practicing: Interfaces")
+}"""
+    },
+    {
+        "key": "enums",
+        "display_name": "Enums",
+        "template": """// _Enumerated types_ (enums) are a special case of
+// sum types. An enum is a type that can be one of a
+// predefined set of values.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement enums concepts
+	fmt.Println("Practicing: Enums")
+}"""
+    },
+    {
+        "key": "struct-embedding",
+        "display_name": "Struct Embedding",
+        "template": """// Go supports _embedding_ of structs and interfaces
+// to express a more seamless _composition_ of types.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement struct embedding concepts
+	fmt.Println("Practicing: Struct Embedding")
+}"""
+    },
+    {
+        "key": "generics",
+        "display_name": "Generics",
+        "template": """// Starting with Go 1.18, Go has added support for
+// _generics_, also known as _type parameters_.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement generics concepts
+	fmt.Println("Practicing: Generics")
+}"""
+    },
+    {
+        "key": "range-over-iterators",
+        "display_name": "Range over Iterators",
+        "template": """// Starting in Go 1.23, the range keyword supports
+// iterating over custom iterators.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement range over iterators concepts
+	fmt.Println("Practicing: Range over Iterators")
+}"""
+    },
+    {
+        "key": "errors",
+        "display_name": "Errors",
+        "template": """// In Go it's idiomatic to communicate errors via an
+// explicit, separate return value.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement errors concepts
+	fmt.Println("Practicing: Errors")
+}"""
+    },
+    {
+        "key": "custom-errors",
+        "display_name": "Custom Errors",
+        "template": """// It's possible to use custom types as errors by
+// implementing the Error() method on them.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement custom errors concepts
+	fmt.Println("Practicing: Custom Errors")
+}"""
+    },
+    {
+        "key": "goroutines",
+        "display_name": "Goroutines",
+        "template": """// A _goroutine_ is a lightweight thread of execution.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement goroutines concepts
+	fmt.Println("Practicing: Goroutines")
+}"""
+    },
+    {
+        "key": "channels",
+        "display_name": "Channels",
+        "template": """// _Channels_ are the pipes that connect concurrent
+// goroutines.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement channels concepts
+	fmt.Println("Practicing: Channels")
+}"""
+    },
+    {
+        "key": "channel-buffering",
+        "display_name": "Channel Buffering",
+        "template": """// By default channels are _unbuffered_, meaning that
+// they will only accept sends if there is a
+// corresponding receive ready to receive the sent value.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement channel buffering concepts
+	fmt.Println("Practicing: Channel Buffering")
+}"""
+    },
+    {
+        "key": "channel-synchronization",
+        "display_name": "Channel Synchronization",
+        "template": """// We can use channels to synchronize execution
+// across goroutines.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement channel synchronization concepts
+	fmt.Println("Practicing: Channel Synchronization")
+}"""
+    },
+    {
+        "key": "channel-directions",
+        "display_name": "Channel Directions",
+        "template": """// When using channels as function parameters, you can
+// specify if a channel is meant to only send or receive values.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement channel directions concepts
+	fmt.Println("Practicing: Channel Directions")
+}"""
+    },
+    {
+        "key": "select",
+        "display_name": "Select",
+        "template": """// Go's _select_ lets you wait on multiple channel
+// operations.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement select concepts
+	fmt.Println("Practicing: Select")
+}"""
+    },
+    {
+        "key": "timeouts",
+        "display_name": "Timeouts",
+        "template": """// _Timeouts_ are important for programs that connect to
+// external resources or that otherwise need to bound
+// execution time.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement timeouts concepts
+	fmt.Println("Practicing: Timeouts")
+}"""
+    },
+    {
+        "key": "non-blocking-channel-operations",
+        "display_name": "Non-Blocking Channel Operations",
+        "template": """// Basic sends and receives on channels are blocking.
+// However, we can use select with a default clause to
+// implement _non-blocking_ sends, receives, and even
+// non-blocking multi-way selects.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement non-blocking channel operations concepts
+	fmt.Println("Practicing: Non-blocking Channel Operations")
+}"""
+    },
+    {
+        "key": "closing-channels",
+        "display_name": "Closing Channels",
+        "template": """// _Closing_ a channel indicates that no more values
+// will be sent on it.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement closing channels concepts
+	fmt.Println("Practicing: Closing Channels")
+}"""
+    },
+    {
+        "key": "range-over-channels",
+        "display_name": "Range over Channels",
+        "template": """// We can use range to iterate over values received
+// from a channel.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement range over channels concepts
+	fmt.Println("Practicing: Range over Channels")
+}"""
+    },
+    {
+        "key": "timers",
+        "display_name": "Timers",
+        "template": """// We often want to execute Go code at some point in the
+// future, or repeatedly at some interval. Go's built-in
+// _timer_ and _ticker_ features make both of these tasks easy.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement timers concepts
+	fmt.Println("Practicing: Timers")
+}"""
+    },
+    {
+        "key": "tickers",
+        "display_name": "Tickers",
+        "template": """// _Timers_ are for when you want to do something once
+// in the future - _tickers_ are for when you want to
+// do something repeatedly at regular intervals.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement tickers concepts
+	fmt.Println("Practicing: Tickers")
+}"""
+    },
+    {
+        "key": "worker-pools",
+        "display_name": "Worker Pools",
+        "template": """// In this example we'll look at how to implement
+// a _worker pool_ using goroutines and channels.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement worker pools concepts
+	fmt.Println("Practicing: Worker Pools")
+}"""
+    },
+    {
+        "key": "waitgroups",
+        "display_name": "WaitGroups",
+        "template": """// To wait for multiple goroutines to finish, we can
+// use a _wait group_.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement waitgroups concepts
+	fmt.Println("Practicing: WaitGroups")
+}"""
+    },
+    {
+        "key": "rate-limiting",
+        "display_name": "Rate Limiting",
+        "template": """// _Rate limiting_ is an important mechanism for
+// controlling resource utilization and maintaining
+// quality of service.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement rate limiting concepts
+	fmt.Println("Practicing: Rate Limiting")
+}"""
+    },
+    {
+        "key": "atomic-counters",
+        "display_name": "Atomic Counters",
+        "template": """// The primary mechanism for managing state in Go is
+// communication over channels. We saw this for example
+// with worker pools. There are a few other options
+// for managing state though. Here we'll look at using
+// the sync/atomic package for _atomic counters_
+// accessed by multiple goroutines.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement atomic counters concepts
+	fmt.Println("Practicing: Atomic Counters")
+}"""
+    },
+    {
+        "key": "mutexes",
+        "display_name": "Mutexes",
+        "template": """// In the previous example we saw how to manage simple
+// counter state using atomic operations. For more complex
+// state we can use a _mutex_ to safely access data
+// across multiple goroutines.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement mutexes concepts
+	fmt.Println("Practicing: Mutexes")
+}"""
+    },
+    {
+        "key": "stateful-goroutines",
+        "display_name": "Stateful Goroutines",
+        "template": """// In the previous example we used explicit locking with
+// mutexes to synchronize access to shared state across
+// multiple goroutines. Another option is to use the
+// built-in synchronization features of goroutines and
+// channels to achieve the same result.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement stateful goroutines concepts
+	fmt.Println("Practicing: Stateful Goroutines")
+}"""
+    },
+    {
+        "key": "sorting",
+        "display_name": "Sorting",
+        "template": """// Go's sort package implements sorting for builtins
+// and user-defined types.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement sorting concepts
+	fmt.Println("Practicing: Sorting")
+}"""
+    },
+    {
+        "key": "sorting-by-functions",
+        "display_name": "Sorting by Functions",
+        "template": """// Sometimes we'll want to sort a collection by something
+// other than its natural order.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement sorting by functions concepts
+	fmt.Println("Practicing: Sorting by Functions")
+}"""
+    },
+    {
+        "key": "panic",
+        "display_name": "Panic",
+        "template": """// A _panic_ typically means something went unexpectedly
+// wrong. Mostly we use it to fail fast on errors that
+// shouldn't occur during normal operation, or that we
+// aren't prepared to handle gracefully.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement panic concepts
+	fmt.Println("Practicing: Panic")
+}"""
+    },
+    {
+        "key": "defer",
+        "display_name": "Defer",
+        "template": """// _Defer_ is used to ensure that a function call is
+// performed later in a program's execution, usually for
+// purposes of cleanup.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement defer concepts
+	fmt.Println("Practicing: Defer")
+}"""
+    },
+    {
+        "key": "recover",
+        "display_name": "Recover",
+        "template": """// Go makes it possible to _recover_ from a panic, by
+// using the recover builtin function.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement recover concepts
+	fmt.Println("Practicing: Recover")
+}"""
+    },
+    {
+        "key": "string-functions",
+        "display_name": "String Functions",
+        "template": """// The standard library's strings package provides many
+// useful string-related functions.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement string functions concepts
+	fmt.Println("Practicing: String Functions")
+}"""
+    },
+    {
+        "key": "string-formatting",
+        "display_name": "String Formatting",
+        "template": """// Go offers excellent support for string formatting in
+// the printf tradition.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement string formatting concepts
+	fmt.Println("Practicing: String Formatting")
+}"""
+    },
+    {
+        "key": "text-templates",
+        "display_name": "Text Templates",
+        "template": """// Go provides built-in support for creating dynamic content
+// or showing customized output to the user with the text/template
+// package.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement text templates concepts
+	fmt.Println("Practicing: Text Templates")
+}"""
+    },
+    {
+        "key": "regular-expressions",
+        "display_name": "Regular Expressions",
+        "template": """// Go offers built-in support for regular expressions.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement regular expressions concepts
+	fmt.Println("Practicing: Regular Expressions")
+}"""
+    },
+    {
+        "key": "json",
+        "display_name": "JSON",
+        "template": """// Go offers built-in support for JSON encoding and
+// decoding, including to and from built-in and custom
+// data types.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement JSON concepts
+	fmt.Println("Practicing: JSON")
+}"""
+    },
+    {
+        "key": "xml",
+        "display_name": "XML",
+        "template": """// Go offers built-in support for XML and XML-like
+// formats with the encoding/xml package.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement XML concepts
+	fmt.Println("Practicing: XML")
+}"""
+    },
+    {
+        "key": "time",
+        "display_name": "Time",
+        "template": """// Go offers extensive support for times and durations.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement time concepts
+	fmt.Println("Practicing: Time")
+}"""
+    },
+    {
+        "key": "epoch",
+        "display_name": "Epoch",
+        "template": """// A common requirement in programs is getting the number
+// of seconds, milliseconds, or nanoseconds since the
+// Unix epoch.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement epoch concepts
+	fmt.Println("Practicing: Epoch")
+}"""
+    },
+    {
+        "key": "time-formatting-parsing",
+        "display_name": "Time Formatting / Parsing",
+        "template": """// Go supports time formatting and parsing via
+// pattern-based layouts.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement time formatting/parsing concepts
+	fmt.Println("Practicing: Time Formatting / Parsing")
+}"""
+    },
+    {
+        "key": "random-numbers",
+        "display_name": "Random Numbers",
+        "template": """// Go's math/rand/v2 package provides pseudorandom number
+// generation.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement random numbers concepts
+	fmt.Println("Practicing: Random Numbers")
+}"""
+    },
+    {
+        "key": "number-parsing",
+        "display_name": "Number Parsing",
+        "template": """// Parsing numbers from strings is a basic but common task
+// in many programs.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement number parsing concepts
+	fmt.Println("Practicing: Number Parsing")
+}"""
+    },
+    {
+        "key": "url-parsing",
+        "display_name": "URL Parsing",
+        "template": """// URLs provide a uniform way to locate resources.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement URL parsing concepts
+	fmt.Println("Practicing: URL Parsing")
+}"""
+    },
+    {
+        "key": "sha256-hashes",
+        "display_name": "SHA256 Hashes",
+        "template": """// _SHA256 hashes_ are frequently used to compute short
+// identities for binary or text blobs.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement SHA256 hashes concepts
+	fmt.Println("Practicing: SHA256 Hashes")
+}"""
+    },
+    {
+        "key": "base64-encoding",
+        "display_name": "Base64 Encoding",
+        "template": """// Go provides built-in support for base64
+// encoding/decoding.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement base64 encoding concepts
+	fmt.Println("Practicing: Base64 Encoding")
+}"""
+    },
+    {
+        "key": "reading-files",
+        "display_name": "Reading Files",
+        "template": """// Reading and writing files are basic tasks needed for
+// many Go programs.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement reading files concepts
+	fmt.Println("Practicing: Reading Files")
+}"""
+    },
+    {
+        "key": "writing-files",
+        "display_name": "Writing Files",
+        "template": """// Writing files in Go follows similar patterns to the
+// ones we saw earlier for reading.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement writing files concepts
+	fmt.Println("Practicing: Writing Files")
+}"""
+    },
+    {
+        "key": "line-filters",
+        "display_name": "Line Filters",
+        "template": """// A _line filter_ is a common type of program that reads
+// input on stdin, processes it, and prints some derived
+// result to stdout.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement line filters concepts
+	fmt.Println("Practicing: Line Filters")
+}"""
+    },
+    {
+        "key": "file-paths",
+        "display_name": "File Paths",
+        "template": """// The filepath package provides functions to parse
+// and construct _file paths_ in a way that is portable
+// between operating systems.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement file paths concepts
+	fmt.Println("Practicing: File Paths")
+}"""
+    },
+    {
+        "key": "directories",
+        "display_name": "Directories",
+        "template": """// Go has several useful functions for working with
+// _directories_ in the file system.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement directories concepts
+	fmt.Println("Practicing: Directories")
+}"""
+    },
+    {
+        "key": "temporary-files-and-directories",
+        "display_name": "Temporary Files and Directories",
+        "template": """// Throughout program execution, we often want to create
+// data that isn't needed after the program exits.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement temporary files and directories concepts
+	fmt.Println("Practicing: Temporary Files and Directories")
+}"""
+    },
+    {
+        "key": "embed-directive",
+        "display_name": "Embed Directive",
+        "template": """// //go:embed is a compiler directive that allows programs
+// to include arbitrary files and folders in the Go binary
+// at build time.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement embed directive concepts
+	fmt.Println("Practicing: Embed Directive")
+}"""
+    },
+    {
+        "key": "testing-and-benchmarking",
+        "display_name": "Testing and Benchmarking",
+        "template": """// Unit testing is an important part of writing
+// principled Go programs.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement testing and benchmarking concepts
+	fmt.Println("Practicing: Testing and Benchmarking")
+}"""
+    },
+    {
+        "key": "command-line-arguments",
+        "display_name": "Command-Line Arguments",
+        "template": """// _Command-line arguments_ are a common way to parameterize
+// execution of programs.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement command-line arguments concepts
+	fmt.Println("Practicing: Command-Line Arguments")
+}"""
+    },
+    {
+        "key": "command-line-flags",
+        "display_name": "Command-Line Flags",
+        "template": """// _Command-line flags_ are a common way to specify options
+// for command-line programs.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement command-line flags concepts
+	fmt.Println("Practicing: Command-Line Flags")
+}"""
+    },
+    {
+        "key": "command-line-subcommands",
+        "display_name": "Command-Line Subcommands",
+        "template": """// Some command-line tools, like the go tool or git
+// have many _subcommands_, each with its own set of
+// flags.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement command-line subcommands concepts
+	fmt.Println("Practicing: Command-Line Subcommands")
+}"""
+    },
+    {
+        "key": "environment-variables",
+        "display_name": "Environment Variables",
+        "template": """// _Environment variables_ are a universal mechanism for
+// conveying configuration information to Unix programs.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement environment variables concepts
+	fmt.Println("Practicing: Environment Variables")
+}"""
+    },
+    {
+        "key": "logging",
+        "display_name": "Logging",
+        "template": """// The Go standard library provides straightforward
+// tools for outputting logs from Go programs, with the
+// log package for free-form output and the log/slog
+// package for structured output.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement logging concepts
+	fmt.Println("Practicing: Logging")
+}"""
+    },
+    {
+        "key": "http-client",
+        "display_name": "HTTP Client",
+        "template": """// The Go standard library comes with excellent support
+// for HTTP clients and servers in the net/http package.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement HTTP client concepts
+	fmt.Println("Practicing: HTTP Client")
+}"""
+    },
+    {
+        "key": "http-server",
+        "display_name": "HTTP Server",
+        "template": """// Writing a basic HTTP server is easy using the
+// net/http package.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement HTTP server concepts
+	fmt.Println("Practicing: HTTP Server")
+}"""
+    },
+    {
+        "key": "context",
+        "display_name": "Context",
+        "template": """// In the previous example we looked at setting up a simple
+// HTTP server. HTTP servers are useful for demonstrating
+// the usage of context.Context for controlling cancellation.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement context concepts
+	fmt.Println("Practicing: Context")
+}"""
+    },
+    {
+        "key": "spawning-processes",
+        "display_name": "Spawning Processes",
+        "template": """// Sometimes our Go programs need to spawn other, non-Go
+// processes.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement spawning processes concepts
+	fmt.Println("Practicing: Spawning Processes")
+}"""
+    },
+    {
+        "key": "execing-processes",
+        "display_name": "Exec'ing Processes",
+        "template": """// In the previous example we looked at spawning external
+// processes. We do this when we need an external process
+// accessible to a running Go process. Sometimes we just
+// want to completely replace the current Go process with
+// another (perhaps non-Go) one. To do this we'll use Go's
+// implementation of the classic exec function.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement exec'ing processes concepts
+	fmt.Println("Practicing: Exec'ing Processes")
+}"""
+    },
+    {
+        "key": "signals",
+        "display_name": "Signals",
+        "template": """// Sometimes we'd like our Go programs to intelligently
+// handle Unix signals.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement signals concepts
+	fmt.Println("Practicing: Signals")
+}"""
+    },
+    {
+        "key": "exit",
+        "display_name": "Exit",
+        "template": """// Use os.Exit to immediately exit with a given status.
+
+package main
+
+import "fmt"
+
+func main() {
+	// TODO: Implement exit concepts
+	fmt.Println("Practicing: Exit")
+}"""
     }
 ]
 
