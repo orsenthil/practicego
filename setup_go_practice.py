@@ -34,8 +34,7 @@ func main() {
         "key": "values",
         "display_name": "Values",
         "template": """// Go has various value types including strings,
-// integers, floats, booleans, etc. Here are a few
-// basic examples.
+// integers, floats, booleans, etc. 
 
 package main
 
@@ -44,16 +43,14 @@ import "fmt"
 func main() {
 
 	// Strings, which can be added together with `+`.
-	// Create and print the result of concatenating "go" and "lang"
+	// Show the result of concatenating "go" and "lang"
 
 	// Integers and floats.
-	// Print "1+1 =" followed by the result of 1+1
-	// Print "7.0/3.0 =" followed by the result of 7.0/3.0
+	// Show the result of 1+1 and 7.0/3.0
 
 	// Booleans, with boolean operators as you'd expect.
-	// Print the result of true && false
-	// Print the result of true || false
-	// Print the result of !true
+	// Show the result of true && false, true || false, and !true
+
 }"""
     },
     {
@@ -65,34 +62,32 @@ func main() {
 
 package main
 
-import "fmt"
-
 func main() {
 
 	// `var` declares 1 or more variables.
-	// Declare variable a with initial value "initial"
-	fmt.Println(a)
+
+	// TODO: Declare variable a with initial value "initial" and print it
 
 	// You can declare multiple variables at once.
-	// Declare variables b and c as int with values 1 and 2
-	fmt.Println(b, c)
+
+	// TODO: Declare variables b and c as int with values 1 and 2 and print them
 
 	// Go will infer the type of initialized variables.
-	// Declare variable d with value true (let Go infer the type)
-	fmt.Println(d)
+
+	// TODO: Declare variable d with value true and print it
 
 	// Variables declared without a corresponding
 	// initialization are _zero-valued_. For example, the
 	// zero value for an `int` is `0`.
-	// Declare variable e as int without initialization
-	fmt.Println(e)
+
+	// TODO: Declare variable e as int without initialization and print it
 
 	// The `:=` syntax is shorthand for declaring and
 	// initializing a variable, e.g. for
 	// `var f string = "apple"` in this case.
 	// This syntax is only available inside functions.
-	// Declare and initialize f with value "apple" using := syntax
-	fmt.Println(f)
+
+	// TODO: Declare and initialize f with value "apple" using := syntax and print it
 }"""
     },
     {
