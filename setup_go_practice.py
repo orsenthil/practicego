@@ -1977,31 +1977,119 @@ func main() {
         "key": "waitgroups",
         "display_name": "WaitGroups",
         "template": """// To wait for multiple goroutines to finish, we can
-// use a _wait group_.
+// use a *wait group*.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+// This is the function we'll run in every goroutine.
+
+// TODO: Define function worker(id int) that prints "Worker %d starting" and "Worker %d done" after sleeping for 1 second
 
 func main() {
-	// TODO: Implement waitgroups concepts
-	fmt.Println("Practicing: WaitGroups")
+
+	// This WaitGroup is used to wait for all the
+	// goroutines launched here to finish. Note: if a WaitGroup is
+	// explicitly passed into functions, it should be done *by pointer*.
+
+	// TODO: Create wg sync.WaitGroup
+
+	// Launch several goroutines using `WaitGroup.Go`
+
+	// TODO: Launch 5 workers using worker function
+
+	// Block until all the goroutines started by `wg` are
+	// done. A goroutine is done when the function it invokes
+	// returns.
+
+	// TODO: Wait for all the goroutines to finish
+	wg.Wait()
+
+	// Note that this approach has no straightforward way
+	// to propagate errors from workers. For more
+	// advanced use cases, consider using the
+	// [errgroup package](https://pkg.go.dev/golang.org/x/sync/errgroup).
+
 }"""
     },
     {
         "key": "rate-limiting",
         "display_name": "Rate Limiting",
-        "template": """// _Rate limiting_ is an important mechanism for
-// controlling resource utilization and maintaining
-// quality of service.
+        "template": """// [_Rate limiting_](https://en.wikipedia.org/wiki/Rate_limiting)
+// is an important mechanism for controlling resource
+// utilization and maintaining quality of service. Go
+// elegantly supports rate limiting with goroutines,
+// channels, and [tickers](tickers).
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	// TODO: Implement rate limiting concepts
-	fmt.Println("Practicing: Rate Limiting")
+
+	// First we'll look at basic rate limiting. Suppose
+	// we want to limit our handling of incoming requests.
+	// We'll serve these requests off a channel of the
+	// same name.
+
+	// TODO: Create requests channel of int with buffer size 5
+
+	// TODO: Send 5 requests to the requests channel
+
+	// TODO: Close the requests channel
+
+	// This `limiter` channel will receive a value
+	// every 200 milliseconds. This is the regulator in
+	// our rate limiting scheme.
+
+	// TODO: Create limiter channel of time.Tick 200 milliseconds
+
+	// By blocking on a receive from the `limiter` channel
+	// before serving each request, we limit ourselves to
+	// 1 request every 200 milliseconds.
+
+	// TODO: Iterate over requests channel and retrieve the limiter channel and print the request and time
+
+	
+
+	// We may want to allow short bursts of requests in
+	// our rate limiting scheme while preserving the
+	// overall rate limit. We can accomplish this by
+	// buffering our limiter channel. This `burstyLimiter`
+	// channel will allow bursts of up to 3 events.
+
+	// TODO: Create burstyLimiter channel of time.Time with buffer size 3
+
+	// Fill up the channel to represent allowed bursting.
+
+	// TODO: Iterate over 3 and send the time to the burstyLimiter channel
+
+	// Every 200 milliseconds we'll try to add a new
+	// value to `burstyLimiter`, up to its limit of 3.
+
+	// TODO: Creat a goroutine that sends the time to the burstyLimiter channel every 200 milliseconds
+	
+
+	// Now simulate 5 more incoming requests. The first
+	// 3 of these will benefit from the burst capability
+	// of `burstyLimiter`.
+
+	// TODO: Create burstyRequests channel of int with buffer size 5
+
+	// TODO: Send 5 requests to the burstyRequests channel
+
+	// TODO: Close the burstyRequests channel
+
+	// TODO: Iterate over burstyRequests channel and retrieve the burstyLimiter channel and print the request and time
+
 }"""
     },
     {
@@ -2009,100 +2097,340 @@ func main() {
         "display_name": "Atomic Counters",
         "template": """// The primary mechanism for managing state in Go is
 // communication over channels. We saw this for example
-// with worker pools. There are a few other options
-// for managing state though. Here we'll look at using
-// the sync/atomic package for _atomic counters_
-// accessed by multiple goroutines.
+// with [worker pools](worker-pools). There are a few other
+// options for managing state though. Here we'll
+// look at using the `sync/atomic` package for _atomic
+// counters_ accessed by multiple goroutines.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+	"sync/atomic"
+)
 
 func main() {
-	// TODO: Implement atomic counters concepts
-	fmt.Println("Practicing: Atomic Counters")
+
+	// We'll use an atomic integer type to represent our
+	// (always-positive) counter.
+
+	// TODO: Create ops atomic.Uint64
+
+	// A WaitGroup will help us wait for all goroutines
+	// to finish their work.
+
+	// TODO: Create wg sync.WaitGroup
+
+	// We'll start 50 goroutines that each increment the
+	// counter exactly 1000 times.
+
+	// TODO: Iterate over 50 and create a goroutine that increments the counter exactly 1000 times
+
+	// Wait until all the goroutines are done.
+
+	// TODO: Wait for all the goroutines to finish
+
+	// Here no goroutines are writing to 'ops', but using
+	// `Load` it's safe to atomically read a value even while
+	// other goroutines are (atomically) updating it.
+
+	// TODO: Print the result of the counter with ops.Load()
 }"""
     },
     {
         "key": "mutexes",
         "display_name": "Mutexes",
         "template": """// In the previous example we saw how to manage simple
-// counter state using atomic operations. For more complex
-// state we can use a _mutex_ to safely access data
-// across multiple goroutines.
+// counter state using [atomic operations](atomic-counters).
+// For more complex state we can use a [_mutex_](https://en.wikipedia.org/wiki/Mutual_exclusion)
+// to safely access data across multiple goroutines.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
+
+// Container holds a map of counters; since we want to
+// update it concurrently from multiple goroutines, we
+// add a `Mutex` to synchronize access.
+// Note that mutexes must not be copied, so if this
+// `struct` is passed around, it should be done by
+// pointer.
+
+// TODO: Define struct Container with mu (sync.Mutex) and counters (map[string]int) fields
+
+// TODO: Create method inc(name string) on Container that locks the mutex and increments the counter for the given name
+// Lock the mutex before accessing `counters`; unlock
+// it at the end of the function using a [defer](defer)
+// statement.
+
 
 func main() {
-	// TODO: Implement mutexes concepts
-	fmt.Println("Practicing: Mutexes")
+	
+	// Note that the zero value of a mutex is usable as-is, so no
+	// initialization is required here.
+
+	// TODO: Create c Container with counters map[string]int{"a": 0, "b": 0}
+
+	// TODO: Create wg sync.WaitGroup
+
+	// This function increments a named counter
+	// in a loop.
+
+	// TODO: Define function doIncrement(name string, n int) that increments the counter for the given name in a loop
+
+	// Run several goroutines concurrently; note
+	// that they all access the same `Container`,
+	// and two of them access the same counter.
+
+	// TODO: Launch 3 goroutines using wg.Go that call doIncrement with "a" and 10000, "a" and 10000, and "b" and 10000
+
+	// Wait for the goroutines to finish
+
+	// TODO: Wait for all the goroutines to finish.
+
+	// TODO: Print the result of the counters with c.counters
 }"""
     },
     {
         "key": "stateful-goroutines",
         "display_name": "Stateful Goroutines",
         "template": """// In the previous example we used explicit locking with
-// mutexes to synchronize access to shared state across
-// multiple goroutines. Another option is to use the
-// built-in synchronization features of goroutines and
-// channels to achieve the same result.
+// [mutexes](mutexes) to synchronize access to shared state
+// across multiple goroutines. Another option is to use the
+// built-in synchronization features of  goroutines and
+// channels to achieve the same result. This channel-based
+// approach aligns with Go's ideas of sharing memory by
+// communicating and having each piece of data owned
+// by exactly 1 goroutine.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"sync/atomic"
+	"time"
+)
+
+// In this example our state will be owned by a single
+// goroutine. This will guarantee that the data is never
+// corrupted with concurrent access. In order to read or
+// write that state, other goroutines will send messages
+// to the owning goroutine and receive corresponding
+// replies. These `readOp` and `writeOp` `struct`s
+// encapsulate those requests and a way for the owning
+// goroutine to respond.
+
+// TODO: Define struct readOp with key (int) and resp (chan int) fields
+
+// TODO: Define struct writeOp with key (int), val (int), and resp (chan bool) fields
+
 
 func main() {
-	// TODO: Implement stateful goroutines concepts
-	fmt.Println("Practicing: Stateful Goroutines")
+
+	// As before we'll count how many operations we perform.
+
+	// TODO: Create readOps uint64
+
+	// TODO: Create writeOps uint64
+
+
+	// The `reads` and `writes` channels will be used by
+	// other goroutines to issue read and write requests,
+	// respectively.
+
+	// TODO: Create reads channel of readOp
+
+	// TODO: Create writes channel of writeOp
+
+	// Here is the goroutine that owns the `state`, which
+	// is a map as in the previous example but now private
+	// to the stateful goroutine. This goroutine repeatedly
+	// selects on the `reads` and `writes` channels,
+	// responding to requests as they arrive. A response
+	// is executed by first performing the requested
+	// operation and then sending a value on the response
+	// channel `resp` to indicate success (and the desired
+	// value in the case of `reads`).
+
+	// TODO: Create a goroutine that owns the state, which is a map as in the previous example but now private to the stateful goroutine.
+	// Inside, use for range to select on reads and writes channels and perform the requested operation and send a value on the response channel resp to indicate success (and the desired value in the case of reads).
+
+
+	// This starts 100 goroutines to issue reads to the
+	// state-owning goroutine via the `reads` channel.
+	// Each read requires constructing a `readOp`, sending
+	// it over the `reads` channel, and then receiving the
+	// result over the provided `resp` channel.
+
+
+	// TODO: Iterate over 100 and create a goroutine that issues reads to the state-owning goroutine via the reads channel.
+	// Inside, create read readOp with key rand.Intn(5) and resp make(chan int)
+	// Send read to reads channel
+	// Receive the result from read.resp
+	// Add 1 to readOps
+	// Sleep for 1 millisecond
+
+
+	// We start 10 writes as well, using a similar
+	// approach.
+
+
+	// TODO: Iterate over 10 and create a goroutine that issues writes to the state-owning goroutine via the writes channel.
+	// Inside, create write writeOp with key rand.Intn(5) and val rand.Intn(100) and resp make(chan bool)
+	// Send write to writes channel
+	// Receive the result from write.resp
+	// Add 1 to writeOps
+	// Sleep for 1 millisecond
+
+
+	// Let the goroutines work for a second.
+
+	// TODO: Sleep for 1 second
+
+	// Finally, capture and report the op counts.
+
+	// TODO: Print the result of the reads with readOps
+
+	// TODO: Print the result of the writes with writeOps
+
 }"""
     },
     {
         "key": "sorting",
         "display_name": "Sorting",
-        "template": """// Go's sort package implements sorting for builtins
-// and user-defined types.
+        "template": """// Go's `slices` package implements sorting for builtins
+// and user-defined types. We'll look at sorting for
+// builtins first.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"slices"
+)
 
 func main() {
-	// TODO: Implement sorting concepts
-	fmt.Println("Practicing: Sorting")
+
+	// Sorting functions are generic, and work for any
+	// _ordered_ built-in type. For a list of ordered
+	// types, see [cmp.Ordered](https://pkg.go.dev/cmp#Ordered).
+
+	// TODO: Create slice strs of strings with values "c", "a", "b"
+
+	// TODO: Sort strs using slices.Sort
+
+	// TODO: Print Strings: strs
+
+
+	// An example of sorting `int`s.
+
+	// TODO: Create slice ints of ints with values 7, 2, 4
+
+	// TODO: Sort ints using slices.Sort
+
+	// TODO: Print Ints: ints
+
+
+	// We can also use the `slices` package to check if
+	// a slice is already in sorted order.
+
+	// TODO: Check if ints is sorted using slices.IsSorted
+
+	// TODO: Print Sorted: s
+
 }"""
     },
     {
         "key": "sorting-by-functions",
         "display_name": "Sorting by Functions",
         "template": """// Sometimes we'll want to sort a collection by something
-// other than its natural order.
+// other than its natural order. For example, suppose we
+// wanted to sort strings by their length instead of
+// alphabetically. Here's an example of custom sorts
+// in Go.
 
 package main
 
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+	"slices"
+)
 
 func main() {
-	// TODO: Implement sorting by functions concepts
-	fmt.Println("Practicing: Sorting by Functions")
+
+	// TODO: Create slice fruits of strings with values "peach", "banana", "kiwi"
+
+
+	// We implement a comparison function for string
+	// lengths. `cmp.Compare` is helpful for this.
+
+	// TODO: Create lenCmp function that returns the comparison of the lengths of a and b
+
+	// Now we can call `slices.SortFunc` with this custom
+	// comparison function to sort `fruits` by name length.
+
+	// TODO: Sort fruits using slices.SortFunc with lenCmp
+
+	// TODO: Print Fruits: fruits
+
+
+	// We can use the same technique to sort a slice of
+	// values that aren't built-in types.
+
+	// TODO: Define struct Person with name (string) and age (int) fields
+
+	// TODO: Create slice people of Person with values Person{name: "Jax", age: 37}, Person{name: "TJ", age: 25}, Person{name: "Alex", age: 72}
+
+
+	// Sort `people` by age using `slices.SortFunc`.
+	//
+	// Note: if the `Person` struct is large,
+	// you may want the slice to contain `*Person` instead
+	// and adjust the sorting function accordingly. If in
+	// doubt, [benchmark](testing-and-benchmarking)!
+
+
+	// TODO: Sort people using slices.SortFunc with func(a, b Person) int that returns the comparison of the ages of a and b
+
+	// TODO: Print People: people
+
 }"""
     },
     {
         "key": "panic",
         "display_name": "Panic",
-        "template": """// A _panic_ typically means something went unexpectedly
+        "template": """// A `panic` typically means something went unexpectedly
 // wrong. Mostly we use it to fail fast on errors that
 // shouldn't occur during normal operation, or that we
 // aren't prepared to handle gracefully.
 
 package main
 
-import "fmt"
+import "os"
 
 func main() {
-	// TODO: Implement panic concepts
-	fmt.Println("Practicing: Panic")
+
+	// We'll use panic throughout this site to check for
+	// unexpected errors. This is the only program on the
+	// site designed to panic.
+
+	// TODO: Panic with "a problem"
+
+
+	// A common use of panic is to abort if a function
+	// returns an error value that we don't know how to
+	// (or want to) handle. Here's an example of
+	// `panic`king if we get an unexpected error when creating a new file.
+
+	// TODO: Create a new file with os.Create("/tmp/file")
+	// TODO: Check if err is not nil, panic with err
+
 }"""
     },
     {
@@ -2110,90 +2438,440 @@ func main() {
         "display_name": "Defer",
         "template": """// _Defer_ is used to ensure that a function call is
 // performed later in a program's execution, usually for
-// purposes of cleanup.
+// purposes of cleanup. `defer` is often used where e.g.
+// `ensure` and `finally` would be used in other languages.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
+// Suppose we wanted to create a file, write to it,
+// and then close when we're done. Here's how we could
+// do that with `defer`.
 func main() {
-	// TODO: Implement defer concepts
-	fmt.Println("Practicing: Defer")
-}"""
+
+	// Immediately after getting a file object with
+	// `createFile`, we defer the closing of that file
+	// with `closeFile`. This will be executed at the end
+	// of the enclosing function (`main`), after
+	// `writeFile` has finished.
+
+	// TODO: Create a file with createFile("/tmp/defer.txt")
+	// TODO: Defer the closing of the file with defer closeFile(f)
+	// TODO: Write to the file with writeFile(f)
+
+}
+
+// TODO: Create function createFile(p string) *os.File that creates a file at the given path and returns the file
+// Inside, create a file with os.Create(p) and check if err is not nil, panic with err
+// Return the file
+
+// TODO: Create function writeFile(f *os.File) that writes "data" to the file
+// Inside, use fmt.Fprintln(f, "data")
+
+
+// TODO: Create function closeFile(f *os.File) that closes the file
+// Inside, use f.Close() and check if err is not nil, panic with err
+
+// It's important to check for errors when closing a
+// file, even in a deferred function."""
     },
     {
         "key": "recover",
         "display_name": "Recover",
         "template": """// Go makes it possible to _recover_ from a panic, by
-// using the recover builtin function.
+// using the `recover` built-in function. A `recover` can
+// stop a `panic` from aborting the program and let it
+// continue with execution instead.
+
+// An example of where this can be useful: a server
+// wouldn't want to crash if one of the client connections
+// exhibits a critical error. Instead, the server would
+// want to close that connection and continue serving
+// other clients. In fact, this is what Go's `net/http`
+// does by default for HTTP servers.
 
 package main
 
 import "fmt"
 
+// This function panics.
+
+// TODO: Create function mayPanic that panics with "a problem"
+
 func main() {
-	// TODO: Implement recover concepts
-	fmt.Println("Practicing: Recover")
+	// `recover` must be called within a deferred function.
+	// When the enclosing function panics, the defer will
+	// activate and a `recover` call within it will catch
+	// the panic.
+
+	// TODO: Defer a function that recovers from a panic
+	// Inside, check if recover is not nil, print the error
+
+	// The return value of `recover` is the error raised in
+	// the call to `panic`.
+
+	// TODO: Call mayPanic
+
+	// This code will not run, because `mayPanic` panics.
+	// The execution of `main` stops at the point of the
+	// panic and resumes in the deferred closure.
+
+	// TODO: Print "After mayPanic()"
 }"""
     },
     {
         "key": "string-functions",
         "display_name": "String Functions",
-        "template": """// The standard library's strings package provides many
-// useful string-related functions.
+        "template": """// The standard library's `strings` package provides many
+// useful string-related functions. Here are some examples
+// to give you a sense of the package.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	s "strings"
+)
+
+// We alias `fmt.Println` to a shorter name as we'll use
+// it a lot below.
+var p = fmt.Println
 
 func main() {
-	// TODO: Implement string functions concepts
-	fmt.Println("Practicing: String Functions")
+
+	// Here's a sample of the functions available in
+	// `strings`. Since these are functions from the
+	// package, not methods on the string object itself,
+	// we need to pass the string in question as the first
+	// argument to the function. You can find more
+	// functions in the [`strings`](https://pkg.go.dev/strings)
+	// package docs.
+
+	// TODO: Print Contains:  s.Contains("test", "es")
+	// TODO: Print Count:     s.Count("test", "t")
+	// TODO: Print HasPrefix: s.HasPrefix("test", "te")
+	// TODO: Print HasSuffix: s.HasSuffix("test", "st")
+	// TODO: Print Index:     s.Index("test", "e")
+	// TODO: Print Join:      s.Join([]string{"a", "b"}, "-")
+	// TODO: Print Repeat:    s.Repeat("a", 5)
+	// TODO: Print Replace:   s.Replace("foo", "o", "0", -1)
+	// TODO: Print Split:     s.Split("a-b-c-d-e", "-")
+	// TODO: Print ToLower:   s.ToLower("TEST")
+	// TODO: Print ToUpper:   s.ToUpper("test")
+
 }"""
     },
     {
         "key": "string-formatting",
         "display_name": "String Formatting",
         "template": """// Go offers excellent support for string formatting in
-// the printf tradition.
+// the `printf` tradition. Here are some examples of
+// common string formatting tasks.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
+
+// TODO: Define struct point with x (int) and y (int) fields
 
 func main() {
-	// TODO: Implement string formatting concepts
-	fmt.Println("Practicing: String Formatting")
+
+	// Go offers several printing "verbs" designed to
+	// format general Go values. For example, this prints
+	// an instance of our `point` struct.
+
+	// TODO: Create p := point{1, 2}
+	// TODO: Print p using %v
+
+	// If the value is a struct, the `%+v` variant will
+	// include the struct's field names.
+
+	// TODO: Print p using %+v
+
+	// The `%#v` variant prints a Go syntax representation
+	// of the value, i.e. the source code snippet that
+	// would produce that value.
+
+	// TODO: Print p using %#v
+
+	// To print the type of a value, use `%T`.
+
+	// TODO: Print p using %T
+
+	// Formatting booleans is straight-forward.
+
+	// TODO: Print true using %t
+
+	// There are many options for formatting integers.
+	// Use `%d` for standard, base-10 formatting.
+
+	// TODO: Print 123 using %d
+
+	// This prints a binary representation.
+	// TODO: Print 14 using %b
+
+	// This prints the character corresponding to the
+	// given integer.
+
+	// TODO: Print 33 using %c
+
+	// `%x` provides hex encoding.
+	// TODO: Print 456 using %x
+
+	// There are also several formatting options for
+	// floats. For basic decimal formatting use `%f`.
+
+	// TODO: Print 78.9 using %f
+
+	// `%e` and `%E` format the float in (slightly
+	// different versions of) scientific notation.
+
+	// TODO: Print 123400000.0 using %e
+	// TODO: Print 123400000.0 using %E
+
+	// For basic string printing use `%s`.
+
+	// TODO: Print "\"string\"" using %s
+
+	// To double-quote strings as in Go source, use `%q`.
+
+	// TODO: Print "\"string\"" using %q
+
+	// As with integers seen earlier, `%x` renders
+	// the string in base-16, with two output characters
+	// per byte of input.
+
+	// TODO: Print "hex this" using %x
+
+	// To print a representation of a pointer, use `%p`.
+
+	// TODO: Print pointer of p using %p
+
+	// When formatting numbers you will often want to
+	// control the width and precision of the resulting
+	// figure. To specify the width of an integer, use a
+	// number after the `%` in the verb. By default the
+	// result will be right-justified and padded with
+	// spaces.
+
+	// TODO: Print "12" and "345" using %6d
+
+	// You can also specify the width of printed floats,
+	// though usually you'll also want to restrict the
+	// decimal precision at the same time with the
+	// width.precision syntax.
+
+	// TODO: Print "1.2" and "3.45" using %6.2f
+
+	// To left-justify, use the `-` flag.
+
+	// TODO: Print "1.2" and "3.45" using %-6.2f
+
+	// You may also want to control width when formatting
+	// strings, especially to ensure that they align in
+	// table-like output. For basic right-justified width.
+
+	// TODO: Print "foo" and "b" using %6s
+
+	// To left-justify use the `-` flag as with numbers.
+
+	// TODO: Print "foo" and "b" using %-6s
+
+	// So far we've seen `Printf`, which prints the
+	// formatted string to `os.Stdout`. `Sprintf` formats
+	// and returns a string without printing it anywhere.
+
+	// TODO: Print "sprintf: a string" using %Sprintf
+
+	// You can format+print to `io.Writers` other than
+	// `os.Stdout` using `Fprintf`.
+
+	// TODO: Print "io: an error" using %Fprintf
 }"""
     },
     {
         "key": "text-templates",
         "display_name": "Text Templates",
-        "template": """// Go provides built-in support for creating dynamic content
-// or showing customized output to the user with the text/template
-// package.
+        "template": """// Go offers built-in support for creating dynamic content or showing customized
+// output to the user with the `text/template` package. A sibling package
+// named `html/template` provides the same API but has additional security
+// features and should be used for generating HTML.
 
 package main
 
-import "fmt"
+import (
+	"os"
+	"text/template"
+)
 
 func main() {
-	// TODO: Implement text templates concepts
-	fmt.Println("Practicing: Text Templates")
+
+	// We can create a new template and parse its body from
+	// a string.
+	// Templates are a mix of static text and "actions" enclosed in
+	// `{{...}}` that are used to dynamically insert content.
+
+	// TODO: Create t1 := template.New("t1")
+	// TODO: Parse t1 with "Value is {{.}}\n" and handle error
+
+	// Alternatively, we can use the `template.Must` function to
+	// panic in case `Parse` returns an error. This is especially
+	// useful for templates initialized in the global scope.
+
+	// TODO: Use template.Must to parse t1 with "Value: {{.}}\n" and handle error
+
+	// By "executing" the template we generate its text with
+	// specific values for its actions. The `{{.}}` action is
+	// replaced by the value passed as a parameter to `Execute`.
+
+	// TODO: Execute t1 with "some text"
+	// TODO: Execute t1 with 5
+	// TODO: Execute t1 with []string{"Go", "Rust", "C++", "C#"}
+	
+
+	// Helper function we'll use below.
+
+	// TODO: Create Create function with name and t string that returns template.Must(template.New(name).Parse(t))
+	
+
+	// If the data is a struct we can use the `{{.FieldName}}` action to access
+	// its fields. The fields should be exported to be accessible when a
+	// template is executing.
+
+	// TODO: Create t2 := Create("t2", "Name: {{.Name}}\n")
+
+	// TODO: Execute t2 with struct {Name string}{"Jane Doe"}
+
+
+	// The same applies to maps; with maps there is no restriction on the
+	// case of key names.
+
+	// TODO: Execute t2 with map[string]string{"Name": "Mickey Mouse"}
+
+	// if/else provide conditional execution for templates. A value is considered
+	// false if it's the default value of a type, such as 0, an empty string,
+	// nil pointer, etc.
+	// This sample demonstrates another
+	// feature of templates: using `-` in actions to trim whitespace.
+
+
+	// TODO: Create t3 := Create("t3", "{{if . -}} yes {{else -}} no {{end}}\n")
+	// TODO: Execute t3 with "not empty"
+	// TODO: Execute t3 with ""
+
+	// range blocks let us loop through slices, arrays, maps or channels. Inside
+	// the range block `{{.}}` is set to the current item of the iteration.
+
+	// TODO: Create t4 := Create("t4", "Range: {{range .}}{{.}} {{end}}\n")
+	// TODO: Execute t4 with []string{"Go", "Rust", "C++", "C#"}
+	
 }"""
     },
     {
         "key": "regular-expressions",
         "display_name": "Regular Expressions",
-        "template": """// Go offers built-in support for regular expressions.
+        "template": """// Go offers built-in support for [regular expressions](https://en.wikipedia.org/wiki/Regular_expression).
+// Here are some examples of  common regexp-related tasks
+// in Go.
 
 package main
 
-import "fmt"
+import (
+	"bytes"
+	"fmt"
+	"regexp"
+)
 
 func main() {
-	// TODO: Implement regular expressions concepts
-	fmt.Println("Practicing: Regular Expressions")
+
+	// This tests whether a pattern matches a string.
+
+	// TODO: Create match, _ := regexp.MatchString("p([a-z]+)ch", "peach") and print it
+
+	// Above we used a string pattern directly, but for
+	// other regexp tasks you'll need to `Compile` an
+	// optimized `Regexp` struct.
+
+	// TODO: Create r, _ := regexp.Compile("p([a-z]+)ch")
+
+	// Many methods are available on these structs. Here's
+	// a match test like we saw earlier.
+
+	// TODO: Print r.MatchString("peach")
+
+	// This finds the match for the regexp.
+	// TODO: Print r.FindString("peach punch")
+
+	// This also finds the first match but returns the
+	// start and end indexes for the match instead of the
+	// matching text.
+
+	// TODO: Print r.FindStringIndex("peach punch")
+
+	// The `Submatch` variants include information about
+	// both the whole-pattern matches and the submatches
+	// within those matches. For example this will return
+	// information for both `p([a-z]+)ch` and `([a-z]+)`.
+
+	// TODO: Print r.FindStringSubmatch("peach punch")
+
+	// Similarly this will return information about the
+	// indexes of matches and submatches.
+
+	// TODO: Print r.FindStringSubmatchIndex("peach punch")
+
+	// The `All` variants of these functions apply to all
+	// matches in the input, not just the first. For
+	// example to find all matches for a regexp.
+
+	// TODO: Print r.FindAllString("peach punch pinch", -1)
+
+	// These `All` variants are available for the other
+	// functions we saw above as well.
+
+	// TODO: Print r.FindAllStringSubmatchIndex("peach punch pinch", -1)
+
+	// Providing a non-negative integer as the second
+	// argument to these functions will limit the number
+	// of matches.
+
+	// TODO: Print r.FindAllString("peach punch pinch", 2)
+
+	// Our examples above had string arguments and used
+	// names like `MatchString`. We can also provide
+	// `[]byte` arguments and drop `String` from the
+	// function name.
+
+	// TODO: Print r.Match([]byte("peach"))
+
+	// When creating global variables with regular
+	// expressions you can use the `MustCompile` variation
+	// of `Compile`. `MustCompile` panics instead of
+	// returning an error, which makes it safer to use for
+	// global variables.
+
+	// TODO: Create r = regexp.MustCompile("p([a-z]+)ch")
+	// TODO: Print r
+
+	// The `regexp` package can also be used to replace
+	// subsets of strings with other values.
+
+	// TODO: Print r.ReplaceAllString("a peach", "<fruit>")
+
+	// The `Func` variant allows you to transform matched
+	// text with a given function.
+
+	// TODO: Create in := []byte("a peach")
+	// TODO: Create out := r.ReplaceAllFunc(in, bytes.ToUpper)
+	// TODO: Print string(out)
+
 }"""
     },
     {
@@ -2205,40 +2883,270 @@ func main() {
 
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"strings"
+)
+
+// We'll use these two structs to demonstrate encoding and
+// decoding of custom types below.
+
+// TODO: Create response1 struct with Page (int) and Fruits ([]string) fields
+
+// Only exported fields will be encoded/decoded in JSON.
+// Fields must start with capital letters to be exported.
+
+// TODO: Create response2 struct with Page (int) and Fruits ([]string) fields
 
 func main() {
-	// TODO: Implement JSON concepts
-	fmt.Println("Practicing: JSON")
+
+	// First we'll look at encoding basic data types to
+	// JSON strings. Here are some examples for atomic
+	// values.
+
+
+	// TODO: Create bolB, _ := json.Marshal(true) and print it
+	// TODO: Create intB, _ := json.Marshal(1) and print it
+	// TODO: Create fltB, _ := json.Marshal(2.34) and print it
+	// TODO: Create strB, _ := json.Marshal("gopher") and print it
+
+
+	// And here are some for slices and maps, which encode
+	// to JSON arrays and objects as you'd expect.
+
+	// TODO: Create slcD := []string{"apple", "peach", "pear"}
+	// TODO: Create slcB, _ := json.Marshal(slcD) and print it
+
+	// TODO: Create mapD := map[string]int{"apple": 5, "lettuce": 7}
+	// TODO: Create mapB, _ := json.Marshal(mapD) and print it
+
+	// The JSON package can automatically encode your
+	// custom data types. It will only include exported
+	// fields in the encoded output and will by default
+	// use those names as the JSON keys.
+
+
+	// TODO: Create res1D := &response1{Page: 1, Fruits: []string{"apple", "peach", "pear"}}
+	// TODO: Create res1B, _ := json.Marshal(res1D) and print it
+
+	// You can use tags on struct field declarations
+	// to customize the encoded JSON key names. Check the
+	// definition of `response2` above to see an example
+	// of such tags.
+
+	// TODO: Create res2D := &response2{Page: 1, Fruits: []string{"apple", "peach", "pear"}}
+	// TODO: Create res2B, _ := json.Marshal(res2D) and print it
+
+	// Now let's look at decoding JSON data into Go
+	// values. Here's an example for a generic data
+	// structure.
+
+	// TODO: Create byt := []byte(`{"num":6.13,"strs":["a","b"]}`)
+
+	// We need to provide a variable where the JSON
+	// package can put the decoded data. This
+	// `map[string]interface{}` will hold a map of strings
+	// to arbitrary data types.
+
+	// TODO: Create var dat map[string]interface{}
+
+	// Here's the actual decoding, and a check for
+	// associated errors.
+
+	// TODO: Create if err := json.Unmarshal(byt, &dat); err != nil {
+	// TODO: Print err
+
+	// In order to use the values in the decoded map,
+	// we'll need to convert them to their appropriate type.
+	// For example here we convert the value in `num` to
+	// the expected `float64` type.
+
+	// TODO: Create num := dat["num"].(float64)
+	// TODO: Print num
+
+	// Accessing nested data requires a series of
+	// conversions.
+
+	// TODO: Create strs := dat["strs"].([]interface{})
+	// TODO: Create str1 := strs[0].(string)
+	// TODO: Print str1
+
+	// We can also decode JSON into custom data types.
+	// This has the advantages of adding additional
+	// type-safety to our programs and eliminating the
+	// need for type assertions when accessing the decoded
+	// data.
+
+	// TODO: Create str := `{"page": 1, "fruits": ["apple", "peach"]}`
+	// TODO: Create res := response2{}
+	// TODO: Create json.Unmarshal([]byte(str), &res)
+	// TODO: Print res
+	// TODO: Print res.Fruits[0]
+
+	// In the examples above we always used bytes and
+	// strings as intermediates between the data and
+	// JSON representation on standard out. We can also
+	// stream JSON encodings directly to `os.Writer`s like
+	// `os.Stdout` or even HTTP response bodies.
+
+	// TODO: Create enc := json.NewEncoder(os.Stdout)
+	// TODO: Create d := map[string]int{"apple": 5, "lettuce": 7}
+	// TODO: Create enc.Encode(d)
+
+	// Streaming reads from `os.Reader`s like `os.Stdin`
+	// or HTTP request bodies is done with `json.Decoder`.
+
+	// TODO: Create dec := json.NewDecoder(strings.NewReader(str))
+	// TODO: Create res1 := response2{}
+	// TODO: Create dec.Decode(&res1)
+	// TODO: Print res1
+
 }"""
     },
     {
         "key": "xml",
         "display_name": "XML",
         "template": """// Go offers built-in support for XML and XML-like
-// formats with the encoding/xml package.
+// formats with the `encoding/xml` package.
 
 package main
 
-import "fmt"
+import (
+	"encoding/xml"
+	"fmt"
+)
+
+// Plant will be mapped to XML. Similarly to the
+// JSON examples, field tags contain directives for the
+// encoder and decoder. Here we use some special features
+// of the XML package: the `XMLName` field name dictates
+// the name of the XML element representing this struct;
+// `id,attr` means that the `Id` field is an XML
+// _attribute_ rather than a nested element.
+
+// TODO: Create Plant struct with XMLName (xml.Name), Id (int), Name (string), and Origin ([]string) fields
+
+
+// TODO: Create String method for Plant struct that returns a string with the Id, Name, and Origin
+// TODO: Return a string with the Id, Name, and Origin
 
 func main() {
-	// TODO: Implement XML concepts
-	fmt.Println("Practicing: XML")
+
+	// TODO: Create coffee := &Plant{Id: 27, Name: "Coffee"}
+	// TODO: Create coffee.Origin = []string{"Ethiopia", "Brazil"}
+
+
+	// Emit XML representing our plant; using
+	// `MarshalIndent` to produce a more
+	// human-readable output.
+
+	// TODO: Create out, _ := xml.MarshalIndent(coffee, " ", "  ")
+	// TODO: Print string(out)
+
+	// To add a generic XML header to the output, append
+	// it explicitly.
+
+	// TODO: Create fmt.Println(xml.Header + string(out))
+
+	// Use `Unmarshal` to parse a stream of bytes with XML
+	// into a data structure. If the XML is malformed or
+	// cannot be mapped onto Plant, a descriptive error
+	// will be returned.
+
+	// TODO: Create var p Plant
+	// TODO: Create if err := xml.Unmarshal(out, &p); err != nil {
+	// TODO: Print err
+
+	// TODO: Create tomato := &Plant{Id: 81, Name: "Tomato"}
+	// TODO: Create tomato.Origin = []string{"Mexico", "California"}
+
+
+	// The `parent>child>plant` field tag tells the encoder
+	// to nest all `plant`s under `<parent><child>...`
+
+	// TODO: Create Nesting struct with XMLName (xml.Name), Plants ([]*Plant) fields	
+
+
+	// TODO: Create nesting := &Nesting{}
+	// TODO: Create nesting.Plants = []*Plant{coffee, tomato}
+
+	// TODO: Create out, _ = xml.MarshalIndent(nesting, " ", "  ")
+	// TODO: Create fmt.Println(string(out))
 }"""
     },
     {
         "key": "time",
         "display_name": "Time",
-        "template": """// Go offers extensive support for times and durations.
+        "template": """// Go offers extensive support for times and durations;
+// here are some examples.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	// TODO: Implement time concepts
-	fmt.Println("Practicing: Time")
+	p := fmt.Println
+
+	// We'll start by getting the current time.
+	now := time.Now()
+	p(now)
+
+	// You can build a `time` struct by providing the
+	// year, month, day, etc. Times are always associated
+	// with a `Location`, i.e. time zone.
+
+	// TODO: Create then := time.Date(2009, 11, 17, 20, 34, 58, 651387237, time.UTC)
+	// TODO: Print then
+
+	// You can extract the various components of the time
+	// value as expected.
+
+	// TODO: Print then.Year()
+	// TODO: Print then.Month()
+	// TODO: Print then.Day()
+	// TODO: Print then.Hour()
+	// TODO: Print then.Minute()
+	// TODO: Print then.Second()
+	// TODO: Print then.Nanosecond()
+	// TODO: Print then.Location()
+
+	// The Monday-Sunday `Weekday` is also available.
+
+	// TODO: Print then.Weekday()
+
+	// These methods compare two times, testing if the
+	// first occurs before, after, or at the same time
+	// as the second, respectively.
+
+	// TODO: Print then.Before(now)
+	// TODO: Print then.After(now)
+	// TODO: Print then.Equal(now)
+
+	// The `Sub` methods returns a `Duration` representing
+	// the interval between two times.
+
+	// TODO: Create diff := now.Sub(then)
+	// TODO: Print diff
+
+	// We can compute the length of the duration in
+	// various units.
+
+	// TODO: Print diff.Hours()
+	// TODO: Print diff.Minutes()
+	// TODO: Print diff.Seconds()
+	// TODO: Print diff.Nanoseconds()
+
+	// You can use `Add` to advance a time by a given
+	// duration, or with a `-` to move backwards by a
+	// duration.
+
+	// TODO: Print then.Add(diff)
+	// TODO: Print then.Add(-diff)
 }"""
     },
     {
@@ -2246,15 +3154,33 @@ func main() {
         "display_name": "Epoch",
         "template": """// A common requirement in programs is getting the number
 // of seconds, milliseconds, or nanoseconds since the
-// Unix epoch.
+// [Unix epoch](https://en.wikipedia.org/wiki/Unix_time).
+// Here's how to do it in Go.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	// TODO: Implement epoch concepts
-	fmt.Println("Practicing: Epoch")
+
+	// Use `time.Now` with `Unix`, `UnixMilli` or `UnixNano`
+	// to get elapsed time since the Unix epoch in seconds,
+	// milliseconds or nanoseconds, respectively.
+
+	// TODO: Create now := time.Now() and print it
+
+	// TODO: Print now.Unix()
+	// TODO: Print now.UnixMilli()
+	// TODO: Print now.UnixNano()
+
+	// You can also convert integer seconds or nanoseconds
+	// since the epoch into the corresponding `time`.
+
+	// TODO: Print time.Unix(now.Unix(), 0)
+	// TODO: Print time.Unix(0, now.UnixNano())
 }"""
     },
     {
@@ -2265,26 +3191,109 @@ func main() {
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	// TODO: Implement time formatting/parsing concepts
-	fmt.Println("Practicing: Time Formatting / Parsing")
+	p := fmt.Println
+
+	// Here's a basic example of formatting a time
+	// according to RFC3339, using the corresponding layout
+	// constant.
+
+	// TODO: Create t := time.Now()
+	// TODO: Print t.Format(time.RFC3339)
+	
+
+	// Time parsing uses the same layout values as `Format`.
+
+	// TODO: Create t1, e := time.Parse(time.RFC3339, "2012-11-01T22:08:41+00:00")
+	// TODO: Print t1
+
+	// `Format` and `Parse` use example-based layouts. Usually
+	// you'll use a constant from `time` for these layouts, but
+	// you can also supply custom layouts. Layouts must use the
+	// reference time `Mon Jan 2 15:04:05 MST 2006` to show the
+	// pattern with which to format/parse a given time/string.
+	// The example time must be exactly as shown: the year 2006,
+	// 15 for the hour, Monday for the day of the week, etc.
+
+	// TODO: Print t.Format("3:04PM")
+	// TODO: Print t.Format("Mon Jan _2 15:04:05 2006")
+	// TODO: Print t.Format("2006-01-02T15:04:05.999999-07:00")
+	
+
+	// TODO: Create form := "3 04 PM"
+	// TODO: Create t2, e := time.Parse(form, "8 41 PM")
+	// TODO: Print t2
+
+	// For purely numeric representations you can also
+	// use standard string formatting with the extracted
+	// components of the time value.
+
+	// TODO: Printf("%d-%02d-%02dT%02d:%02d:%02d-00:00")
+	// TODO: with t.Year(), t.Month(), t.Day(),
+	// t.Hour(), t.Minute(), t.Second()
+
+	// `Parse` will return an error on malformed input
+	// explaining the parsing problem.
+
+	// TODO: Create ansic := "Mon Jan _2 15:04:05 2006"
+	// TODO: Create _, e = time.Parse(ansic, "8:41PM")
+	// TODO: Print e
 }"""
     },
     {
         "key": "random-numbers",
         "display_name": "Random Numbers",
-        "template": """// Go's math/rand/v2 package provides pseudorandom number
+        "template": """// Go's `math/rand/v2` package provides
+// [pseudorandom number](https://en.wikipedia.org/wiki/Pseudorandom_number_generator)
 // generation.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand/v2"
+)
 
 func main() {
-	// TODO: Implement random numbers concepts
-	fmt.Println("Practicing: Random Numbers")
+
+	// For example, `rand.IntN` returns a random `int` n,
+	// `0 <= n < 100`.
+
+	// TODO: Print rand.IntN(100), ","
+	// TODO: Print rand.IntN(100)
+
+	// `rand.Float64` returns a `float64` `f`,
+	// `0.0 <= f < 1.0`.
+
+	// TODO: Print rand.Float64()
+
+	// This can be used to generate random floats in
+	// other ranges, for example `5.0 <= f' < 10.0`.
+
+	// TODO: Print (rand.Float64()*5)+5, ","
+	// TODO: Print (rand.Float64() * 5) + 5
+
+	// If you want a known seed, create a new
+	// `rand.Source` and pass it into the `New`
+	// constructor. `NewPCG` creates a new
+	// [PCG](https://en.wikipedia.org/wiki/Permuted_congruential_generator)
+	// source that requires a seed of two `uint64`
+	// numbers.
+
+	// TODO: Create s2 := rand.NewPCG(42, 1024)
+	// TODO: Create r2 := rand.New(s2)
+	// TODO: Print r2.IntN(100), ","
+	// TODO: Print r2.IntN(100)
+
+	// TODO: Create s3 := rand.NewPCG(42, 1024)
+	// TODO: Create r3 := rand.New(s3)
+	// TODO: Print r3.IntN(100), ","
+	// TODO: Print r3.IntN(100)
 }"""
     },
     {
