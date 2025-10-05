@@ -153,7 +153,7 @@ func main() {
 	// A classic initial/condition/after `for` loop.
 
 	// TODO: Create a for loop with j := 0; j < 3; j++ and print j in each iteration
-	
+
 	// Another way of accomplishing the basic "do this
 	// N times" iteration is `range` over an integer.
 
@@ -175,7 +175,7 @@ func main() {
     },
     {
         "key": "if-else",
-        "display_name": "If/Else", 
+        "display_name": "If/Else",
         "template": """// Branching with `if` and `else` in Go is
 // straight-forward.
 
@@ -206,12 +206,12 @@ func main() {
 	// A statement can precede conditionals; any variables
 	// declared in this statement are available in the current
 	// and all subsequent branches.
-	
+
 	// TODO: Assign num := 9 and check if num < 0, print num "is negative"
 	// otherwise if num < 10, print num "has 1 digit"
 	// otherwise print num "has multiple digits"
 
-	
+
 }"""
     },
     {
@@ -249,7 +249,7 @@ func main() {
 	// TODO: Create a switch with no expression, check time conditions. Set t := time.Now()
 	// If t.Hour() < 12, print "It's before noon"
 	// Otherwise print "It's after noon"
-	
+
 
 	// A type `switch` compares types instead of values.  You
 	// can use this to discover the type of an interface
@@ -3300,74 +3300,308 @@ func main() {
         "key": "number-parsing",
         "display_name": "Number Parsing",
         "template": """// Parsing numbers from strings is a basic but common task
-// in many programs.
+// in many programs; here's how to do it in Go.
 
 package main
 
-import "fmt"
+// The built-in package `strconv` provides the number
+// parsing.
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
-	// TODO: Implement number parsing concepts
-	fmt.Println("Practicing: Number Parsing")
+
+	// With `ParseFloat`, this `64` tells how many bits of
+	// precision to parse.
+
+	// TODO: Create f, _ := strconv.ParseFloat("1.234", 64)
+	// TODO: Print f
+
+	// For `ParseInt`, the `0` means infer the base from
+	// the string. `64` requires that the result fit in 64
+	// bits.
+
+	// TODO: Create i, _ := strconv.ParseInt("123", 0, 64)
+	// TODO: Print i
+
+	// `ParseInt` will recognize hex-formatted numbers.
+
+	// TODO: Create d, _ := strconv.ParseInt("0x1c8", 0, 64)
+	// TODO: Print d
+
+	// A `ParseUint` is also available.
+
+	// TODO: Create u, _ := strconv.ParseUint("789", 0, 64)
+	// TODO: Print u
+
+	// `Atoi` is a convenience function for basic base-10
+	// `int` parsing.
+
+	// TODO: Create k, _ := strconv.Atoi("135")
+	// TODO: Print k
+
+	// Parse functions return an error on bad input.
+
+	// TODO: Create _, e := strconv.Atoi("wat")
+	// TODO: Print e
 }"""
     },
     {
         "key": "url-parsing",
         "display_name": "URL Parsing",
-        "template": """// URLs provide a uniform way to locate resources.
+        "template": """// URLs provide a [uniform way to locate resources](https://adam.herokuapp.com/past/2010/3/30/urls_are_the_uniform_way_to_locate_resources/).
+// Here's how to parse URLs in Go.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net"
+	"net/url"
+)
 
 func main() {
-	// TODO: Implement URL parsing concepts
-	fmt.Println("Practicing: URL Parsing")
+
+	// We'll parse this example URL, which includes a
+	// scheme, authentication info, host, port, path,
+	// query params, and query fragment.
+
+	// TODO: Create s := "postgres://user:pass@host.com:5432/path?k=v#f"
+
+	// Parse the URL and ensure there are no errors.
+
+	// TODO: Create u, err := url.Parse(s)
+	// TODO: Print err
+
+	// Accessing the scheme is straightforward.
+
+	// TODO: Print u.Scheme
+
+	// `User` contains all authentication info; call
+	// `Username` and `Password` on this for individual
+	// values.
+
+	// TODO: Print u.User
+	// TODO: Print u.User.Username()
+	// TODO: Create p, _ := u.User.Password()
+	// TODO: Print p
+
+	// The `Host` contains both the hostname and the port,
+	// if present. Use `SplitHostPort` to extract them.
+
+	// TODO: Print u.Host
+	// TODO: Create host, port, _ := net.SplitHostPort(u.Host)
+	// TODO: Print host
+	// TODO: Print port
+
+	// Here we extract the `path` and the fragment after
+	// the `#`.
+
+	// TODO: Print u.Path
+	// TODO: Print u.Fragment
+
+	// To get query params in a string of `k=v` format,
+	// use `RawQuery`. You can also parse query params
+	// into a map. The parsed query param maps are from
+	// strings to slices of strings, so index into `[0]`
+	// if you only want the first value.
+
+	// TODO: Print u.RawQuery
+	// TODO: Create m, _ := url.ParseQuery(u.RawQuery)
+	// TODO: Print m
+	// TODO: Print m["k"][0]
 }"""
     },
     {
         "key": "sha256-hashes",
         "display_name": "SHA256 Hashes",
-        "template": """// _SHA256 hashes_ are frequently used to compute short
-// identities for binary or text blobs.
+        "template": """// [_SHA256 hashes_](https://en.wikipedia.org/wiki/SHA-2) are
+// frequently used to compute short identities for binary
+// or text blobs. For example, TLS/SSL certificates use SHA256
+// to compute a certificate's signature. Here's how to compute
+// SHA256 hashes in Go.
 
 package main
 
-import "fmt"
+// Go implements several hash functions in various
+// `crypto/*` packages.
+import (
+	"crypto/sha256"
+	"fmt"
+)
 
 func main() {
-	// TODO: Implement SHA256 hashes concepts
-	fmt.Println("Practicing: SHA256 Hashes")
+	// TODO: Create s := "sha256 this string"
+
+	// Here we start with a new hash.
+	// TODO: Create h := sha256.New()
+
+	// `Write` expects bytes. If you have a string `s`,
+	// use `[]byte(s)` to coerce it to bytes.
+
+	// TODO: h.Write([]byte(s))
+
+	// This gets the finalized hash result as a byte
+	// slice. The argument to `Sum` can be used to append
+	// to an existing byte slice: it usually isn't needed.
+
+	// TODO: Create bs := h.Sum(nil)
+
+	// TODO: Print s
+	// TODO: Print fmt.Printf("%x\n", bs)
 }"""
     },
     {
         "key": "base64-encoding",
         "display_name": "Base64 Encoding",
-        "template": """// Go provides built-in support for base64
-// encoding/decoding.
+        "template": """// Go provides built-in support for [base64
+// encoding/decoding](https://en.wikipedia.org/wiki/Base64).
 
 package main
 
-import "fmt"
+// This syntax imports the `encoding/base64` package with
+// the `b64` name instead of the default `base64`. It'll
+// save us some space below.
+import (
+	b64 "encoding/base64"
+	"fmt"
+)
 
 func main() {
-	// TODO: Implement base64 encoding concepts
-	fmt.Println("Practicing: Base64 Encoding")
+
+	// Here's the `string` we'll encode/decode.
+	// TODO: Create data := "abc123!?$*&()'-=@~"
+
+	// Go supports both standard and URL-compatible
+	// base64. Here's how to encode using the standard
+	// encoder. The encoder requires a `[]byte` so we
+	// convert our `string` to that type.
+
+	// TODO: Create sEnc := b64.StdEncoding.EncodeToString([]byte(data))
+	// TODO: Print sEnc
+
+	// Decoding may return an error, which you can check
+	// if you don't already know the input to be
+	// well-formed.
+
+	// TODO: Create sDec, _ := b64.StdEncoding.DecodeString(sEnc)
+	// TODO: Print sDec
+	// TODO: Print fmt.Println()
+
+	// This encodes/decodes using a URL-compatible base64
+	// format.
+
+	// TODO: Create uEnc := b64.URLEncoding.EncodeToString([]byte(data))
+	// TODO: Print uEnc
+	// TODO: Create uDec, _ := b64.URLEncoding.DecodeString(uEnc)
+	// TODO: Print uDec
+	// TODO: Print fmt.Println()
 }"""
     },
     {
         "key": "reading-files",
         "display_name": "Reading Files",
         "template": """// Reading and writing files are basic tasks needed for
-// many Go programs.
+// many Go programs. First we'll look at some examples of
+// reading files.
 
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+)
+
+// Reading files requires checking most calls for errors.
+// This helper will streamline our error checks below.
+
+// TODO: Create function check(e error) that checks if e is not nil, panic with e
+
 
 func main() {
-	// TODO: Implement reading files concepts
-	fmt.Println("Practicing: Reading Files")
+
+	// Perhaps the most basic file reading task is
+	// slurping a file's entire contents into memory.
+
+	// TODO: Create dat, err := os.ReadFile("/tmp/dat")
+	// TODO: Print err
+	// TODO: Print fmt.Print(string(dat))
+
+	// You'll often want more control over how and what
+	// parts of a file are read. For these tasks, start
+	// by `Open`ing a file to obtain an `os.File` value.
+
+	// TODO: Create f, err := os.Open("/tmp/dat")
+	// TODO: Print err
+
+	// Read some bytes from the beginning of the file.
+	// Allow up to 5 to be read but also note how many
+	// actually were read.
+
+	// TODO: Create b1 := make([]byte, 5)
+	// TODO: Create n1, err := f.Read(b1)
+	// TODO: Print err
+	// TODO: Print fmt.Printf("%d bytes: %s\n", n1, string(b1[:n1]))
+
+	// You can also `Seek` to a known location in the file
+	// and `Read` from there.
+
+	// TODO: Create o2, err := f.Seek(6, io.SeekStart)
+	// TODO: Print err
+	// TODO: Create b2 := make([]byte, 2)
+	// TODO: Create n2, err := f.Read(b2)
+	// TODO: Print err
+	// TODO: Print fmt.Printf("%d bytes @ %d: ", n2, o2)
+	// TODO: Print fmt.Printf("%v\n", string(b2[:n2]))
+
+	// Other methods of seeking are relative to the
+	// current cursor position,
+
+	// TODO: Create _, err = f.Seek(2, io.SeekCurrent)
+	// TODO: Print err
+
+	// and relative to the end of the file.
+
+	// TODO: Create _, err = f.Seek(-4, io.SeekEnd)
+	// TODO: Print err
+
+	// The `io` package provides some functions that may
+	// be helpful for file reading. For example, reads
+	// like the ones above can be more robustly
+	// implemented with `ReadAtLeast`.
+
+	// TODO: Create o3, err := f.Seek(6, io.SeekStart)
+	// TODO: Print err
+	// TODO: Create b3 := make([]byte, 2)
+	// TODO: Create n3, err := io.ReadAtLeast(f, b3, 2)
+	// TODO: Print err
+	// TODO: Print fmt.Printf("%d bytes @ %d: %s\n", n3, o3, string(b3))
+
+	// There is no built-in rewind, but
+	// `Seek(0, io.SeekStart)` accomplishes this.
+
+	// TODO: Create _, err = f.Seek(0, io.SeekStart)
+	// TODO: Print err
+
+	// The `bufio` package implements a buffered
+	// reader that may be useful both for its efficiency
+	// with many small reads and because of the additional
+	// reading methods it provides.
+
+	// TODO: Create r4 := bufio.NewReader(f)
+	// TODO: Create b4, err := r4.Peek(5)
+	// TODO: Print err
+	// TODO: Print fmt.Printf("5 bytes: %s\n", string(b4))
+
+	// Close the file when you're done (usually this would
+	// be scheduled immediately after `Open`ing with
+	// `defer`).
+
+	// TODO: Create f.Close()
 }"""
     },
     {
@@ -3378,165 +3612,647 @@ func main() {
 
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+// TODO: Create function check(e error) that checks if e is not nil, panic with e
 
 func main() {
-	// TODO: Implement writing files concepts
-	fmt.Println("Practicing: Writing Files")
+
+	// To start, here's how to dump a string (or just
+	// bytes) into a file.
+
+	// TODO: Create d1 := []byte("hello\ngo\n")
+	// TODO: Create err := os.WriteFile("/tmp/dat1", d1, 0644)
+	// TODO: Print err
+
+	// For more granular writes, open a file for writing.
+
+	// TODO: Create f, err := os.Create("/tmp/dat2")
+	// TODO: Print err
+
+	// It's idiomatic to defer a `Close` immediately
+	// after opening a file.
+
+	// TODO: Defer the closing of the file with defer f.Close()
+
+	// You can `Write` byte slices as you'd expect.
+
+	// TODO: Create d2 := []byte{115, 111, 109, 101, 10}
+	// TODO: Create n2, err := f.Write(d2)
+	// TODO: Print err
+	// TODO: Print fmt.Printf("wrote %d bytes\n", n2)
+
+	// A `WriteString` is also available.
+
+	// TODO: Create n3, err := f.WriteString("writes\n")
+	// TODO: Print err
+	// TODO: Print fmt.Printf("wrote %d bytes\n", n3)
+
+	// Issue a `Sync` to flush writes to stable storage.
+
+	// TODO: Create f.Sync()
+
+	// `bufio` provides buffered writers in addition
+	// to the buffered readers we saw earlier.
+
+	// TODO: Create w := bufio.NewWriter(f)
+	// TODO: Print err
+	// TODO: Print fmt.Printf("wrote %d bytes\n", n4)
+
+	// Use `Flush` to ensure all buffered operations have
+	// been applied to the underlying writer.
+
+	// TODO: Create w.Flush()
+
 }"""
     },
     {
         "key": "line-filters",
         "display_name": "Line Filters",
         "template": """// A _line filter_ is a common type of program that reads
-// input on stdin, processes it, and prints some derived
-// result to stdout.
+// input on stdin, processes it, and then prints some
+// derived result to stdout. `grep` and `sed` are common
+// line filters.
 
+// Here's an example line filter in Go that writes a
+// capitalized version of all input text. You can use this
+// pattern to write your own Go line filters.
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
 
 func main() {
-	// TODO: Implement line filters concepts
-	fmt.Println("Practicing: Line Filters")
+
+	// Wrapping the unbuffered `os.Stdin` with a buffered
+	// scanner gives us a convenient `Scan` method that
+	// advances the scanner to the next token; which is
+	// the next line in the default scanner.
+
+	// TODO: Create scanner := bufio.NewScanner(os.Stdin)
+
+	// TODO: For scanner.Scan(), use strings.ToUpper(scanner.Text()) to uppercase the line
+	// TODO: Write out the uppercased line
+
+
+	// Check for errors during `Scan`. End of file is
+	// expected and not reported by `Scan` as an error.
+
+	// TODO: Create err := scanner.Err()
+	// TODO: If err is not nil, print "error:", err and exit with 1
 }"""
     },
     {
         "key": "file-paths",
         "display_name": "File Paths",
-        "template": """// The filepath package provides functions to parse
-// and construct _file paths_ in a way that is portable
-// between operating systems.
-
+        "template": """// The `filepath` package provides functions to parse
+// and construct *file paths* in a way that is portable
+// between operating systems; `dir/file` on Linux vs.
+// `dir\file` on Windows, for example.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"path/filepath"
+	"strings"
+)
 
 func main() {
-	// TODO: Implement file paths concepts
-	fmt.Println("Practicing: File Paths")
+
+	// `Join` should be used to construct paths in a
+	// portable way. It takes any number of arguments
+	// and constructs a hierarchical path from them.
+
+	// TODO: Create p := filepath.Join("dir1", "dir2", "filename")
+	// TODO: Print p
+
+	// You should always use `Join` instead of
+	// concatenating `/`s or `\`s manually. In addition
+	// to providing portability, `Join` will also
+	// normalize paths by removing superfluous separators
+	// and directory changes.
+
+	// TODO: Create fmt.Println(filepath.Join("dir1//", "filename"))
+	// TODO: Create fmt.Println(filepath.Join("dir1/../dir1", "filename"))
+
+	// `Dir` and `Base` can be used to split a path to the
+	// directory and the file. Alternatively, `Split` will
+	// return both in the same call.
+
+	// TODO: Create fmt.Println("Dir(p):", filepath.Dir(p))
+	// TODO: Create fmt.Println("Base(p):", filepath.Base(p))
+
+	// We can check whether a path is absolute.
+
+	// TODO: Create fmt.Println(filepath.IsAbs("dir/file"))
+	// TODO: Create fmt.Println(filepath.IsAbs("/dir/file"))
+
+	// TODO: Create filename := "config.json"
+	// TODO: Print filename
+
+
+	// Some file names have extensions following a dot. We
+	// can split the extension out of such names with `Ext`.
+
+
+	// TODO: Create ext := filepath.Ext(filename)
+	// TODO: Print ext
+
+	// To find the file's name with the extension removed,
+	// use `strings.TrimSuffix`.
+
+	// TODO: Create fmt.Println(strings.TrimSuffix(filename, ext))
+
+	// `Rel` finds a relative path between a *base* and a
+	// *target*. It returns an error if the target cannot
+	// be made relative to base.
+
+	// TODO: Create rel, err := filepath.Rel("a/b", "a/b/t/file")
+	// TODO: Print err
+	// TODO: Create rel, err = filepath.Rel("a/b", "a/c/t/file")
+	// TODO: Print err
+	// TODO: Print rel
+
 }"""
     },
     {
         "key": "directories",
         "display_name": "Directories",
         "template": """// Go has several useful functions for working with
-// _directories_ in the file system.
+// *directories* in the file system.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+)
+
+// TODO: Create function check(e error) that checks if e is not nil, panic with e
 
 func main() {
-	// TODO: Implement directories concepts
-	fmt.Println("Practicing: Directories")
-}"""
+
+	// Create a new sub-directory in the current working
+	// directory.
+
+	// TODO: Create err := os.Mkdir("subdir", 0755)
+	// TODO: Print err
+
+	// When creating temporary directories, it's good
+	// practice to `defer` their removal. `os.RemoveAll`
+	// will delete a whole directory tree (similarly to
+	// `rm -rf`).
+
+	// TODO: Defer the removal of the directory with defer os.RemoveAll("subdir")
+
+	// Helper function to create a new empty file.
+
+	// TODO: Create createEmptyFile := func(name string) {
+	// That gets d := []byte("")
+	// and calls check(os.WriteFile(name, d, 0644))
+
+
+	// TODO: call createEmptyFile("subdir/file1")
+
+	// We can create a hierarchy of directories, including
+	// parents with `MkdirAll`. This is similar to the
+	// command-line `mkdir -p`.
+
+
+	// TODO: Create err = os.MkdirAll("subdir/parent/child", 0755)
+	// check(err)
+	// TODO: Print err
+	// TODO: call createEmptyFile("subdir/parent/file2")
+	// TODO: call createEmptyFile("subdir/parent/file3")
+	// TODO: call createEmptyFile("subdir/parent/child/file4")
+
+	// `ReadDir` lists directory contents, returning a
+	// slice of `os.DirEntry` objects.
+
+	// TODO: Create c, err := os.ReadDir("subdir/parent")
+	// TODO: Print err
+
+	// TODO: For _, entry := range c, print " ", entry.Name(), entry.IsDir()
+
+	// `Chdir` lets us change the current working directory,
+	// similarly to `cd`.
+
+	// TODO: Create err = os.Chdir("subdir/parent/child")
+	// TODO: Print err
+
+	// Now we'll see the contents of `subdir/parent/child`
+	// when listing the *current* directory.
+
+	// TODO: Create c, err := os.ReadDir(".")
+	// TODO: Print err
+
+	// TODO: For _, entry := range c, print " ", entry.Name(), entry.IsDir()
+
+
+	// `cd` back to where we started.
+
+	// TODO: err = os.Chdir("../../..")
+
+	// We can also visit a directory *recursively*,
+	// including all its sub-directories. `WalkDir` accepts
+	// a callback function to handle every file or
+	// directory visited.
+	
+	// TODO: err = filepath.WalkDir("subdir", visit)
+}
+
+// `visit` is called for every file or directory found
+// recursively by `filepath.WalkDir`.
+
+// TODO: Create function visit(path string, d fs.DirEntry, err error) error"""
     },
     {
         "key": "temporary-files-and-directories",
         "display_name": "Temporary Files and Directories",
         "template": """// Throughout program execution, we often want to create
 // data that isn't needed after the program exits.
+// *Temporary files and directories* are useful for this
+// purpose since they don't pollute the file system over
+// time.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+)
+
+
+// TODO: Create function check(e error) that checks if e is not nil, panic with e
 
 func main() {
-	// TODO: Implement temporary files and directories concepts
-	fmt.Println("Practicing: Temporary Files and Directories")
+
+	// The easiest way to create a temporary file is by
+	// calling `os.CreateTemp`. It creates a file *and*
+	// opens it for reading and writing. We provide `""`
+	// as the first argument, so `os.CreateTemp` will
+	// create the file in the default location for our OS.
+
+
+	// TODO: Create f, err := os.CreateTemp("", "sample")
+	// TODO: Print err
+
+	// Display the name of the temporary file. On
+	// Unix-based OSes the directory will likely be `/tmp`.
+	// The file name starts with the prefix given as the
+	// second argument to `os.CreateTemp` and the rest
+	// is chosen automatically to ensure that concurrent
+	// calls will always create different file names.
+
+	// TODO: Print fmt.Println("Temp file name:", f.Name())
+
+	// Clean up the file after we're done. The OS is
+	// likely to clean up temporary files by itself after
+	// some time, but it's good practice to do this
+	// explicitly.
+
+	// TODO: Defer the removal of the file with defer os.Remove(f.Name())
+
+	// We can write some data to the file.
+
+	// TODO: Create _, err = f.Write([]byte{1, 2, 3, 4})
+	// TODO: Print err
+
+	// If we intend to write many temporary files, we may
+	// prefer to create a temporary *directory*.
+	// `os.MkdirTemp`'s arguments are the same as
+	// `CreateTemp`'s, but it returns a directory *name*
+	// rather than an open file.
+
+	// TODO: Create dname, err := os.MkdirTemp("", "sampledir")
+	// TODO: Print err
+
+	// TODO: Defer the removal of the directory with defer os.RemoveAll(dname)
+
+	// Now we can synthesize temporary file names by
+	// prefixing them with our temporary directory.
+
+	// TODO: Create fname := filepath.Join(dname, "file1")
+	// TODO: Create err = os.WriteFile(fname, []byte{1, 2}, 0666)
+	// TODO: Print err
 }"""
     },
     {
         "key": "embed-directive",
         "display_name": "Embed Directive",
-        "template": """// //go:embed is a compiler directive that allows programs
-// to include arbitrary files and folders in the Go binary
-// at build time.
-
+        "template": """// `//go:embed` is a [compiler
+// directive](https://pkg.go.dev/cmd/compile#hdr-Compiler_Directives) that
+// allows programs to include arbitrary files and folders in the Go binary at
+// build time. Read more about the embed directive
+// [here](https://pkg.go.dev/embed).
 package main
 
-import "fmt"
+// Import the `embed` package; if you don't use any exported
+// identifiers from this package, you can do a blank import with `_ "embed"`.
+import (
+	"embed"
+)
+
+// `embed` directives accept paths relative to the directory containing the
+// Go source file. This directive embeds the contents of the file into the
+// `string` variable immediately following it.
+//
+//go:embed folder/single_file.txt
+var fileString string
+
+// Or embed the contents of the file into a `[]byte`.
+//
+//go:embed folder/single_file.txt
+var fileByte []byte
+
+// We can also embed multiple files or even folders with wildcards. This uses
+// a variable of the [embed.FS type](https://pkg.go.dev/embed#FS), which
+// implements a simple virtual file system.
+//
+//go:embed folder/single_file.txt
+//go:embed folder/*.hash
+var folder embed.FS
 
 func main() {
-	// TODO: Implement embed directive concepts
-	fmt.Println("Practicing: Embed Directive")
+
+	// Print out the contents of `single_file.txt`.
+	// TODO: Print fileString
+	// TODO: Print string(fileByte)
+
+	// Retrieve some files from the embedded folder.
+	// TODO: Create content1, _ := folder.ReadFile("folder/file1.hash")
+	// TODO: Print string(content1)
+	// TODO: Create content2, _ := folder.ReadFile("folder/file2.hash")
+	// TODO: Print string(content2)
 }"""
     },
     {
         "key": "testing-and-benchmarking",
         "display_name": "Testing and Benchmarking",
         "template": """// Unit testing is an important part of writing
-// principled Go programs.
+// principled Go programs. The `testing` package
+// provides the tools we need to write unit tests
+// and the `go test` command runs tests.
 
+// For the sake of demonstration, this code is in package
+// `main`, but it could be any package. Testing code
+// typically lives in the same package as the code it tests.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
-func main() {
-	// TODO: Implement testing and benchmarking concepts
-	fmt.Println("Practicing: Testing and Benchmarking")
+// We'll be testing this simple implementation of an
+// integer minimum. Typically, the code we're testing
+// would be in a source file named something like
+// `intutils.go`, and the test file for it would then
+// be named `intutils_test.go`.
+
+// TODO: Create function IntMin(a, b int) int that returns the minimum of a and b
+
+// A test is created by writing a function with a name
+// beginning with `Test`.
+
+// TODO: Create function TestIntMinBasic(t *testing.T) that tests IntMin(2, -2) = -2
+
+// `t.Error*` will report test failures but continue
+// executing the test. `t.Fatal*` will report test
+// failures and stop the test immediately.
+
+func TestIntMinBasic(t *testing.T) {
+	// TODO: Create ans := IntMin(2, -2)
+	// TODO: If ans != -2, t.Errorf("IntMin(2, -2) = %d; want -2", ans)
+}
+
+// Writing tests can be repetitive, so it's idiomatic to
+// use a *table-driven style*, where test inputs and
+// expected outputs are listed in a table and a single loop
+// walks over them and performs the test logic.
+func TestIntMinTableDriven(t *testing.T) {
+
+	// TODO: Create tests = []struct {
+	// a, b int
+	// want int
+	//}{
+	// {0, 1, 0},
+	// {1, 0, 0},
+	// {2, -2, -2},
+	// {0, -1, -1},
+	// {-1, 0, -1},
+	//}
+
+	// TODO: For _, tt := range tests, create testname := fmt.Sprintf("%d,%d", tt.a, tt.b)
+	// TODO: t.Run(testname, func(t *testing.T) {
+	// TODO: Create ans := IntMin(tt.a, tt.b)
+	// TODO: If ans != tt.want, t.Errorf("got %d, want %d", ans, tt.want)
+	// TODO: })
+}
+
+// Benchmark tests typically go in `_test.go` files and are
+// named beginning with `Benchmark`.
+// Any code that's required for the benchmark to run but should
+// not be measured goes before this loop.
+
+// TODO: Create function BenchmarkIntMin(b *testing.B) that benchmarks IntMin(1, 2)
+func BenchmarkIntMin(b *testing.B) {
+	for b.Loop() {
+		// TODO: IntMin(1, 2)
+	}
 }"""
     },
     {
         "key": "command-line-arguments",
         "display_name": "Command-Line Arguments",
-        "template": """// _Command-line arguments_ are a common way to parameterize
-// execution of programs.
+        "template": """// [_Command-line arguments_](https://en.wikipedia.org/wiki/Command-line_interface#Arguments)
+// are a common way to parameterize execution of programs.
+// For example, `go run hello.go` uses `run` and
+// `hello.go` arguments to the `go` program.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
-	// TODO: Implement command-line arguments concepts
-	fmt.Println("Practicing: Command-Line Arguments")
+
+	// `os.Args` provides access to raw command-line
+	// arguments. Note that the first value in this slice
+	// is the path to the program, and `os.Args[1:]`
+	// holds the arguments to the program.
+
+	// TODO: Create argsWithProg := os.Args
+	// TODO: Create argsWithoutProg := os.Args[1:]
+
+	// You can get individual args with normal indexing.
+
+	// TODO: Create arg := os.Args[3]	
+	// TODO: Print arg
+
+	// TODO: Print argsWithProg
+	// TODO: Print argsWithoutProg
+	// TODO: Print arg
 }"""
     },
     {
         "key": "command-line-flags",
         "display_name": "Command-Line Flags",
-        "template": """// _Command-line flags_ are a common way to specify options
-// for command-line programs.
+        "template": """// [_Command-line flags_](https://en.wikipedia.org/wiki/Command-line_interface#Command-line_option)
+// are a common way to specify options for command-line
+// programs. For example, in `wc -l` the `-l` is a
+// command-line flag.
 
 package main
 
-import "fmt"
+// Go provides a `flag` package supporting basic
+// command-line flag parsing. We'll use this package to
+// implement our example command-line program.
+import (
+	"flag"
+	"fmt"
+)
 
 func main() {
-	// TODO: Implement command-line flags concepts
-	fmt.Println("Practicing: Command-Line Flags")
+
+	// Basic flag declarations are available for string,
+	// integer, and boolean options. Here we declare a
+	// string flag `word` with a default value `"foo"`
+	// and a short description. This `flag.String` function
+	// returns a string pointer (not a string value);
+	// we'll see how to use this pointer below.
+
+	// TODO: Create wordPtr := flag.String("word", "foo", "a string")
+
+	// This declares `numb` and `fork` flags, using a
+	// similar approach to the `word` flag.
+
+	// TODO: Create numbPtr := flag.Int("numb", 42, "an int")
+	// TODO: Create forkPtr := flag.Bool("fork", false, "a bool")
+
+	// It's also possible to declare an option that uses an
+	// existing var declared elsewhere in the program.
+	// Note that we need to pass in a pointer to the flag
+	// declaration function.
+
+	// TODO: Create var svar string
+	// TODO: Create flag.StringVar(&svar, "svar", "bar", "a string var")
+
+	// Once all flags are declared, call `flag.Parse()`
+	// to execute the command-line parsing.
+
+	// TODO: Create flag.Parse()
+
+	// Here we'll just dump out the parsed options and
+	// any trailing positional arguments. Note that we
+	// need to dereference the pointers with e.g. `*wordPtr`
+	// to get the actual option values.
+
+	// TODO: Print word:", *wordPtr)
+	// TODO: Print numb:", *numbPtr)
+	// TODO: Print fork:", *forkPtr)
+	// TODO: Print svar:", svar)
+	// TODO: Print tail:", flag.Args())
 }"""
     },
     {
         "key": "command-line-subcommands",
         "display_name": "Command-Line Subcommands",
-        "template": """// Some command-line tools, like the go tool or git
-// have many _subcommands_, each with its own set of
-// flags.
+        "template": """// Some command-line tools, like the `go` tool or `git`
+// have many *subcommands*, each with its own set of
+// flags. For example, `go build` and `go get` are two
+// different subcommands of the `go` tool.
+// The `flag` package lets us easily define simple
+// subcommands that have their own flags.
 
 package main
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"os"
+)
 
 func main() {
-	// TODO: Implement command-line subcommands concepts
-	fmt.Println("Practicing: Command-Line Subcommands")
+
+	// We declare a subcommand using the `NewFlagSet`
+	// function, and proceed to define new flags specific
+	// for this subcommand.
+
+	// TODO: Create fooCmd := flag.NewFlagSet("foo", flag.ExitOnError)
+	// TODO: Create fooEnable := fooCmd.Bool("enable", false, "enable")
+	// TODO: Create fooName := fooCmd.String("name", "", "name")
+
+	// For a different subcommand we can define different
+	// supported flags.
+
+	// TODO: Create barCmd := flag.NewFlagSet("bar", flag.ExitOnError)
+	// TODO: Create barLevel := barCmd.Int("level", 0, "level")
+
+	// The subcommand is expected as the first argument
+	// to the program.
+
+	// TODO: If len(os.Args) < 2, fmt.Println("expected 'foo' or 'bar' subcommands")
+	// TODO: os.Exit(1)
+
+	// Check which subcommand is invoked.
+
+	// TODO: switch os.Args[1] {
+	// If the case is "foo", parse the fooCmd flags, if the case is "bar", parse the barCmd flags.
+	// default print "expected 'foo' or 'bar' subcommands" and exit with 1
+
+	// For every subcommand, we parse its own flags and
+	// have access to trailing positional arguments.
+	
 }"""
     },
     {
         "key": "environment-variables",
         "display_name": "Environment Variables",
-        "template": """// _Environment variables_ are a universal mechanism for
-// conveying configuration information to Unix programs.
+        "template": """// [Environment variables](https://en.wikipedia.org/wiki/Environment_variable)
+// are a universal mechanism for [conveying configuration
+// information to Unix programs](https://www.12factor.net/config).
+// Let's look at how to set, get, and list environment variables.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
 func main() {
-	// TODO: Implement environment variables concepts
-	fmt.Println("Practicing: Environment Variables")
+
+	// To set a key/value pair, use `os.Setenv`. To get a
+	// value for a key, use `os.Getenv`. This will return
+	// an empty string if the key isn't present in the
+	// environment.
+
+	// TODO: Create os.Setenv("FOO", "1")
+	// TODO: Create fmt.Println("FOO:", os.Getenv("FOO"))
+	// TODO: Create fmt.Println("BAR:", os.Getenv("BAR"))
+
+	// Use `os.Environ` to list all key/value pairs in the
+	// environment. This returns a slice of strings in the
+	// form `KEY=value`. You can `strings.SplitN` them to
+	// get the key and value. Here we print all the keys.
+	fmt.Println()
+	// TODO: iterate over os.Environ() with range and print the key
+	// Use strings.SplitN(e, "=", 2) to get the key and value
 }"""
     },
     {
@@ -3560,110 +4276,371 @@ func main() {
         "key": "http-client",
         "display_name": "HTTP Client",
         "template": """// The Go standard library comes with excellent support
-// for HTTP clients and servers in the net/http package.
-
+// for HTTP clients and servers in the `net/http`
+// package. In this example we'll use it to issue simple
+// HTTP requests.
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"net/http"
+)
 
 func main() {
-	// TODO: Implement HTTP client concepts
-	fmt.Println("Practicing: HTTP Client")
+
+	// Issue an HTTP GET request to a server. `http.Get` is a
+	// convenient shortcut around creating an `http.Client`
+	// object and calling its `Get` method; it uses the
+	// `http.DefaultClient` object which has useful default
+	// settings.
+
+	// TODO: Create resp, err := http.Get("https://gobyexample.com")
+	// TODO: Print err
+	
+
+	// TODO: Defer the closing of the response body with defer resp.Body.Close()
+
+	// Print the HTTP response status.
+
+	// TODO: Print fmt.Println("Response status:", resp.Status)
+
+	// Print the first 5 lines of the response body.
+
+	// TODO: Create scanner := bufio.NewScanner(resp.Body)
+	// Iterate over the scanner with for i := 0; scanner.Scan() && i < 5; i++ {
+	// TODO: Print fmt.Println(scanner.Text())
+	// TODO: Print err
+
+	// Check for scanner.Err() and if it is not nil, panic with the error
 }"""
     },
     {
         "key": "http-server",
         "display_name": "HTTP Server",
         "template": """// Writing a basic HTTP server is easy using the
-// net/http package.
-
+// `net/http` package.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
+
+// A fundamental concept in `net/http` servers is
+// *handlers*. A handler is an object implementing the
+// `http.Handler` interface. A common way to write
+// a handler is by using the `http.HandlerFunc` adapter
+// on functions with the appropriate signature.
+
+// TODO: Create function hello that takes a http.ResponseWriter and a http.Request
+// Functions serving as handlers take a
+// `http.ResponseWriter` and a `http.Request` as
+// arguments. The response writer is used to fill in the
+// HTTP response. Here our simple response is just
+// "hello\n".
+
+
+// TODO: Create function headers that takes a http.ResponseWriter and a http.Request
+// Inside the function, iterate over the request headers with range and print the name and value
+
+
 
 func main() {
-	// TODO: Implement HTTP server concepts
-	fmt.Println("Practicing: HTTP Server")
+
+	// We register our handlers on server routes using the
+	// `http.HandleFunc` convenience function. It sets up
+	// the *default router* in the `net/http` package and
+	// takes a function as an argument.
+
+	// TODO: Create http.HandleFunc("/hello", hello)
+	// TODO: Create http.HandleFunc("/headers", headers)
+
+	// Finally, we call the `ListenAndServe` with the port
+	// and a handler. `nil` tells it to use the default
+	// router we've just set up.
+
+	// TODO: Create http.ListenAndServe(":8090", nil)
 }"""
     },
     {
         "key": "context",
         "display_name": "Context",
         "template": """// In the previous example we looked at setting up a simple
-// HTTP server. HTTP servers are useful for demonstrating
-// the usage of context.Context for controlling cancellation.
-
+// [HTTP server](http-server). HTTP servers are useful for
+// demonstrating the usage of `context.Context` for
+// controlling cancellation. A `Context` carries deadlines,
+// cancellation signals, and other request-scoped values
+// across API boundaries and goroutines.
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+	"time"
+)
+
+func hello(w http.ResponseWriter, req *http.Request) {
+
+	// A `context.Context` is created for each request by
+	// the `net/http` machinery, and is available with
+	// the `Context()` method.
+
+	// TODO: Create ctx := req.Context()
+	// TODO: Print "server: hello handler started"
+	// TODO: Defer "server: hello handler ended"
+
+	// Wait for a few seconds before sending a reply to the
+	// client. This could simulate some work the server is
+	// doing. While working, keep an eye on the context's
+	// `Done()` channel for a signal that we should cancel
+	// the work and return as soon as possible.
+
+	// TODO: Use select to wait for 10 seconds or the context's Done() channel
+	// When context is <- time.After(10 * time.Second), print "hello\n"
+	// When context is <- ctx.Done(), print "server: " and the context's Err()
+	// and set the status code to http.StatusInternalServerError and call http.Error(w, err.Error(), internalError)
+	
+	}
+}
 
 func main() {
-	// TODO: Implement context concepts
-	fmt.Println("Practicing: Context")
+
+	// As before, we register our handler on the "/hello"
+	// route, and start serving.
+
+	// TODO: Create http.HandleFunc("/hello", hello)
+	// TODO: Create http.ListenAndServe(":8090", nil)
 }"""
     },
     {
         "key": "spawning-processes",
         "display_name": "Spawning Processes",
-        "template": """// Sometimes our Go programs need to spawn other, non-Go
+        "template": """// Sometimes our Go programs need to spawn other
 // processes.
 
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"io"
+	"os/exec"
+)
 
 func main() {
-	// TODO: Implement spawning processes concepts
-	fmt.Println("Practicing: Spawning Processes")
+
+	// We'll start with a simple command that takes no
+	// arguments or input and just prints something to
+	// stdout. The `exec.Command` helper creates an object
+	// to represent this external process.
+
+	// TODO: Create dateCmd := exec.Command("date")
+
+	// The `Output` method runs the command, waits for it
+	// to finish and collects its standard output.
+	//  If there were no errors, `dateOut` will hold bytes
+	// with the date info.
+
+	// TODO: Create dateOut, err := dateCmd.Output()
+	// TODO: Print err
+	// TODO: Print dateOut
+	
+
+	// `Output` and other methods of `Command` will return
+	// `*exec.Error` if there was a problem executing the
+	// command (e.g. wrong path), and `*exec.ExitError`
+	// if the command ran but exited with a non-zero return
+	// code.
+
+
+	// TODO: Create _, err = exec.Command("date", "-x").Output()
+	
+	// TODO: Create if err != nil {
+	// Create var execErr *exec.Error and var exitErr *exec.ExitError
+	// With switch, check if err is an execErr or exitErr
+	// If it is, print the error
+	// If it is not, panic with the error
+
+
+	// Next we'll look at a slightly more involved case
+	// where we pipe data to the external process on its
+	// `stdin` and collect the results from its `stdout`.
+
+	// TODO: Create grepCmd := exec.Command("grep", "hello")
+
+	// Here we explicitly grab input/output pipes, start
+	// the process, write some input to it, read the
+	// resulting output, and finally wait for the process
+	// to exit.
+
+	// TODO: Create grepIn, _ := grepCmd.StdinPipe()
+	// TODO: Create grepOut, _ := grepCmd.StdoutPipe()
+	// Start the process, write some input to it, read the resulting output, and finally wait for the process to exit.
+
+
+	// We omitted error checks in the above example, but
+	// you could use the usual `if err != nil` pattern for
+	// all of them. We also only collect the `StdoutPipe`
+	// results, but you could collect the `StderrPipe` in
+	// exactly the same way.
+
+	// TODO: Print "> grep hello" and the result of grepBytes
+
+	// Note that when spawning commands we need to
+	// provide an explicitly delineated command and
+	// argument array, vs. being able to just pass in one
+	// command-line string. If you want to spawn a full
+	// command with a string, you can use `bash`'s `-c`
+	// option:
+
+	// TODO: Create lsCmd := exec.Command("bash", "-c", "ls -a -l -h")
+	// Call lsCmd.Output() and print the result 
 }"""
     },
     {
         "key": "execing-processes",
         "display_name": "Exec'ing Processes",
-        "template": """// In the previous example we looked at spawning external
-// processes. We do this when we need an external process
-// accessible to a running Go process. Sometimes we just
-// want to completely replace the current Go process with
-// another (perhaps non-Go) one. To do this we'll use Go's
-// implementation of the classic exec function.
+        "template": """// In the previous example we looked at
+// [spawning external processes](spawning-processes). We
+// do this when we need an external process accessible to
+// a running Go process. Sometimes we just want to
+// completely replace the current Go process with another
+// (perhaps non-Go) one. To do this we'll use Go's
+// implementation of the classic
+// <a href="https://en.wikipedia.org/wiki/Exec_(operating_system)"><code>exec</code></a>
+// function.
 
 package main
 
-import "fmt"
+import (
+	"os"
+	"os/exec"
+	"syscall"
+)
 
 func main() {
-	// TODO: Implement exec'ing processes concepts
-	fmt.Println("Practicing: Exec'ing Processes")
+
+	// For our example we'll exec `ls`. Go requires an
+	// absolute path to the binary we want to execute, so
+	// we'll use `exec.LookPath` to find it (probably
+	// `/bin/ls`).
+
+	// TODO: Create binary, lookErr := exec.LookPath("ls")
+	// TODO: Print lookErr
+
+	// `Exec` requires arguments in slice form (as
+	// opposed to one big string). We'll give `ls` a few
+	// common arguments. Note that the first argument should
+	// be the program name.
+
+	// TODO: Create args := []string{"ls", "-a", "-l", "-h"}
+
+	// `Exec` also needs a set of [environment variables](environment-variables)
+	// to use. Here we just provide our current
+	// environment.
+
+	// TODO: Create env := os.Environ()
+
+	// Here's the actual `syscall.Exec` call. If this call is
+	// successful, the execution of our process will end
+	// here and be replaced by the `/bin/ls -a -l -h`
+	// process. If there is an error we'll get a return
+	// value.
+
+	// TODO: Create execErr := syscall.Exec(binary, args, env)
+	// TODO: Print execErr
 }"""
     },
     {
         "key": "signals",
         "display_name": "Signals",
         "template": """// Sometimes we'd like our Go programs to intelligently
-// handle Unix signals.
+// handle [Unix signals](https://en.wikipedia.org/wiki/Unix_signal).
+// For example, we might want a server to gracefully
+// shutdown when it receives a `SIGTERM`, or a command-line
+// tool to stop processing input if it receives a `SIGINT`.
+// Here's how to handle signals in Go with channels.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+)
 
 func main() {
-	// TODO: Implement signals concepts
-	fmt.Println("Practicing: Signals")
+
+	// Go signal notification works by sending `os.Signal`
+	// values on a channel. We'll create a channel to
+	// receive these notifications. Note that this channel
+	// should be buffered.
+
+	// TODO: Create sigs channel of os.Signal with buffer size 1
+
+
+	// `signal.Notify` registers the given channel to
+	// receive notifications of the specified signals.
+
+	// TODO: Call signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+
+	// We could receive from `sigs` here in the main
+	// function, but let's see how this could also be
+	// done in a separate goroutine, to demonstrate
+	// a more realistic scenario of graceful shutdown.
+
+	// TODO: Create done channel of bool with buffer size 1
+
+	go func() {
+		// This goroutine executes a blocking receive for
+		// signals. When it gets one it'll print it out
+		// and then notify the program that it can finish.
+
+		// TODO: Create sig := <-sigs
+		// TODO: Print sig
+		// TODO: Send true to done channel
+	}()
+
+	// The program will wait here until it gets the
+	// expected signal (as indicated by the goroutine
+	// above sending a value on `done`) and then exit.
+
+	// TODO: Print "awaiting signal"
+	// TODO: Receive from done channel
+	// TODO: Print "exiting"
 }"""
     },
     {
         "key": "exit",
         "display_name": "Exit",
-        "template": """// Use os.Exit to immediately exit with a given status.
+        "template": """// Use `os.Exit` to immediately exit with a given
+// status.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
-	// TODO: Implement exit concepts
-	fmt.Println("Practicing: Exit")
-}"""
+
+	// `defer`s will _not_ be run when using `os.Exit`, so
+	// this `fmt.Println` will never be called.
+
+	// TODO: Defer fmt.Println("!")
+
+	// Exit with status 3.
+
+	// TODO: Create os.Exit(3)
+}
+
+// Note that unlike e.g. C, Go does not use an integer
+// return value from `main` to indicate exit status. If
+// you'd like to exit with a non-zero status you should
+// use `os.Exit`."""
     }
 ]
 
