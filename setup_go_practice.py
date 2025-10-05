@@ -940,9 +940,33 @@ package main
 
 import "fmt"
 
+// TODO: Define struct rect with width, height float64
+
+// Here we define an `area` method which has a _receiver type_ of `*rect`.
+
+// TODO: Create method area() float64 on rect that returns width * height
+
+// Methods can be defined for either pointer or value receiver types.
+// Here's an example of a value receiver.
+
+// TODO: Create method perim() float64 on rect that returns 2*width + 2*height
+
 func main() {
-	// TODO: Implement methods concepts
-	fmt.Println("Practicing: Methods")
+	r := rect{width: 10, height: 5}
+
+	// Here we call the 2 methods defined for our struct.
+
+	// TODO: Call r.area() and print the result
+	// TODO: Call r.perim() and print the result
+
+	// Go automatically handles conversion between values
+	// and pointers for method calls. You may want to use
+	// a pointer receiver type to avoid copying on method
+	// calls or to allow the method to mutate the
+	// receiving struct.
+
+	// TODO: Create rp := &r
+	// TODO: Call rp.area() and rp.perim() and print results
 }"""
     },
     {
@@ -953,102 +977,437 @@ func main() {
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
+
+// Here's a basic interface for geometric shapes.
+
+// TODO: Define interface geometry with area() float64 and perim() float64 methods
+
+// For our example we'll implement this interface on
+// `rect` and `circle` types.
+
+// TODO: Define struct rect with width, height float64
+// TODO: Define struct circle with radius float64
+
+// To implement an interface in Go, we just need to
+// implement all the methods in the interface. Here we
+// implement `geometry` on `rect`s.
+
+// TODO: Implement area() method on rect that returns width * height
+// TODO: Implement perim() method on rect that returns 2*width + 2*height
+
+// The implementation for `circle`s.
+
+// TODO: Implement area() method on circle that returns math.Pi * radius * radius
+// TODO: Implement perim() method on circle that returns 2 * math.Pi * radius
+
+// If a variable has an interface type, then we can call
+// methods that are in the named interface. Here's a
+// generic `measure` function taking advantage of this
+// to work on any `geometry`.
+
+// TODO: Create function measure(g geometry) that prints g, g.area(), and g.perim()
 
 func main() {
-	// TODO: Implement interfaces concepts
-	fmt.Println("Practicing: Interfaces")
+	r := rect{width: 3, height: 4}
+	c := circle{radius: 5}
+
+	// The `circle` and `rect` struct types both
+	// implement the `geometry` interface so we can use
+	// instances of these structs as arguments to `measure`.
+
+	// TODO: Call measure(r) and measure(c)
+
+	// Sometimes it's useful to know the runtime type of an
+	// interface value. One option is using a *type assertion*
+	// as shown here; another is a [type `switch`](switch).
+
+	// TODO: Create function describe(i interface{}) that uses type assertion
+	// Check if i is a circle, if so print "Circle with radius" and the radius
+	// Check if i is a rect, if so print "Rectangle" and dimensions
+	// Otherwise print "Unknown type"
+
+	// TODO: Call describe(r) and describe(c)
 }"""
     },
     {
         "key": "enums",
         "display_name": "Enums",
         "template": """// _Enumerated types_ (enums) are a special case of
-// sum types. An enum is a type that can be one of a
-// predefined set of values.
+// [sum types](https://en.wikipedia.org/wiki/Algebraic_data_type).
+// An enum is a type that has a fixed number of possible
+// values, each with a distinct name. Go doesn't have an
+// enum type as a distinct language feature, but enums
+// are simple to implement using existing language idioms.
 
 package main
 
 import "fmt"
 
+// Our enum type `ServerState` has an underlying `int` type.
+
+// TODO: Define struct ServerState with underlying int type
+
+// The possible values for `ServerState` are defined as
+// constants. The special keyword [iota](https://go.dev/ref/spec#Iota)
+// generates successive constant values automatically; in this
+// case 0, 1, 2 and so on.
+
+// TODO: Define constants for StateIdle, StateConnected, StateError, StateRetrying
+
+// By implementing the [fmt.Stringer](https://pkg.go.dev/fmt#Stringer)
+// interface, values of `ServerState` can be printed out or converted
+// to strings.
+//
+// This can get cumbersome if there are many possible values. In such
+// cases the [stringer tool](https://pkg.go.dev/golang.org/x/tools/cmd/stringer)
+// can be used in conjunction with `go:generate` to automate the
+// process. See [this post](https://eli.thegreenplace.net/2021/a-comprehensive-guide-to-go-generate)
+// for a longer explanation.
+
+// TODO: Define map stateName with ServerState keys and string values
+// StateIdle: "idle",
+// StateConnected: "connected",
+// StateError: "error",
+// StateRetrying: "retrying",
+
+// TODO: Define method String() string on ServerState that returns stateName[ss]
+
 func main() {
-	// TODO: Implement enums concepts
-	fmt.Println("Practicing: Enums")
-}"""
+	
+	// TODO: Create ns := transition(StateIdle) and print it
+
+	// If we have a value of type `int`, we cannot pass it to `transition` - the
+	// compiler will complain about type mismatch. This provides some degree of
+	// compile-time type safety for enums.
+
+	// TODO: Create ns2 := transition(ns) and print it
+
+}
+
+// transition emulates a state transition for a
+// server; it takes the existing state and returns
+// a new state.
+
+// TODO: Create function transition(s ServerState) ServerState that 
+// returns StateConnected if s is StateIdle, 
+// StateIdle if s is StateConnected or StateRetrying, 
+// StateError if s is StateError"""
     },
     {
         "key": "struct-embedding",
         "display_name": "Struct Embedding",
         "template": """// Go supports _embedding_ of structs and interfaces
 // to express a more seamless _composition_ of types.
+// This is not to be confused with [`//go:embed`](embed-directive) which is
+// a go directive introduced in Go version 1.16+ to embed
+// files and folders into the application binary.
 
 package main
 
 import "fmt"
 
+// TODO: Define struct base with num int field
+
+// TODO: Create method describe() string on base that returns fmt.Sprintf("base with num=%v", b.num)
+
+// A `container` _embeds_ a `base`. An embedding looks
+// like a field without a name.
+
+// TODO: Define struct container that embeds base and has str string field
+
 func main() {
-	// TODO: Implement struct embedding concepts
-	fmt.Println("Practicing: Struct Embedding")
+
+	// When creating structs with literals, we have to
+	// initialize the embedding explicitly; here the
+	// embedded type serves as the field name.
+
+	// TODO: Create co := container with base: base{num: 1} and str: "some name"
+
+	// We can access the base's fields directly on `co`,
+	// e.g. `co.num`.
+
+	// TODO: Print "co={num: %v, str: %v}" with co.num and co.str
+
+	// Alternatively, we can spell out the full path using
+	// the embedded type name.
+
+	// TODO: Print "also num:" followed by co.base.num
+
+	// Since `container` embeds `base`, the methods of
+	// `base` also become methods of a `container`. Here
+	// we invoke a method that was embedded from `base`
+	// directly on `co`.
+
+	// TODO: Print "describe:" followed by co.describe()
+
+	// TODO: Define interface describer with describe() string method
+
+	// Embedding structs with methods may be used to bestow
+	// interface implementations onto other structs. Here
+	// we see that a `container` now implements the
+	// `describer` interface because it embeds `base`.
+
+	// TODO: Create var d describer = co and print "describer:" followed by d.describe()
 }"""
     },
     {
         "key": "generics",
         "display_name": "Generics",
-        "template": """// Starting with Go 1.18, Go has added support for
+        "template": """// Starting with version 1.18, Go has added support for
 // _generics_, also known as _type parameters_.
 
 package main
 
 import "fmt"
 
+// As an example of a generic function, `SlicesIndex` takes
+// a slice of any `comparable` type and an element of that
+// type and returns the index of the first occurrence of
+// v in s, or -1 if not present. The `comparable` constraint
+// means that we can compare values of this type with the
+// `==` and `!=` operators. For a more thorough explanation
+// of this type signature, see [this blog post](https://go.dev/blog/deconstructing-type-parameters).
+// Note that this function exists in the standard library
+// as [slices.Index](https://pkg.go.dev/slices#Index).
+
+
+// TODO: Create function SlicesIndex[S ~[]E, E comparable](s S, v E) int that returns the index of the first occurrence of v in s, or -1 if not present
+
+
+// As an example of a generic type, `List` is a
+// singly-linked list with values of any type.
+
+
+// TODO: Define struct List[T any] with head and tail pointers to element[T]
+
+
+// TODO: Define struct element[T any] with next pointer to element[T] and val field of type T
+
+
+// We can define methods on generic types just like we
+// do on regular types, but we have to keep the type
+// parameters in place. The type is `List[T]`, not `List`.
+
+
+// TODO: Define method Push(v T) on List[T] that pushes a value v to the list
+
+
+// AllElements returns all the List elements as a slice.
+// In the next example we'll see a more idiomatic way
+// of iterating over all elements of custom types.
+
+
+// TODO: Define method AllElements() []T on List[T] that returns all the List elements as a slice
+
+
 func main() {
-	// TODO: Implement generics concepts
-	fmt.Println("Practicing: Generics")
+
+	// TODO: Create var s = []string{"foo", "bar", "zoo"}
+
+
+	// When invoking generic functions, we can often rely
+	// on _type inference_. Note that we don't have to
+	// specify the types for `S` and `E` when
+	// calling `SlicesIndex` - the compiler infers them
+	// automatically.
+
+	// TODO: Print index of zoo, zoo should be 2
+
+	// ... though we could also specify them explicitly.
+
+	// TODO: Get index of zoo using explicit types
+
+	// TODO: Create lst := List[int]{}
+	// TODO: Push 10, 13, 23 to lst
+	// TODO: Print list: lst.AllElements()
+
 }"""
     },
     {
         "key": "range-over-iterators",
         "display_name": "Range over Iterators",
-        "template": """// Starting in Go 1.23, the range keyword supports
-// iterating over custom iterators.
+        "template": """// Starting with version 1.23, Go has added support for
+// [iterators](https://go.dev/blog/range-functions),
+// which lets us range over pretty much anything!
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"iter"
+	"slices"
+)
+
+// Let's look at the `List` type from the
+// [previous example](generics) again. In that example
+// we had an `AllElements` method that returned a slice
+// of all elements in the list. With Go iterators, we
+// can do it better - as shown below.
+
+// TODO: Define struct List[T any] with head and tail pointers to element[T]
+
+// TODO: Define struct element[T any] with next pointer to element[T] and val field of type T
+
+// TODO: Define method Push(v T) on List[T] that pushes a value v to the list
+// if tail is nil, set head and tail to the new element, otherwise set tail.next to the new element and tail to the new element
+
+// All returns an _iterator_, which in Go is a function
+// with a [special signature](https://pkg.go.dev/iter#Seq).
+
+// TODO: Define method All() iter.Seq[T] on List[T] that returns an iterator
+
+// The iterator function takes another function as
+// a parameter, called `yield` by convention (but
+// the name can be arbitrary). It will call `yield` for
+// every element we want to iterate over, and note `yield`'s
+// return value for a potential early termination.
+
+// Iteration doesn't require an underlying data structure,
+// and doesn't even have to be finite! Here's a function
+// returning an iterator over Fibonacci numbers: it keeps
+// running as long as `yield` keeps returning `true`.
+
+// TODO: Define function genFib() iter.Seq[int] that returns an iterator over Fibonacci numbers
+// return a function that takes a yield function as a parameter
+// inside, create variables a, b := 1, 1
+// in the for loop, call yield with a, if yield returns false, return
+// otherwise, set a, b = b, a+b
 
 func main() {
-	// TODO: Implement range over iterators concepts
-	fmt.Println("Practicing: Range over Iterators")
+
+	// TODO: Create lst := List[int]{}
+	// TODO: Push 10, 13, 23 to lst
+
+	// Since `List.All` returns an iterator, we can use it
+	// in a regular `range` loop.
+
+	// TODO: Use range to iterate over lst.All() and print each element
+
+	// Packages like [slices](https://pkg.go.dev/slices) have
+	// a number of useful functions to work with iterators.
+	// For example, `Collect` takes any iterator and collects
+	// all its values into a slice.
+
+	// TODO: Use slices.Collect to collect all elements of lst.All() into a slice
+	// TODO: Print all
+
+	
+	// TODO: Use range to iterate over genFib() and print each element
+
+	// Once the loop hits `break` or an early return, the `yield` function
+	// passed to the iterator will return `false`.
+
 }"""
     },
     {
         "key": "errors",
         "display_name": "Errors",
         "template": """// In Go it's idiomatic to communicate errors via an
-// explicit, separate return value.
+// explicit, separate return value. This contrasts with
+// the exceptions used in languages like Java, Python and
+// Ruby and the overloaded single result / error value
+// sometimes used in C. Go's approach makes it easy to
+// see which functions return errors and to handle them
+// using the same language constructs employed for other,
+// non-error tasks.
+//
+// See the documentation of the [errors package](https://pkg.go.dev/errors)
+// and [this blog post](https://go.dev/blog/go1.13-errors) for additional
+// details.
 
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
+
+// By convention, errors are the last return value and
+// have type `error`, a built-in interface.
+
+// TODO: Create function f(arg int) (int, error) that returns -1, errors.New("can't work with 42") if arg == 42,
+// otherwise returns arg + 3, nil
+
+// A sentinel error is a predeclared variable that is used to
+// signify a specific error condition.
+
+// TODO: Define var ErrOutOfTea = fmt.Errorf("no more tea available")
+// TODO: Define var ErrPower = fmt.Errorf("can't boil water")
+
+// TODO: Define function makeTea(arg int) error that returns ErrOutOfTea if arg == 2, ErrPower if arg == 4, nil otherwise
+
+// We can wrap errors with higher-level errors to add
+// context. The simplest way to do this is with the
+// `%w` verb in `fmt.Errorf`. Wrapped errors
+// create a logical chain (A wraps B, which wraps C, etc.)
+// that can be queried with functions like `errors.Is`
+// and `errors.As`.
 
 func main() {
-	// TODO: Implement errors concepts
-	fmt.Println("Practicing: Errors")
+
+	// TODO: Use range to iterate over []int{7, 42} and check if f(i) is nil
+	// TODO: Print result
+	// It's idiomatic to use an inline error check in the `if`
+	// line.
+
+
+	// TODO: Use range to iterate over 5 and check if makeTea(i) is nil
+	// Check if err is ErrOutOfTea or ErrPower, print the error message
+
+	// `errors.Is` checks that a given error (or any error in its chain)
+	// matches a specific error value. This is especially useful with wrapped or
+	// nested errors, allowing you to identify specific error types or sentinel
+	// errors in a chain of errors.
+
 }"""
     },
     {
         "key": "custom-errors",
         "display_name": "Custom Errors",
-        "template": """// It's possible to use custom types as errors by
-// implementing the Error() method on them.
+        "template": """// It's possible to define custom error types by
+// implementing the `Error()` method on them. Here's a
+// variant on the example above that uses a custom type
+// to explicitly represent an argument error.
 
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
+
+// A custom error type usually has the suffix "Error".
+
+// TODO: Define struct argError with arg int and message string fields
+
+
+// Adding this `Error` method makes `argError` implement
+// the `error` interface.
+
+// TODO: Define method Error() string on argError that returns fmt.Sprintf("%d - %s", e.arg, e.message)
+
+
+// TODO: Define function f(arg int) (int, error) that returns -1, &argError{arg, "can't work with it"} if arg == 42,
+// otherwise returns arg + 3, nil
+
 
 func main() {
-	// TODO: Implement custom errors concepts
-	fmt.Println("Practicing: Custom Errors")
+
+	// `errors.As` is a more advanced version of `errors.Is`.
+	// It checks that a given error (or any error in its chain)
+	// matches a specific error type and converts to a value
+	// of that type, returning `true`. If there's no match, it
+	// returns `false`.
+	_, err := f(42)
+	var ae *argError
+
+	// TODO: Use errors.As to check if err is an argError
+	// TODO: Print arg and message
+
 }"""
     },
     {
@@ -1058,87 +1417,226 @@ func main() {
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
+
+// TODO: Define function f(from string) that prints from and i in each iteration
+// inside, use i:= range 3 to iterate
+
 
 func main() {
-	// TODO: Implement goroutines concepts
-	fmt.Println("Practicing: Goroutines")
+
+	// Suppose we have a function call `f(s)`. Here's how
+	// we'd call that in the usual way, running it
+	// synchronously.
+
+	// TODO: Call f("direct")
+
+
+	// To invoke this function in a goroutine, use
+	// `go f(s)`. This new goroutine will execute
+	// concurrently with the calling one.
+
+	// TODO: Call go f("goroutine")
+
+
+	// You can also start a goroutine for an anonymous
+	// function call.
+
+	// TODO: Call go func(msg string) {
+	// fmt.Println(msg)
+	// }("going")
+
+	// Our two function calls are running asynchronously in
+	// separate goroutines now. Wait for them to finish
+	// (for a more robust approach, use a [WaitGroup](waitgroups)).
+
+	// TODO: Sleep for 1 second
 }"""
     },
     {
         "key": "channels",
         "display_name": "Channels",
         "template": """// _Channels_ are the pipes that connect concurrent
-// goroutines.
+// goroutines. You can send values into channels from one
+// goroutine and receive those values into another
+// goroutine.
 
 package main
 
 import "fmt"
 
 func main() {
-	// TODO: Implement channels concepts
-	fmt.Println("Practicing: Channels")
+
+	// Create a new channel with `make(chan val-type)`.
+	// Channels are typed by the values they convey.
+
+	// TODO: Create messages channel of strings
+
+	// _Send_ a value into a channel using the `channel <-`
+	// syntax. Here we send `"ping"`  to the `messages`
+	// channel we made above, from a new goroutine.
+
+	// TODO: Send "ping" to messages channel
+
+	// The `<-channel` syntax _receives_ a value from the
+	// channel. Here we'll receive the `"ping"` message
+	// we sent above and print it out.
+
+	// TODO: Receive msg from messages channel and print it
+
 }"""
     },
     {
         "key": "channel-buffering",
         "display_name": "Channel Buffering",
-        "template": """// By default channels are _unbuffered_, meaning that
-// they will only accept sends if there is a
-// corresponding receive ready to receive the sent value.
+        "template": """// By default channels are _unbuffered_, meaning that they
+// will only accept sends (`chan <-`) if there is a
+// corresponding receive (`<- chan`) ready to receive the
+// sent value. _Buffered channels_ accept a limited
+// number of  values without a corresponding receiver for
+// those values.
 
 package main
 
 import "fmt"
 
 func main() {
-	// TODO: Implement channel buffering concepts
-	fmt.Println("Practicing: Channel Buffering")
+
+	// Here we `make` a channel of strings buffering up to
+	// 2 values.
+
+	// TODO: Create messages channel of strings buffering up to 2 values
+
+	// Because this channel is buffered, we can send these
+	// values into the channel without a corresponding
+	// concurrent receive.
+
+	// TODO: Send "buffered" and "channel" to messages channel
+
+	// Later we can receive these two values as usual.
+
+	// TODO: Receive "buffered" and "channel" from messages channel and print them
+
 }"""
     },
     {
         "key": "channel-synchronization",
         "display_name": "Channel Synchronization",
         "template": """// We can use channels to synchronize execution
-// across goroutines.
+// across goroutines. Here's an example of using a
+// blocking receive to wait for a goroutine to finish.
+// When waiting for multiple goroutines to finish,
+// you may prefer to use a [WaitGroup](waitgroups).
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
+
+// This is the function we'll run in a goroutine. The
+// `done` channel will be used to notify another
+// goroutine that this function's work is done.
+
+// TODO: Define function worker(done chan bool) that prints "working..." and sleeps for 1 second, 
+// then prints "done" and sends true to the done channel.
+
 
 func main() {
-	// TODO: Implement channel synchronization concepts
-	fmt.Println("Practicing: Channel Synchronization")
+
+	// Start a worker goroutine, giving it the channel to
+	// notify on.
+
+	// TODO: Create done channel of bool with buffer size 1
+
+	// TODO: Call go worker(done)
+
+	// Block until we receive a notification from the
+	// worker on the channel.
+
+	// TODO: Receive from done channel
 }"""
     },
     {
         "key": "channel-directions",
         "display_name": "Channel Directions",
         "template": """// When using channels as function parameters, you can
-// specify if a channel is meant to only send or receive values.
+// specify if a channel is meant to only send or receive
+// values. This specificity increases the type-safety of
+// the program.
 
 package main
 
 import "fmt"
 
+// This `ping` function only accepts a channel for sending
+// values. It would be a compile-time error to try to
+// receive on this channel.
+
+// TODO: Define function ping(pings chan<- string, msg string) that sends msg to pings channel
+
+
+// The `pong` function accepts one channel for receives
+// (`pings`) and a second for sends (`pongs`).
+
+// TODO: Define function pong(pings <-chan string, pongs chan<- string) that 
+// receives msg from pings channel and sends it to pongs channel
+
+
 func main() {
-	// TODO: Implement channel directions concepts
-	fmt.Println("Practicing: Channel Directions")
+
+	// TODO: Create pings channel of strings with buffer size 1
+
+	// TODO: Create pongs channel of strings with buffer size 1
+
+	// TODO: Call ping(pings, "passed message")
+
+	// TODO: Call pong(pings, pongs)
+
+	// TODO: Receive from pongs channel and print it
 }"""
     },
     {
         "key": "select",
         "display_name": "Select",
         "template": """// Go's _select_ lets you wait on multiple channel
-// operations.
+// operations. Combining goroutines and channels with
+// select is a powerful feature of Go.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	// TODO: Implement select concepts
-	fmt.Println("Practicing: Select")
+
+	// For our example we'll select across two channels.
+
+	// TODO: Create c1 channel of strings
+
+	// TODO: Create c2 channel of strings
+
+
+	// Each channel will receive a value after some amount
+	// of time, to simulate e.g. blocking RPC operations
+	// executing in concurrent goroutines.
+
+	// TODO Creat a goroutine that sends "one" to c1 after 1 second
+
+	// TODO: Creat a goroutine that sends "two" to c2 after 2 seconds
+
+
+	// We'll use `select` to await both of these values
+	// simultaneously, printing each one as it arrives.
+
+	// TODO: Use for range 2 to receive from c1 and c2
+
 }"""
     },
     {
@@ -1146,62 +1644,191 @@ func main() {
         "display_name": "Timeouts",
         "template": """// _Timeouts_ are important for programs that connect to
 // external resources or that otherwise need to bound
-// execution time.
+// execution time. Implementing timeouts in Go is easy and
+// elegant thanks to channels and `select`.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	// TODO: Implement timeouts concepts
-	fmt.Println("Practicing: Timeouts")
+
+	// For our example, suppose we're executing an external
+	// call that returns its result on a channel `c1`
+	// after 2s. Note that the channel is buffered, so the
+	// send in the goroutine is nonblocking. This is a
+	// common pattern to prevent goroutine leaks in case the
+	// channel is never read.
+
+	// TODO: Create c1 channel of strings with buffer size 1
+
+	// TODO: Creat a goroutine that sends "result 1" to c1 after 2 seconds
+
+
+	// Here's the `select` implementing a timeout.
+	// `res := <-c1` awaits the result and `<-time.After`
+	// awaits a value to be sent after the timeout of
+	// 1s. Since `select` proceeds with the first
+	// receive that's ready, we'll take the timeout case
+	// if the operation takes more than the allowed 1s.
+
+	// TODO: Use select to receive from c1 and print the result
+	// or print "timeout 1" if the operation takes more than 1 second
+
+
+	// If we allow a longer timeout of 3s, then the receive
+	// from `c2` will succeed and we'll print the result.
+
+	// TODO: Create c2 channel of strings with buffer size 1
+
+	// TODO: Creat a goroutine that sends "result 2" to c2 after 2 seconds
+
+	// TODO: Use select to receive from c2 and print the result
+	// or print "timeout 2" if the operation takes more than 3 seconds
+
 }"""
     },
     {
         "key": "non-blocking-channel-operations",
         "display_name": "Non-Blocking Channel Operations",
         "template": """// Basic sends and receives on channels are blocking.
-// However, we can use select with a default clause to
+// However, we can use `select` with a `default` clause to
 // implement _non-blocking_ sends, receives, and even
-// non-blocking multi-way selects.
+// non-blocking multi-way `select`s.
 
 package main
 
 import "fmt"
 
 func main() {
-	// TODO: Implement non-blocking channel operations concepts
-	fmt.Println("Practicing: Non-blocking Channel Operations")
+	
+	// TODO: Create messages channel of strings
+
+	// TODO: Create signals channel of bools
+
+	// Here's a non-blocking receive. If a value is
+	// available on `messages` then `select` will take
+	// the `<-messages` `case` with that value. If not
+	// it will immediately take the `default` case.
+
+	// TODO: Use select to receive from messages and print the result
+	// or print "no message received" if the operation takes more than 1 second
+	
+
+	// A non-blocking send works similarly. Here `msg`
+	// cannot be sent to the `messages` channel, because
+	// the channel has no buffer and there is no receiver.
+	// Therefore the `default` case is selected.
+
+	// TODO: Use select to send to messages and print the result
+	// or print "no message sent" as default
+
+	// We can use multiple `case`s above the `default`
+	// clause to implement a multi-way non-blocking
+	// select. Here we attempt non-blocking receives
+	// on both `messages` and `signals`.
+
+	// TODO: Use select to receive from messages and signals and print the result
+	// or print "no activity" as default
+
 }"""
     },
     {
         "key": "closing-channels",
         "display_name": "Closing Channels",
         "template": """// _Closing_ a channel indicates that no more values
-// will be sent on it.
+// will be sent on it. This can be useful to communicate
+// completion to the channel's receivers.
 
 package main
 
 import "fmt"
 
+// In this example we'll use a `jobs` channel to
+// communicate work to be done from the `main()` goroutine
+// to a worker goroutine. When we have no more jobs for
+// the worker we'll `close` the `jobs` channel.
 func main() {
-	// TODO: Implement closing channels concepts
-	fmt.Println("Practicing: Closing Channels")
+	
+	// TODO: Create jobs channel of int with buffer size 5
+
+	// TODO: Create done channel of bool
+
+
+	// Here's the worker goroutine. It repeatedly receives
+	// from `jobs` with `j, more := <-jobs`. In this
+	// special 2-value form of receive, the `more` value
+	// will be `false` if `jobs` has been `close`d and all
+	// values in the channel have already been received.
+	// We use this to notify on `done` when we've worked
+	// all our jobs.
+
+	// TODO: Creat a goroutine that receives from jobs and prints the result
+	// or prints "received all jobs" if the operation takes more than 1 second
+	
+
+	// This sends 3 jobs to the worker over the `jobs`
+	// channel, then closes it.
+
+	// TODO: Send 3 jobs to the worker over the jobs channel
+
+	// TODO: Close the jobs channel
+
+	fmt.Println("sent all jobs")
+
+	// We await the worker using the
+	// [synchronization](channel-synchronization) approach
+	// we saw earlier.
+
+	// TODO: Receive from done channel
+
+	// Reading from a closed channel succeeds immediately,
+	// returning the zero value of the underlying type.
+	// The optional second return value is `true` if the
+	// value received was delivered by a successful send
+	// operation to the channel, or `false` if it was a
+	// zero value generated because the channel is closed
+	// and empty.
+	
+	// TODO: Receive from jobs
+
+	// TODO: Print the result
+
 }"""
     },
     {
         "key": "range-over-channels",
         "display_name": "Range over Channels",
-        "template": """// We can use range to iterate over values received
-// from a channel.
+        "template": """// In a [previous](range-over-built-in-types) example we saw how `for` and
+// `range` provide iteration over basic data structures.
+// We can also use this syntax to iterate over
+// values received from a channel.
 
 package main
 
 import "fmt"
 
 func main() {
-	// TODO: Implement range over channels concepts
-	fmt.Println("Practicing: Range over Channels")
+
+	// We'll iterate over 2 values in the `queue` channel.
+
+	// TODO: Create queue channel of strings with buffer size 2
+
+	// TODO: Send "one" and "two" to queue channel
+
+	// TODO: Close the queue channel
+
+
+	// This `range` iterates over each element as it's
+	// received from `queue`. Because we `close`d the
+	// channel above, the iteration terminates after
+	// receiving the 2 elements.
+
+	// TODO: Use range to iterate over queue and print each element
+
 }"""
     },
     {
@@ -1209,31 +1836,88 @@ func main() {
         "display_name": "Timers",
         "template": """// We often want to execute Go code at some point in the
 // future, or repeatedly at some interval. Go's built-in
-// _timer_ and _ticker_ features make both of these tasks easy.
+// _timer_ and _ticker_ features make both of these tasks
+// easy. We'll look first at timers and then
+// at [tickers](tickers).
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	// TODO: Implement timers concepts
-	fmt.Println("Practicing: Timers")
+
+	// Timers represent a single event in the future. You
+	// tell the timer how long you want to wait, and it
+	// provides a channel that will be notified at that
+	// time. This timer will wait 2 seconds.
+
+	// TODO: Create timer1 with 2 seconds
+
+	// The `<-timer1.C` blocks on the timer's channel `C`
+	// until it sends a value indicating that the timer
+	// fired.
+
+	// TODO: Receive from timer1.C and print the result
+
+	// If you just wanted to wait, you could have used
+	// `time.Sleep`. One reason a timer may be useful is
+	// that you can cancel the timer before it fires.
+	// Here's an example of that.
+
+	// TODO: Create timer2 with 1 second using NewTimer
+
+	// TODO: Creat a goroutine that receives from timer2.C and prints the result
+
+	// TODO: Create stop2 with timer2.Stop()
+
+	// TODO: If stop2 is true, print "Timer 2 stopped"
+
+	// TODO: Give the timer2 enough time to fire, if it ever
+	// was going to, to show it is in fact stopped.
+
 }"""
     },
     {
         "key": "tickers",
         "display_name": "Tickers",
-        "template": """// _Timers_ are for when you want to do something once
-// in the future - _tickers_ are for when you want to
-// do something repeatedly at regular intervals.
+        "template": """// [Timers](timers) are for when you want to do
+// something once in the future - _tickers_ are for when
+// you want to do something repeatedly at regular
+// intervals. Here's an example of a ticker that ticks
+// periodically until we stop it.
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	// TODO: Implement tickers concepts
-	fmt.Println("Practicing: Tickers")
+
+	// Tickers use a similar mechanism to timers: a
+	// channel that is sent values. Here we'll use the
+	// `select` builtin on the channel to await the
+	// values as they arrive every 500ms.
+
+	// TODO: Create ticker with 500 milliseconds using NewTicker
+
+	// TODO: Create done channel of bool
+
+	// TODO: Creat a goroutine that receives from ticker.C and prints the result
+
+	// Tickers can be stopped like timers. Once a ticker
+	// is stopped it won't receive any more values on its
+	// channel. We'll stop ours after 1600ms.
+
+	// TODO: Give the ticker enough time to fire, if it ever
+	// was going to, to show it is in fact stopped.
+
+	// TODO: If done is true, print "Ticker stopped"
+
 }"""
     },
     {
@@ -1244,11 +1928,49 @@ func main() {
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
+
+// Here's the worker, of which we'll run several
+// concurrent instances. These workers will receive
+// work on the `jobs` channel and send the corresponding
+// results on `results`. We'll sleep a second per job to
+// simulate an expensive task.
+
+// TODO: Define function worker(id int, jobs <-chan int, results chan<- int) that receives from jobs and sends the result to results
 
 func main() {
-	// TODO: Implement worker pools concepts
-	fmt.Println("Practicing: Worker Pools")
+
+	// In order to use our pool of workers we need to send
+	// them work and collect their results. We make 2
+	// channels for this.
+
+	// TODO: Create numJobs = 5
+
+	// TODO: Create jobs channel of int with buffer size numJobs
+
+	// TODO: Create results channel of int with buffer size numJobs
+
+	// This starts up 3 workers, initially blocked
+	// because there are no jobs yet.
+
+	// TODO: Create 3 workers using worker function
+
+	// Here we send 5 `jobs` and then `close` that
+	// channel to indicate that's all the work we have.
+
+	// TODO: Send 5 jobs to the workers
+	// TODO: Close the jobs channel
+
+	// Finally we collect all the results of the work.
+	// This also ensures that the worker goroutines have
+	// finished. An alternative way to wait for multiple
+	// goroutines is to use a [WaitGroup](waitgroups).
+
+	// TODO: Receive from results channel
+
 }"""
     },
     {
