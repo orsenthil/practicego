@@ -4500,7 +4500,7 @@ func main() {
     },
     {
         "key": "execing-processes",
-        "display_name": "Exec'ing Processes",
+        "display_name": "Execing Processes",
         "template": """// In the previous example we looked at
 // [spawning external processes](spawning-processes). We
 // do this when we need an external process accessible to
