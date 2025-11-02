@@ -5,3 +5,4 @@ alwaysApply: true
 ---
 
 - When creating template code, do not give explaination or summary. Just do it.
+- When you find a TODO in the code, jump to the TODO, in the interactive mode, insert a line below and complete the TODO item and delete the TODO comment.
