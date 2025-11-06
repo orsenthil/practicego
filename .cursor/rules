@@ -4,5 +4,5 @@ globs:
 alwaysApply: true
 ---
 
-- When creating template code, do not give explaination or summary. Just do it.
-- When you find a TODO in the code, jump to the TODO, in the interactive mode, insert a line below and complete the TODO item and delete the TODO comment.
+- When creating template code, do not give explanation or summary. Just do it.
+- When you find a TODO in the code or when autocompleting code with a TODO comment, complete the TODO implementation and remove the TODO comment entirely. Do not leave TODO comments in the final code.

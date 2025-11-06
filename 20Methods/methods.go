@@ -1,0 +1,36 @@
+// Go supports _methods_ defined on struct types.
+
+package main
+
+import "fmt"
+
+type rect struct {
+	width float64
+	height float64
+}
+
+// Here we define an `area` method which has a _receiver type_ of `*rect`.
+
+func (r *rect) area() float64 {
+	return r.width * r.height
+}
+
+// Methods can be defined for either pointer or value receiver types.
+// Here's an example of a value receiver.
+
+func (r *rect) perim() float64 {
+	return 2*r.width + 2*r.height
+}
+
+func main() {
+	r := rect{width: 10, height: 5}
+
+	// Here we call the 2 methods defined for our struct.
+
+	fmt.Println(r.area())
+	fmt.Println(r.perim())
+
+	rp := &r
+	fmt.Println(rp.area())
+	fmt.Println(rp.perim())
+}
