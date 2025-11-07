@@ -14,25 +14,22 @@ import (
 // on functions with the appropriate signature.
 
 // TODO: Create function hello that takes a http.ResponseWriter and a http.Request
-// Functions serving as handlers take a
-// `http.ResponseWriter` and a `http.Request` as
-// arguments. The response writer is used to fill in the
-// HTTP response. Here our simple response is just
-// "hello ".
-
-func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "hello ")
+func hello(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "hello\n")
 }
+
 
 // TODO: Create function headers that takes a http.ResponseWriter and a http.Request
 // Inside the function, iterate over the request headers with range and print the name and value
-func headers(w http.ResponseWriter, r *http.Request) {
-	for name, values := range r.Header {
-		for _, value := range values {
-			fmt.Fprintf(w, "%s: %s\n", name, value)
+
+func headers(w http.ResponseWriter, req *http.Request) {
+	for name, headers := range req.Header {
+		for _, h := range headers {
+			fmt.Fprintf(w, "%v: %v\n", name, h)
 		}
 	}
 }
+
 
 
 func main() {
@@ -42,6 +39,7 @@ func main() {
 	// the *default router* in the `net/http` package and
 	// takes a function as an argument.
 
+	// TODO: Create http.HandleFunc("/hello", hello)
 	http.HandleFunc("/hello", hello)
 	http.HandleFunc("/headers", headers)
 
@@ -49,5 +47,6 @@ func main() {
 	// and a handler. `nil` tells it to use the default
 	// router we've just set up.
 
+	// TODO: Create http.ListenAndServe(":8090", nil)
 	http.ListenAndServe(":8090", nil)
 }

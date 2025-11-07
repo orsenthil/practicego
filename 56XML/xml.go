@@ -16,7 +16,6 @@ import (
 // `id,attr` means that the `Id` field is an XML
 // _attribute_ rather than a nested element.
 
-// TODO: Create Plant struct with XMLName (xml.Name), Id (int), Name (string), and Origin ([]string) fields
 type Plant struct {
 	XMLName xml.Name `xml:"plant"`
 	Id int `xml:"id,attr"`
@@ -24,48 +23,47 @@ type Plant struct {
 	Origin []string `xml:"origin"`
 }
 
-
-// TODO: Create String method for Plant struct that returns a string with the Id, Name, and Origin
 func (p Plant) String() string {
-	return fmt.Sprintf("Plant id=%d, name=%s, origin=%v", p.Id, p.Name, p.Origin)
+	return fmt.Sprintf("Plant id=%v, name=%v, origin=%v", p.Id, p.Name, p.Origin)
 }
 
 func main() {
 
 	coffee := &Plant{Id: 27, Name: "Coffee"}
 	coffee.Origin = []string{"Ethiopia", "Brazil"}
+	out, _ := xml.MarshalIndent(coffee, " ", "  ")
+	fmt.Println(string(out))
+	fmt.Println(xml.Header + string(out))
+	p := &Plant{}
+	if err := xml.Unmarshal(out, p); err != nil {
+		panic(err)
+	}
+	fmt.Println(p)
 
 
 	// Emit XML representing our plant; using
 	// `MarshalIndent` to produce a more
 	// human-readable output.
-
-	out, _ := xml.MarshalIndent(coffee, " ", "  ")
-	// TODO: Print string(out)
-
-	// To add a generic XML header to the output, append
-	// it explicitly.
-
-	fmt.Println(xml.Header + string(out))
+	tomato := &Plant{Id: 81, Name: "Tomato"}
+	tomato.Origin = []string{"Mexico", "California"}
+	out, _ = xml.MarshalIndent(tomato, " ", "  ")
+	fmt.Println(string(out))
 
 	// Use `Unmarshal` to parse a stream of bytes with XML
 	// into a data structure. If the XML is malformed or
 	// cannot be mapped onto Plant, a descriptive error
 	// will be returned.
 
-	var p Plant
+	// TODO: Create if err := xml.Unmarshal(out, &p); err != nil {
 	if err := xml.Unmarshal(out, &p); err != nil {
 		panic(err)
 	}
-	fmt.Println("p:", p)
-
-	tomato := &Plant{Id: 81, Name: "Tomato"}
-	tomato.Origin = []string{"Mexico", "California"}
-
+	fmt.Println(p)
 
 	// The `parent>child>plant` field tag tells the encoder
 	// to nest all `plant`s under `<parent><child>...`
 
+	// TODO: Create Nesting struct with XMLName (xml.Name), Plants ([]*Plant) fields	
 	type Nesting struct {
 		XMLName xml.Name `xml:"nesting"`
 		Plants []*Plant `xml:"plant"`
@@ -73,7 +71,7 @@ func main() {
 
 	nesting := &Nesting{}
 	nesting.Plants = []*Plant{coffee, tomato}
-
 	out, _ = xml.MarshalIndent(nesting, " ", "  ")
 	fmt.Println(string(out))
+	// TODO: Create nesting := &Nesting{}
 }

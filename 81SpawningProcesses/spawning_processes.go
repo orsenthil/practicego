@@ -25,10 +25,20 @@ func main() {
 	//  If there were no errors, `dateOut` will hold bytes
 	// with the date info.
 
-	dateOut, err := dateCmd.Output()
-	fmt.Println("err:", err)
-	fmt.Println("dateOut:", string(dateOut))
-	
+	// TODO: Create dateOut, err := dateCmd.Output()
+	// TODO: Print err
+	fmt.Println(err)
+	fmt.Println(string(dateOut))
+	dateOut, err = exec.Command("date", "-x").Output()
+	fmt.Println(err)
+	if err != nil {
+		switch e := err.(type) {
+		case *exec.Error:
+			fmt.Println("failed to execute:", e)
+		case *exec.ExitError:
+			fmt.Println("command exit rc =", e.ExitCode())
+		}
+	}
 
 	// `Output` and other methods of `Command` will return
 	// `*exec.Error` if there was a problem executing the
@@ -38,8 +48,16 @@ func main() {
 
 
 	_, err = exec.Command("date", "-x").Output()
-	fmt.Println("err:", err)
 	
+	if err != nil {
+		switch e := err.(type) {
+		case *exec.Error:
+			fmt.Println("failed to execute:", e)
+		case *exec.ExitError:
+			fmt.Println("command exit rc =", e.ExitCode())
+		}
+	}
+
 
 	// Next we'll look at a slightly more involved case
 	// where we pipe data to the external process on its
@@ -52,14 +70,18 @@ func main() {
 	// resulting output, and finally wait for the process
 	// to exit.
 
+	// TODO: Create grepIn, _ := grepCmd.StdinPipe()
 	grepIn, _ := grepCmd.StdinPipe()
+	// TODO: Create grepOut, _ := grepCmd.StdoutPipe()
 	grepOut, _ := grepCmd.StdoutPipe()
+	// Start the process, write some input to it, read the resulting output, and finally wait for the process to exit.
+
 	grepCmd.Start()
 	grepIn.Write([]byte("hello grep\n"))
 	grepIn.Close()
 	grepBytes, _ := io.ReadAll(grepOut)
-	fmt.Println("grepBytes:", string(grepBytes))
 	grepCmd.Wait()
+	fmt.Println(string(grepBytes))
 
 
 	// We omitted error checks in the above example, but
@@ -68,9 +90,9 @@ func main() {
 	// results, but you could collect the `StderrPipe` in
 	// exactly the same way.
 
+	// TODO: Print "> grep hello" and the result of grepBytes
 	fmt.Println("> grep hello")
 	fmt.Println(string(grepBytes))
-
 	// Note that when spawning commands we need to
 	// provide an explicitly delineated command and
 	// argument array, vs. being able to just pass in one
@@ -78,8 +100,9 @@ func main() {
 	// command with a string, you can use `bash`'s `-c`
 	// option:
 
+	// TODO: Create lsCmd := exec.Command("bash", "-c", "ls -a -l -h")
+	// Call lsCmd.Output() and print the result 
 	lsCmd := exec.Command("bash", "-c", "ls -a -l -h")
-	lsOut, err := lsCmd.Output()
-	fmt.Println("err:", err)
-	fmt.Println("lsOut:", string(lsOut))
+	lsOut, _ := lsCmd.Output()
+	fmt.Println(string(lsOut))
 }

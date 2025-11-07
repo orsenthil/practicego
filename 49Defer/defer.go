@@ -20,11 +20,12 @@ func main() {
 	// with `closeFile`. This will be executed at the end
 	// of the enclosing function (`main`), after
 	// `writeFile` has finished.
+
 	f := createFile("/tmp/defer.txt")
 	defer closeFile(f)
 	writeFile(f)
-}
 
+}
 
 func createFile(p string) *os.File {
 	f, err := os.Create(p)
@@ -38,10 +39,10 @@ func writeFile(f *os.File) {
 	fmt.Fprintln(f, "data")
 }
 
-
 func closeFile(f *os.File) {
 	err := f.Close()
 	if err != nil {
 		panic(err)
 	}
 }
+

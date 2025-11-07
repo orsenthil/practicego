@@ -35,8 +35,9 @@ func main() {
 	// Note that we need to pass in a pointer to the flag
 	// declaration function.
 
-	svar := "bar"
+	svar := ""
 	flag.StringVar(&svar, "svar", "bar", "a string var")
+
 	// Once all flags are declared, call `flag.Parse()`
 	// to execute the command-line parsing.
 

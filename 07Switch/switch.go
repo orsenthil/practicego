@@ -39,28 +39,25 @@ func main() {
 		fmt.Println("It's after noon")
 	}
 
+
 	// A type `switch` compares types instead of values.  You
 	// can use this to discover the type of an interface
-	// value.  In this example, the variable `t` will have the
+	// value.  In this example, the variable `i` will have the
 	// type corresponding to its clause.
 
-	// TODO: Create a function that uses type switch on interface{}
-	// Function WhatAmI takes an argument i of type interface{} and extracts the type of i.
-	// Uses switch to print the type of i
 	WhatAmI := func(i interface{}) {
-		switch t := i.(type) {
-		case bool:
-			fmt.Println("I'm a bool")
+		switch i.(type) {
 		case int:
 			fmt.Println("I'm an int")
 		case string:
 			fmt.Println("I'm a string")
 		default:
-			fmt.Println("Don't know type %T", t)
+			fmt.Println("I'm something else")
 		}
 	}
-	WhatAmI(true)
 	WhatAmI(1)
-	WhatAmI("hey")
-	WhatAmI(1.0)
+	WhatAmI("hello")
+	WhatAmI(true)
+
+
 }

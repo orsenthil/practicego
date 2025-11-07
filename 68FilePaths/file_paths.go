@@ -26,28 +26,21 @@ func main() {
 	// normalize paths by removing superfluous separators
 	// and directory changes.
 
-	// TODO: Create fmt.Println(filepath.Join("dir1//", "filename"))
 	fmt.Println(filepath.Join("dir1//", "filename"))
-	// TODO: Create fmt.Println(filepath.Join("dir1/../dir1", "filename"))
 	fmt.Println(filepath.Join("dir1/../dir1", "filename"))
 
 	// `Dir` and `Base` can be used to split a path to the
 	// directory and the file. Alternatively, `Split` will
 	// return both in the same call.
 
-	// TODO: Create fmt.Println("Dir(p):", filepath.Dir(p))
 	fmt.Println("Dir(p):", filepath.Dir(p))
-	// TODO: Create fmt.Println("Base(p):", filepath.Base(p))
 	fmt.Println("Base(p):", filepath.Base(p))
 
 	// We can check whether a path is absolute.
 
-	// TODO: Create fmt.Println(filepath.IsAbs("dir/file"))
 	fmt.Println(filepath.IsAbs("dir/file"))
-	// TODO: Create fmt.Println(filepath.IsAbs("/dir/file"))
 	fmt.Println(filepath.IsAbs("/dir/file"))
 
-	// TODO: Create filename := "config.json"
 	filename := "config.json"
 	fmt.Println(filename)
 
@@ -56,27 +49,24 @@ func main() {
 	// can split the extension out of such names with `Ext`.
 
 
-	// TODO: Create ext := filepath.Ext(filename)
 	ext := filepath.Ext(filename)
 	fmt.Println(ext)
 
 	// To find the file's name with the extension removed,
 	// use `strings.TrimSuffix`.
 
-	// TODO: Create fmt.Println(strings.TrimSuffix(filename, ext))
 	fmt.Println(strings.TrimSuffix(filename, ext))
+
 	// `Rel` finds a relative path between a *base* and a
 	// *target*. It returns an error if the target cannot
 	// be made relative to base.
 
-	// TODO: Create rel, err := filepath.Rel("a/b", "a/b/t/file")
 	rel, err := filepath.Rel("a/b", "a/b/t/file")
 	fmt.Println(rel)
 	fmt.Println(err)
-	// TODO: Create rel, err = filepath.Rel("a/b", "a/c/t/file")
 	rel, err = filepath.Rel("a/b", "a/c/t/file")
 	fmt.Println(rel)
 	fmt.Println(err)
-	// TODO: Print rel
 	fmt.Println(rel)
+
 }

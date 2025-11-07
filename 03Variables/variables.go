@@ -13,6 +13,8 @@ func main() {
 	var a string = "initial"
 	fmt.Println(a)
 
+	// You can declare multiple variables at once.
+
 	var b, c int = 1, 2
 	fmt.Println(b, c)
 

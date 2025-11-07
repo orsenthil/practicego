@@ -22,7 +22,7 @@ func main() {
 
 	// You can get individual args with normal indexing.
 
-	arg := os.Args[3]	
+	arg := os.Args[3]
 	fmt.Println(arg)
 
 	fmt.Println(argsWithProg)

@@ -16,6 +16,7 @@ import "fmt"
 // as [slices.Index](https://pkg.go.dev/slices#Index).
 
 
+// TODO: Create function SlicesIndex[S ~[]E, E comparable](s S, v E) int that returns the index of the first occurrence of v in s, or -1 if not present
 func SlicesIndex[S ~[]E, E comparable](s S, v E) int {
 	for i, vs := range s {
 		if vs == v {
@@ -35,11 +36,11 @@ type List[T any] struct {
 	tail *element[T]
 }
 
+
 type element[T any] struct {
 	next *element[T]
 	val T
 }
-
 
 // We can define methods on generic types just like we
 // do on regular types, but we have to keep the type
@@ -56,6 +57,7 @@ func (l *List[T]) Push(v T) {
 	}
 }
 
+
 // AllElements returns all the List elements as a slice.
 // In the next example we'll see a more idiomatic way
 // of iterating over all elements of custom types.
@@ -68,6 +70,7 @@ func (l *List[T]) AllElements() []T {
 	}
 	return elements
 }
+
 
 func main() {
 
@@ -91,5 +94,4 @@ func main() {
 	lst.Push(13)
 	lst.Push(23)
 	fmt.Println(lst.AllElements())
-
 }

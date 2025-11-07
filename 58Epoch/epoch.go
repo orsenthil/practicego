@@ -18,19 +18,19 @@ func main() {
 
 	// TODO: Create now := time.Now() and print it
 	now := time.Now()
-	fmt.Println("now:", now)
+	fmt.Println(now)
 	// TODO: Print now.Unix()
-	fmt.Println("now.Unix():", now.Unix())
+	fmt.Println(now.Unix())
 	// TODO: Print now.UnixMilli()
-	fmt.Println("now.UnixMilli():", now.UnixMilli())
+	fmt.Println(now.UnixMilli())
 	// TODO: Print now.UnixNano()
-	fmt.Println("now.UnixNano():", now.UnixNano())
+	fmt.Println(now.UnixNano())
 
 	// You can also convert integer seconds or nanoseconds
 	// since the epoch into the corresponding `time`.
 
 	// TODO: Print time.Unix(now.Unix(), 0)
-	fmt.Println("time.Unix(now.Unix(), 0):", time.Unix(now.Unix(), 0))
+	fmt.Println(time.Unix(now.Unix(), 0))
 	// TODO: Print time.Unix(0, now.UnixNano())
-	fmt.Println("time.Unix(0, now.UnixNano()):", time.Unix(0, now.UnixNano()))
+	fmt.Println(time.Unix(0, now.UnixNano()))
 }

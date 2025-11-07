@@ -25,34 +25,34 @@ func main() {
 	// Printing a map with e.g. `fmt.Println` will show all of
 	// its key/value pairs.
 
-	fmt.Println(m)
+	fmt.Println("map:", m)
 
 	// Get a value for a key with `name[key]`.
 
-	fmt.Println(m["k1"])
+	fmt.Println("k1:", m["k1"])
 
 	// If the key doesn't exist, the
 	// [zero value](https://go.dev/ref/spec#The_zero_value) of the
 	// value type is returned.
 
-	fmt.Println(m["k3"])
+	fmt.Println("k3:", m["k3"])
 
 	// The builtin `len` returns the number of key/value
 	// pairs when called on a map.
 
-	fmt.Println(len(m))
+	fmt.Println("len:", len(m))
 
 	// The builtin `delete` removes key/value pairs from
 	// a map.
 
 	delete(m, "k2")
-	fmt.Println(m)
+	fmt.Println("map:", m)
 
 	// To remove *all* key/value pairs from a map, use
 	// the `clear` builtin.
 
 	clear(m)
-	fmt.Println(m)
+	fmt.Println("map:", m)
 
 	// The optional second return value when getting a
 	// value from a map indicates if the key was present
@@ -62,18 +62,18 @@ func main() {
 	// itself, so we ignored it with the _blank identifier_
 	// `_`.
 
-	// TODO: Check if key "k2" exists in map
-	fmt.Println(m["k2"])
+	fmt.Println("k2 exists:", m["k2"] != 0)
 
 	// You can also declare and initialize a new map in
 	// the same line with this syntax.
 
 	n := map[string]int{"foo": 1, "bar": 2}
-	fmt.Println(n)
+	fmt.Println("map:", n)
 
 	// The `maps` package contains a number of useful
 	// utility functions for maps.
 
 	n2 := map[string]int{"foo": 1, "bar": 2}
-	fmt.Println(maps.Equal(n, n2))
+	fmt.Println("n == n2:", maps.Equal(n, n2))
+
 }

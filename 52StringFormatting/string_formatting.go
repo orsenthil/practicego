@@ -10,10 +10,6 @@ import (
 )
 
 // TODO: Define struct point with x (int) and y (int) fields
-type point struct {
-	x int
-	y int
-}
 
 func main() {
 
@@ -21,89 +17,72 @@ func main() {
 	// format general Go values. For example, this prints
 	// an instance of our `point` struct.
 
-	// Create p := point{1, 2}
-	p := point{1, 2}
-	// Print p using %v
-	fmt.Printf("p using %v: %v\n", p)
+	// TODO: Create p := point{1, 2}
+	// TODO: Print p using %v
 
 	// If the value is a struct, the `%+v` variant will
 	// include the struct's field names.
 
-	// Print p using %+v
-	fmt.Printf("p using %+v: %+v\n", p)
+	// TODO: Print p using %+v
 
 	// The `%#v` variant prints a Go syntax representation
 	// of the value, i.e. the source code snippet that
 	// would produce that value.
 
-	// Print p using %#v
-	fmt.Printf("p using %#v: %#v\n", p)
+	// TODO: Print p using %#v
 
 	// To print the type of a value, use `%T`.
 
-	// Print p using %T
-	fmt.Printf("p using %T: %T\n", p)
+	// TODO: Print p using %T
 
 	// Formatting booleans is straight-forward.
 
-	// Print true using %t
-	fmt.Printf("true using %t: %t\n", true)
+	// TODO: Print true using %t
 
 	// There are many options for formatting integers.
 	// Use `%d` for standard, base-10 formatting.
 
-	// Print 123 using %d
-	fmt.Printf("123 using %d: %d\n", 123)
+	// TODO: Print 123 using %d
 
 	// This prints a binary representation.
-	// Print 14 using %b
-	fmt.Printf("14 using %b: %b\n", 14)
+	// TODO: Print 14 using %b
 
 	// This prints the character corresponding to the
 	// given integer.
 
-	// Print 33 using %c
-	fmt.Printf("33 using %c: %c\n", 33)
+	// TODO: Print 33 using %c
 
 	// `%x` provides hex encoding.
-	// Print 456 using %x
-	fmt.Printf("456 using %x: %x\n", 456)
+	// TODO: Print 456 using %x
 
 	// There are also several formatting options for
 	// floats. For basic decimal formatting use `%f`.
 
-	// Print 78.9 using %f
-	fmt.Printf("78.9 using %f: %f\n", 78.9)
+	// TODO: Print 78.9 using %f
 
 	// `%e` and `%E` format the float in (slightly
 	// different versions of) scientific notation.
 
-	// Print 123400000.0 using %e
-	fmt.Printf("123400000.0 using %e: %e\n", 123400000.0)
-	// Print 123400000.0 using %E
-	fmt.Printf("123400000.0 using %E: %E\n", 123400000.0)
+	// TODO: Print 123400000.0 using %e
+	// TODO: Print 123400000.0 using %E
 
 	// For basic string printing use `%s`.
 
-	// Print ""string"" using %s
-	fmt.Printf("\"string\" using %s: %s\n", "string")
+	// TODO: Print ""string"" using %s
 
 	// To double-quote strings as in Go source, use `%q`.
 
-	// Print ""string"" using %q
-	fmt.Printf("\"string\" using %q: %q\n", "string")
+	// TODO: Print ""string"" using %q
 
 	// As with integers seen earlier, `%x` renders
 	// the string in base-16, with two output characters
 	// per byte of input.
 
-	// Print "hex this" using %x
-	fmt.Printf("\"hex this\" using %x: %x\n", "hex this")
+	// TODO: Print "hex this" using %x
 
 	// To print a representation of a pointer, use `%p`.
 
-	// Print pointer of p using %p
-	fmt.Printf("pointer of p using %p: %p\n", &p)
+	// TODO: Print pointer of p using %p
 
 	// When formatting numbers you will often want to
 	// control the width and precision of the resulting
@@ -112,44 +91,37 @@ func main() {
 	// result will be right-justified and padded with
 	// spaces.
 
-	// Print "12" and "345" using %6d
-	fmt.Printf("\"12\" and \"345\" using %6d: %6d\n", 12, 345)
+	// TODO: Print "12" and "345" using %6d
 
 	// You can also specify the width of printed floats,
 	// though usually you'll also want to restrict the
 	// decimal precision at the same time with the
 	// width.precision syntax.
 
-	// Print "1.2" and "3.45" using %6.2f
-	fmt.Printf("\"1.2\" and \"3.45\" using %6.2f: %6.2f\n", 1.2, 3.45)
+	// TODO: Print "1.2" and "3.45" using %6.2f
 
 	// To left-justify, use the `-` flag.
 
-	// Print "1.2" and "3.45" using %-6.2f
-	fmt.Printf("\"1.2\" and \"3.45\" using %-6.2f: %-6.2f\n", 1.2, 3.45)
+	// TODO: Print "1.2" and "3.45" using %-6.2f
 
 	// You may also want to control width when formatting
 	// strings, especially to ensure that they align in
 	// table-like output. For basic right-justified width.
 
-	// Print "foo" and "b" using %6s
-	fmt.Printf("\"foo\" and \"b\" using %6s: %6s\n", "foo", "b")
+	// TODO: Print "foo" and "b" using %6s
 
 	// To left-justify use the `-` flag as with numbers.
 
-	// Print "foo" and "b" using %-6s
-	fmt.Printf("\"foo\" and \"b\" using %-6s: %-6s\n", "foo", "b")
+	// TODO: Print "foo" and "b" using %-6s
 
 	// So far we've seen `Printf`, which prints the
 	// formatted string to `os.Stdout`. `Sprintf` formats
 	// and returns a string without printing it anywhere.
 
-	// Print "sprintf: a string" using %Sprintf
-	fmt.Printf("\"sprintf: a string\" using %Sprintf: %Sprintf\n", "sprintf: a string")
+	// TODO: Print "sprintf: a string" using %Sprintf
 
 	// You can format+print to `io.Writers` other than
 	// `os.Stdout` using `Fprintf`.
 
-	// Print "io: an error" using %Fprintf
-	fmt.Printf("\"io: an error\" using %Fprintf: %Fprintf\n", "io: an error")
+	// TODO: Print "io: an error" using %Fprintf
 }

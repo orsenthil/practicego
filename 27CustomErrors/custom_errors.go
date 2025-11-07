@@ -5,12 +5,15 @@
 
 package main
 
-// A custom error type usually has the suffix "Error".
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
-// TODO: Define struct argError with arg int and message string fieldsa
+// A custom error type usually has the suffix "Error".
+
 type argError struct {
-	arg     int
+	arg  int
 	message string
 }
 
@@ -21,8 +24,6 @@ func (e *argError) Error() string {
 	return fmt.Sprintf("%d - %s", e.arg, e.message)
 }
 
-// TODO: Define function f(arg int) (int, error) that returns -1, &argError{arg, "can't work with it"} if arg == 42,
-// otherwise returns arg + 3, nil
 
 func f(arg int) (int, error) {
 	if arg == 42 {
@@ -31,6 +32,7 @@ func f(arg int) (int, error) {
 	return arg + 3, nil
 }
 
+
 func main() {
 
 	// `errors.As` is a more advanced version of `errors.Is`.
@@ -38,9 +40,15 @@ func main() {
 	// matches a specific error type and converts to a value
 	// of that type, returning `true`. If there's no match, it
 	// returns `false`.
-	_, err := f(42)
-	if ae, ok := err.(*argError); ok {
+	for _, i := range []int{7, 42} {
+		if r, err := f(i); err != nil {
+			fmt.Println("f(", i, ") =", r, err)
+		}
+	}
+	var ae *argError
+	if errors.As(err, &ae) {
 		fmt.Println(ae.arg)
 		fmt.Println(ae.message)
 	}
+
 }

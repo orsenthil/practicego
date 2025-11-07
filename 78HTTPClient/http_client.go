@@ -8,6 +8,7 @@ import (
 	"bufio"
 	"fmt"
 	"net/http"
+
 )
 
 func main() {
@@ -18,27 +19,24 @@ func main() {
 	// `http.DefaultClient` object which has useful default
 	// settings.
 
+	// TODO: Create resp, err := http.Get("https://gobyexample.com")
 	resp, err := http.Get("https://gobyexample.com")
-	fmt.Println("err:", err)
+	fmt.Println(err)
 	
 
+	// TODO: Defer the closing of the response body with defer resp.Body.Close()
 	defer resp.Body.Close()
-
 	// Print the HTTP response status.
 
+	// TODO: Print fmt.Println("Response status:", resp.Status)
 	fmt.Println("Response status:", resp.Status)
-
 	// Print the first 5 lines of the response body.
 
+	// TODO: Create scanner := bufio.NewScanner(resp.Body)
 	scanner := bufio.NewScanner(resp.Body)
 	// Iterate over the scanner with for i := 0; scanner.Scan() && i < 5; i++ {
 	for i := 0; scanner.Scan() && i < 5; i++ {
 		fmt.Println(scanner.Text())
 	}
-	fmt.Println("err:", err)
-
-	// Check for scanner.Err() and if it is not nil, panic with the error
-	if err := scanner.Err(); err != nil {
-		panic(err)
-	}
+	fmt.Println(err)
 }

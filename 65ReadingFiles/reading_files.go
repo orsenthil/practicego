@@ -25,9 +25,8 @@ func main() {
 	// Perhaps the most basic file reading task is
 	// slurping a file's entire contents into memory.
 
-	dat, err := os.ReadFile("/tmp/dat")
+	_, err := os.ReadFile("/tmp/dat")
 	check(err)
-	fmt.Println(string(dat))
 
 	// You'll often want more control over how and what
 	// parts of a file are read. For these tasks, start
@@ -50,12 +49,10 @@ func main() {
 
 	o2, err := f.Seek(6, io.SeekStart)
 	check(err)
-	// TODO: Print err
 	b2 := make([]byte, 2)
 	n2, err := f.Read(b2)
 	check(err)
 	fmt.Printf("%d bytes @ %d: %s\n", n2, o2, string(b2[:n2]))
-
 	// Other methods of seeking are relative to the
 	// current cursor position,
 
@@ -63,6 +60,7 @@ func main() {
 	check(err)
 
 	// and relative to the end of the file.
+
 	_, err = f.Seek(-4, io.SeekEnd)
 	check(err)
 
@@ -83,14 +81,12 @@ func main() {
 
 	_, err = f.Seek(0, io.SeekStart)
 	check(err)
-	// TODO: Print err
 
 	// The `bufio` package implements a buffered
 	// reader that may be useful both for its efficiency
 	// with many small reads and because of the additional
 	// reading methods it provides.
 
-	// TODO: Create r4 := bufio.NewReader(f)
 	r4 := bufio.NewReader(f)
 	b4, err := r4.Peek(5)
 	check(err)
@@ -101,4 +97,5 @@ func main() {
 	// `defer`).
 
 	f.Close()
+
 }

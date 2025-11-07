@@ -10,18 +10,17 @@ func vals() (int, int) {
 	return 3, 7
 }
 
+
 func main() {
 
 	// Here we use the 2 different return values from the
 	// call with _multiple assignment_.
 
 	a, b := vals()
-	fmt.Println(a, b)
-	// TODO: Print a and b
+	fmt.Println("a =", a, "b =", b)
 
 	// If you only want a subset of the returned values,
 	// use the blank identifier `_`.
 	_, c := vals()
-	fmt.Println(c)
-	// TODO: Print c
+	fmt.Println("c =", c)
 }

@@ -18,7 +18,7 @@ func main() {
 	for _, num := range nums {
 		sum += num
 	}
-	fmt.Println(sum)
+	fmt.Println("sum =", sum)
 
 	// `range` on arrays and slices provides both the
 	// index and value for each entry. Above we didn't
@@ -27,20 +27,23 @@ func main() {
 	// the indexes though.
 
 	for i, num := range nums {
-		fmt.Println(i, num)
+		fmt.Println("index =", i, "value =", num)
 	}
 
 	// `range` on map iterates over key/value pairs.
 
 	kvs := map[string]string{"a": "apple", "b": "banana"}
+
 	for key, value := range kvs {
-		fmt.Println(key, value)
+		fmt.Println("key =", key, "value =", value)
 	}
+
 
 	// `range` can also iterate over just the keys of a map.
 	for key := range kvs {
-		fmt.Println(key)
+		fmt.Println("key =", key)
 	}
+
 
 	// `range` on strings iterates over Unicode code
 	// points. The first value is the starting byte index
@@ -48,8 +51,9 @@ func main() {
 	// See [Strings and Runes](strings-and-runes) for more
 	// details.
 
-	for i, rune := range "go" {
-		fmt.Println(i, rune)
+	s := "go"
+	for i, r := range s {
+		fmt.Println("index =", i, "rune =", r)
 	}
 
 }

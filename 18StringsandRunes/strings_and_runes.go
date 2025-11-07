@@ -25,7 +25,7 @@ func main() {
 	// Since strings are equivalent to `[]byte`, this
 	// will produce the length of the raw bytes stored within.
 
-	fmt.Println(len(s))
+	fmt.Println("len(s) =", len(s))
 
 	// Indexing into a string produces the raw byte values at
 	// each index. This loop generates the hex values of all
@@ -43,31 +43,30 @@ func main() {
 	// that can span multiple bytes, so the result of this count
 	// may be surprising.
 
-	fmt.Println(utf8.RuneCountInString(s))
+	fmt.Println("utf8.RuneCountInString(s) =", utf8.RuneCountInString(s))
 
 	// A `range` loop handles strings specially and decodes
 	// each `rune` along with its offset in the string.
 
-	for i, rune := range s {
-		fmt.Println(i, rune)
+	for i, r := range s {
+		fmt.Printf("index = %d, rune = %c\n", i, r)
 	}
 
 	// We can achieve the same iteration by using the
 	// `utf8.DecodeRuneInString` function explicitly.
 
 
-	// TODO: Loop through s and print index and rune value using utf8.DecodeRuneInString
-	// Use for loop and i, w := 0, 0; i < len(s); i += w, where w is the width of the rune
 	for i, w := 0, 0; i < len(s); i += w {
-		rune, width:= utf8.DecodeRuneInString(s[i:])
-		fmt.Println(i, rune)
+		r, width := utf8.DecodeRuneInString(s[i:])
+		fmt.Printf("index = %d, rune = %c\n", i, r)
 		w = width
 	}
-	// Also demonstrate passing a `rune` value to a function, examineRune
 
 	fmt.Println("\nUsing DecodeRuneInString")
+
 	examineRune('t')
 	examineRune('ส')
+
 }
 
 func examineRune(r rune) {

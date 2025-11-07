@@ -26,24 +26,26 @@ type rect struct {
 type circle struct {
 	radius float64
 }
-func (r *rect) area() float64 {
-	return r.width * r.height
-}
-func (r *rect) perim() float64 {
-	return 2*r.width + 2*r.height
-}
 
 // To implement an interface in Go, we just need to
 // implement all the methods in the interface. Here we
 // implement `geometry` on `rect`s.
 
+func (r rect) area() float64 {
+	return r.width * r.height
+}
+
+func (r rect) perim() float64 {
+	return 2*r.width + 2*r.height
+}
 
 // The implementation for `circle`s.
 
-func (c *circle) area() float64 {
+func (c circle) area() float64 {
 	return math.Pi * c.radius * c.radius
 }
-func (c *circle) perim() float64 {
+
+func (c circle) perim() float64 {
 	return 2 * math.Pi * c.radius
 }
 
@@ -60,29 +62,31 @@ func measure(g geometry) {
 
 func main() {
 	r := rect{width: 3, height: 4}
+	measure(r)
 	c := circle{radius: 5}
-
-	// The `circle` and `rect` struct types both
-	// implement the `geometry` interface so we can use
-	// instances of these structs as arguments to `measure`.
-
-	measure(&r)
-	measure(&c)
+	measure(c)
 
 	// Sometimes it's useful to know the runtime type of an
 	// interface value. One option is using a *type assertion*
 	// as shown here; another is a [type `switch`](switch).
 
+	// TODO: Create function describe(i interface{}) that uses type assertion
+	// Check if i is a circle, if so print "Circle with radius" and the radius
+	// Check if i is a rect, if so print "Rectangle" and dimensions
+	// Otherwise print "Unknown type"
+
 	describe := func(i interface{}) {
-		switch t := i.(type) {
+		fmt.Println(i)
+		switch v := i.(type) {
 		case circle:
-			fmt.Println("Circle with radius", t.radius)
+			fmt.Println("Circle with radius", v.radius)
 		case rect:
-			fmt.Println("Rectangle with width", t.width, "and height", t.height)
+			fmt.Println("Rectangle with width", v.width, "and height", v.height)
 		default:
 			fmt.Println("Unknown type")
 		}
 	}
-	describe(&r)
-	describe(&c)
+
+	describe(r)
+	describe(c)
 }

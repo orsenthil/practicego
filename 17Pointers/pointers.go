@@ -33,14 +33,14 @@ func main() {
 	i := 1
 
 	zeroval(i)
-	fmt.Println(i)
+	fmt.Println("zeroval(i) =", i)
 
 	// The `&i` syntax gives the memory address of `i`,
 	// i.e. a pointer to `i`.
 
 	zeroptr(&i)
-	fmt.Println(i)
+	fmt.Println("zeroptr(i) =", i)
 
 	// Pointers can be printed too
-	fmt.Println(&i)
+	fmt.Println("&i =", &i)
 }

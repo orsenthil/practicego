@@ -19,6 +19,7 @@ func intSeq() func() int {
 		return i
 	}
 }
+
 func main() {
 
 	// We call `intSeq`, assigning the result (a function)
@@ -38,5 +39,6 @@ func main() {
 	// particular function, create and test a new one.
 
 	newInts := intSeq()
+	fmt.Println(newInts())
 	fmt.Println(newInts())
 }

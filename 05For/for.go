@@ -17,8 +17,10 @@ func main() {
 
 	// A classic initial/condition/after `for` loop.
 
-	for j := 0; j < 3; j++ {
+	j := 0
+	for j < 3 {
 		fmt.Println(j)
+		j++
 	}
 
 	// Another way of accomplishing the basic "do this
@@ -27,6 +29,7 @@ func main() {
 	for i := range 3 {
 		fmt.Println("range", i)
 	}
+
 	// `for` without a condition will loop repeatedly
 	// until you `break` out of the loop or `return` from
 	// the enclosing function.
@@ -35,6 +38,7 @@ func main() {
 		fmt.Println("loop")
 		break
 	}
+
 	// You can also `continue` to the next iteration of
 	// the loop.
 
@@ -44,4 +48,5 @@ func main() {
 		}
 		fmt.Println(i)
 	}
+	
 }

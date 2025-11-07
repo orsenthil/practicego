@@ -37,10 +37,17 @@ func TestIntMinBasic(t *testing.T) {
 		t.Errorf("IntMin(2, -2) = %d; want -2", ans)
 	}
 }
-
 // `t.Error*` will report test failures but continue
 // executing the test. `t.Fatal*` will report test
 // failures and stop the test immediately.
+
+func TestIntMinBasic(t *testing.T) {
+	// TODO: Create ans := IntMin(2, -2)
+	// TODO: If ans != -2, t.Errorf("IntMin(2, -2) = %d; want -2", ans)
+	if ans != -2 {
+		t.Errorf("IntMin(2, -2) = %d; want -2", ans)
+	}
+}
 
 // Writing tests can be repetitive, so it's idiomatic to
 // use a *table-driven style*, where test inputs and
@@ -48,6 +55,16 @@ func TestIntMinBasic(t *testing.T) {
 // walks over them and performs the test logic.
 func TestIntMinTableDriven(t *testing.T) {
 
+	// TODO: Create tests = []struct {
+	// a, b int
+	// want int
+	//}{
+	// {0, 1, 0},
+	// {1, 0, 0},
+	// {2, -2, -2},
+	// {0, -1, -1},
+	// {-1, 0, -1},
+	//}
 	tests := []struct {
 		a, b int
 		want int
@@ -58,7 +75,6 @@ func TestIntMinTableDriven(t *testing.T) {
 		{0, -1, -1},
 		{-1, 0, -1},
 	}
-
 	for _, tt := range tests {
 		testname := fmt.Sprintf("%d,%d", tt.a, tt.b)
 		t.Run(testname, func(t *testing.T) {
@@ -75,8 +91,10 @@ func TestIntMinTableDriven(t *testing.T) {
 // Any code that's required for the benchmark to run but should
 // not be measured goes before this loop.
 
+// TODO: Create function BenchmarkIntMin(b *testing.B) that benchmarks IntMin(1, 2)
 func BenchmarkIntMin(b *testing.B) {
 	for b.Loop() {
+		// TODO: IntMin(1, 2)
 		IntMin(1, 2)
 	}
 }

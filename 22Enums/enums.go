@@ -13,11 +13,6 @@ import "fmt"
 
 type ServerState int
 
-// The possible values for `ServerState` are defined as
-// constants. The special keyword [iota](https://go.dev/ref/spec#Iota)
-// generates successive constant values automatically; in this
-// case 0, 1, 2 and so on.
-
 const (
 	StateIdle ServerState = iota
 	StateConnected
@@ -36,11 +31,12 @@ const (
 // for a longer explanation.
 
 var stateName = map[ServerState]string{
-	StateIdle:      "idle",
+	StateIdle: "idle",
 	StateConnected: "connected",
-	StateError:     "error",
-	StateRetrying:  "retrying",
+	StateError: "error",
+	StateRetrying: "retrying",
 }
+
 
 func (s ServerState) String() string {
 	return stateName[s]
@@ -48,7 +44,7 @@ func (s ServerState) String() string {
 
 func main() {
 	ns := transition(StateIdle)
-
+	fmt.Println(ns)
 	ns2 := transition(ns)
 	fmt.Println(ns2)
 }
@@ -68,5 +64,4 @@ func transition(s ServerState) ServerState {
 	default:
 		return StateIdle
 	}
-	return StateIdle
 }

@@ -14,19 +14,16 @@ func main() {
 	// Here we `make` a channel of strings buffering up to
 	// 2 values.
 
-	ch := make(chan string, 2)
+	messages := make(chan string, 2)
+
 	// Because this channel is buffered, we can send these
 	// values into the channel without a corresponding
 	// concurrent receive.
 
-	ch <- "buffered"
-	ch <- "channel"
-
+	messages <- "buffered"
+	messages <- "channel"
 	// Later we can receive these two values as usual.
 
-	msg1 := <-ch
-	msg2 := <-ch
-	fmt.Println(msg1)
-	fmt.Println(msg2)
-
+	fmt.Println(<-messages)
+	fmt.Println(<-messages)
 }

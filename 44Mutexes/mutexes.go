@@ -17,6 +17,8 @@ import (
 // `struct` is passed around, it should be done by
 // pointer.
 
+// TODO: Define struct Container with mu (sync.Mutex) and counters (map[string]int) fields
+
 type Container struct {
 	mu sync.Mutex
 	counters map[string]int
@@ -28,7 +30,6 @@ func (c *Container) inc(name string) {
 	c.counters[name]++
 }
 
-
 func main() {
 	
 	// Note that the zero value of a mutex is usable as-is, so no
@@ -37,19 +38,35 @@ func main() {
 	c := Container{
 		counters: map[string]int{"a": 0, "b": 0},
 	}
-	var wg sync.WaitGroup
+
+	wg := sync.WaitGroup{}
 
 	// This function increments a named counter
 	// in a loop.
 
-	for i := 0; i < 10000; i++ {
+	doIncrement := func(c *Container, name string, n int) {
+		for i := 0; i < n; i++ {
+			c.inc(name)
+		}
+	}
+
+	// Run several goroutines concurrently; note
+	// that they all access the same `Container`,
+	// and two of them access the same counter.
+
+	for i := 0; i < 3; i++ {
 		wg.Add(1)
 		go func() {
-			c.inc("a")
+			doIncrement(&c, "a", 10000)
+			doIncrement(&c, "a", 10000)
+			doIncrement(&c, "b", 10000)
 			wg.Done()
 		}()
 	}
 
+	// Wait for the goroutines to finish
+
 	wg.Wait()
+
 	fmt.Println(c.counters)
 }

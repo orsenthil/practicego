@@ -28,9 +28,10 @@ func main() {
 	// create the file in the default location for our OS.
 
 
+	// TODO: Create f, err := os.CreateTemp("", "sample")
 	f, err := os.CreateTemp("", "sample")
 	check(err)
-	fmt.Println("err:", err)
+	fmt.Println("Temp file name:", f.Name())
 
 	// Display the name of the temporary file. On
 	// Unix-based OSes the directory will likely be `/tmp`.
@@ -47,13 +48,11 @@ func main() {
 	// explicitly.
 
 	defer os.Remove(f.Name())
-
 	// We can write some data to the file.
 
+	// TODO: Create _, err = f.Write([]byte{1, 2, 3, 4})
 	_, err = f.Write([]byte{1, 2, 3, 4})
 	check(err)
-	fmt.Println("err:", err)
-	// TODO: Print err
 
 	// If we intend to write many temporary files, we may
 	// prefer to create a temporary *directory*.
@@ -64,18 +63,17 @@ func main() {
 	// TODO: Create dname, err := os.MkdirTemp("", "sampledir")
 	dname, err := os.MkdirTemp("", "sampledir")
 	check(err)
-	fmt.Println("err:", err)
+	fmt.Println("Temp directory name:", dname)
 
-	defer os.RemoveAll(dname)
+	// TODO: Defer the removal of the directory with defer os.RemoveAll(dname)
 
 	// Now we can synthesize temporary file names by
 	// prefixing them with our temporary directory.
 
+	// TODO: Create fname := filepath.Join(dname, "file1")
 	fname := filepath.Join(dname, "file1")
-	check(err)
-	fmt.Println("err:", err)
-
 	err = os.WriteFile(fname, []byte{1, 2}, 0666)
 	check(err)
-	fmt.Println("err:", err)
+	fmt.Println("Temp file name:", fname)
+	// TODO: Print err
 }

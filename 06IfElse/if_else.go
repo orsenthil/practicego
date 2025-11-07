@@ -16,6 +16,9 @@ func main() {
 	} else {
 		fmt.Println("7 is odd")
 	}
+
+	
+
 	// You can have an `if` statement without an else.
 
 	if 8%4 == 0 {
@@ -42,6 +45,8 @@ func main() {
 	} else {
 		fmt.Println(num, "has multiple digits")
 	}
+	// otherwise if num < 10, print num "has 1 digit"
+	// otherwise print num "has multiple digits"
 
 
 }

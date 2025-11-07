@@ -18,13 +18,14 @@ func fact(n int) int {
 
 func main() {
 	
-	fmt.Println(fact(7))
+	fmt.Println("fact(7) =", fact(7))
 
 	// Anonymous functions can also be recursive, but this requires
 	// explicitly declaring a variable with `var` to store
 	// the function before it's defined.
 
 	var fib func(int) int
+
 	fib = func(n int) int {
 		if n == 0 {
 			return 0
@@ -35,6 +36,5 @@ func main() {
 		return fib(n-1) + fib(n-2)
 	}
 
-
-	fmt.Println(fib(7))
+	fmt.Println("fib(7) =", fib(7))
 }

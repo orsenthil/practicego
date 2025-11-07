@@ -21,18 +21,20 @@ import (
 // By convention, errors are the last return value and
 // have type `error`, a built-in interface.
 
+// TODO: Create function f(arg int) (int, error) that returns -1, errors.New("can't work with 42") if arg == 42,
+// otherwise returns arg + 3, nil
+
 func f(arg int) (int, error) {
 	if arg == 42 {
 		return -1, errors.New("can't work with 42")
 	}
 	return arg + 3, nil
 }
-
 // A sentinel error is a predeclared variable that is used to
 // signify a specific error condition.
 
-var ErrOutOfTea = fmt.Errorf("no more tea available")
-var ErrPower = fmt.Errorf("can't boil water")
+var ErrOutOfTea = errors.New("no more tea available")
+var ErrPower = errors.New("can't boil water")
 
 func makeTea(arg int) error {
 	if arg == 2 {
@@ -52,25 +54,28 @@ func makeTea(arg int) error {
 // and `errors.As`.
 
 func main() {
-
 	for _, i := range []int{7, 42} {
 		if r, err := f(i); err != nil {
-			fmt.Println("f failed:", err)
-		} else {
-			fmt.Println("f worked:", r)
+			fmt.Println("f(", i, ") =", r, err)
 		}
 	}
 
-	for _, i := range []int{2, 4, 5} {
+	for _, i := range []int{5} {
 		if err := makeTea(i); err != nil {
-			fmt.Println("makeTea failed:", err)
+			fmt.Println("makeTea(", i, ") =", err)
 		}
 	}
 
-	if errors.Is(makeTea(2), ErrOutOfTea) {
+	// `errors.Is` checks that a given error (or any error in its chain)
+	// matches a specific error value. This is especially useful with wrapped or
+	// nested errors, allowing you to identify specific error types or sentinel
+	// errors in a chain of errors.
+	err := makeTea(5)
+	if errors.Is(err, ErrOutOfTea) {
 		fmt.Println("out of tea")
-	}
-	if errors.Is(makeTea(4), ErrPower) {
+	} else if errors.Is(err, ErrPower) {
 		fmt.Println("power error")
+	} else {
+		fmt.Println("no error")
 	}
 }

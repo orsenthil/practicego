@@ -9,7 +9,6 @@ package main
 import "fmt"
 
 // TODO: Define struct base with num int field
-
 type base struct {
 	num int
 }
@@ -17,7 +16,6 @@ type base struct {
 func (b *base) describe() string {
 	return fmt.Sprintf("base with num=%v", b.num)
 }
-
 // A `container` _embeds_ a `base`. An embedding looks
 // like a field without a name.
 
@@ -32,20 +30,18 @@ func main() {
 	// initialize the embedding explicitly; here the
 	// embedded type serves as the field name.
 
-	co := container{
-		base: base{num: 1},
-		str: "some name",
-	}
+	co := container{base: base{num: 1}, str: "some name"}
+	fmt.Printf("co={num: %v, str: %v}\n", co.num, co.str)
 
 	// We can access the base's fields directly on `co`,
 	// e.g. `co.num`.
 
-	fmt.Printf("co={num: %v, str: %v}\n", co.num, co.str)
+	fmt.Printf("also num: %v\n", co.base.num)
 
 	// Alternatively, we can spell out the full path using
 	// the embedded type name.
 
-	fmt.Printf("also num: %v\n", co.base.num)
+	fmt.Printf("describe: %v\n", co.describe())
 
 	// Since `container` embeds `base`, the methods of
 	// `base` also become methods of a `container`. Here

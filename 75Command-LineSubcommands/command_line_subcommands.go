@@ -43,15 +43,16 @@ func main() {
 	switch os.Args[1] {
 	case "foo":
 		fooCmd.Parse(os.Args[2:])
-		fmt.Println("subcommand 'foo'")
 		fmt.Println("enable:", *fooEnable)
 		fmt.Println("name:", *fooName)
 	case "bar":
 		barCmd.Parse(os.Args[2:])
-		fmt.Println("subcommand 'bar'")
 		fmt.Println("level:", *barLevel)
-	default:
-		fmt.Println("expected 'foo' or 'bar' subcommands")
-		os.Exit(1)
 	}
+	// If the case is "foo", parse the fooCmd flags, if the case is "bar", parse the barCmd flags.
+	// default print "expected 'foo' or 'bar' subcommands" and exit with 1
+
+	// For every subcommand, we parse its own flags and
+	// have access to trailing positional arguments.
+	
 }

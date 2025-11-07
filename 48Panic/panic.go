@@ -6,7 +6,6 @@
 package main
 
 import "os"
-import "fmt"
 
 func main() {
 
@@ -14,7 +13,6 @@ func main() {
 	// unexpected errors. This is the only program on the
 	// site designed to panic.
 
-	// Panic with "a problem"
 	panic("a problem")
 
 
@@ -23,16 +21,10 @@ func main() {
 	// (or want to) handle. Here's an example of
 	// `panic`king if we get an unexpected error when creating a new file.
 
-	// Create a new file with os.Create("/tmp/file")
 	f, err := os.Create("/tmp/file")
 	if err != nil {
 		panic(err)
 	}
 	defer f.Close()
-	write, err := f.WriteString("data")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("wrote", write, "bytes")
 
 }

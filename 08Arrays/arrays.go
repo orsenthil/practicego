@@ -14,59 +14,56 @@ func main() {
 	// part of the array's type. By default an array is
 	// zero-valued, which for `int`s means `0`s.
 
-	a := [5]int{1, 2, 3, 4, 5}
-	fmt.Println(a)
-
+	a := [5]int{}
+	fmt.Println("uninitialized:", a)
 
 	// We can set a value at an index using the
 	// `array[index] = value` syntax, and get a value with
 	// `array[index]`.
 
 	a[4] = 100
-	fmt.Println(a)
+	fmt.Println("a:", a)
 
 	// The builtin `len` returns the length of an array.
 
-	fmt.Println(len(a))
+	fmt.Println("length of a:", len(a))
+
 
 	// Use this syntax to declare and initialize an array
 	// in one line.
 
 	b := [5]int{1, 2, 3, 4, 5}
-	fmt.Println(b)
+	fmt.Println("b:", b)
 
 	// You can also have the compiler count the number of
 	// elements for you with `...`
 
 	c := [...]int{1, 2, 3, 4, 5}
-	fmt.Println(c)
-
+	fmt.Println("c:", c)
 
 	// If you specify the index with `:`, the elements in
 	// between will be zeroed.
 
-	d := [...]int{100, 3: 400, 500}
-	fmt.Println(d)
+	d := [5]int{100, 3: 400, 500}
+	fmt.Println("d:", d)
 
 	// Array types are one-dimensional, but you can
 	// compose types to build multi-dimensional data
 	// structures.
 
-	// TODO: Create a two-dimensional array `twoD` of size [2][3]int and print it
-	// Use nested loops (range 2, range 3) to populate twoD[i][j] = i + j
-	twoD := make([][]int, 2)
-	for i := range 2 {
-		twoD[i] = make([]int, 3)
-		for j := range 3 {
-			twoD[i][j] = i + j
-		}
-	}
-	fmt.Println(twoD)
-
+	twoD := [2][3]int{{1, 2, 3}, {4, 5, 6}}
+	fmt.Println("twoD:", twoD)
 
 	// You can create and initialize multi-dimensional
 	// arrays at once too.
 
-	twoD2 := [2][3]int{{1, 2, 3}, {1, 2, 3}}
-	fmt.Println(twoD2)
+	var twoD2 [2][3]int
+	twoD2[0][0] = 1
+	twoD2[0][1] = 2
+	twoD2[0][2] = 3
+	twoD2[1][0] = 1
+	twoD2[1][1] = 2
+	twoD2[1][2] = 3
+	fmt.Println("twoD2:", twoD2)
+
 }

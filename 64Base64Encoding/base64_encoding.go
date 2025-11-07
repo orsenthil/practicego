@@ -22,23 +22,29 @@ func main() {
 	// encoder. The encoder requires a `[]byte` so we
 	// convert our `string` to that type.
 
+	// TODO: Create sEnc := b64.StdEncoding.EncodeToString([]byte(data))
 	sEnc := b64.StdEncoding.EncodeToString([]byte(data))
-	fmt.Println("sEnc:", sEnc)
+	fmt.Println(sEnc)
+	// TODO: Print sEnc
 
 	// Decoding may return an error, which you can check
 	// if you don't already know the input to be
 	// well-formed.
 
+	// TODO: Create sDec, _ := b64.StdEncoding.DecodeString(sEnc)
 	sDec, _ := b64.StdEncoding.DecodeString(sEnc)
-	fmt.Println("sDec:", sDec)
-	fmt.Println()
+	fmt.Println(string(sDec))
+	// TODO: Print sDec
+	fmt.Println(string(sDec))
 
 	// This encodes/decodes using a URL-compatible base64
 	// format.
 
+	// TODO: Create uEnc := b64.URLEncoding.EncodeToString([]byte(data))
 	uEnc := b64.URLEncoding.EncodeToString([]byte(data))
-	fmt.Println("uEnc:", uEnc)
+	fmt.Println(uEnc)
+	// TODO: Create uDec, _ := b64.URLEncoding.DecodeString(uEnc)
 	uDec, _ := b64.URLEncoding.DecodeString(uEnc)
-	fmt.Println("uDec:", uDec)
 	fmt.Println(string(uDec))
+	// TODO: Print fmt.Println()
 }

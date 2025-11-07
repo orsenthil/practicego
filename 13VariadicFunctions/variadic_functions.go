@@ -18,18 +18,23 @@ func sum(nums ...int) int {
 	return total
 }
 
+// Within the function, the type of `nums` is equivalent to `[]int`. We can call `len(nums)`,
+// We can iterate over it with `range`, etc.
+
+
 func main() {
 
 	// Variadic functions can be called in the usual way
 	// with individual arguments.
 
-	fmt.Println(sum(1, 2))
-	fmt.Println(sum(1, 2, 3))
+	fmt.Println("sum(1, 2) =", sum(1, 2))
+	fmt.Println("sum(1, 2, 3) =", sum(1, 2, 3))
 
 	// If you already have multiple args in a slice,
 	// apply them to a variadic function using
 	// `func(slice...)` like this.
 
 	nums := []int{1, 2, 3, 4}
-	fmt.Println(sum(nums...))
+	fmt.Println("sum(nums...) =", sum(nums...))
+
 }

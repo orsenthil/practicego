@@ -11,14 +11,11 @@ func main() {
 
 	// We'll iterate over 2 values in the `queue` channel.
 
-	// Create queue channel of strings with buffer size 2
 	queue := make(chan string, 2)
 
-	// Send "one" and "two" to queue channel
-	queue <- "one"
-	queue <- "two"
+	go func() { queue <- "one" }()
+	go func() { queue <- "two" }()
 
-	// Close the queue channel
 	close(queue)
 
 
@@ -27,9 +24,8 @@ func main() {
 	// channel above, the iteration terminates after
 	// receiving the 2 elements.
 
-	// Use range to iterate over queue and print each element
-	for msg := range queue {
-		fmt.Println(msg)
+	for elem := range queue {
+		fmt.Println(elem)
 	}
 
 }

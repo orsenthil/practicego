@@ -21,9 +21,26 @@ func newPerson(name string) *person {
 	return &p
 }
 
+// Go is a garbage collected language; you can safely
+// return a pointer to a local variable - it will only
+// be cleaned up by the garbage collector when there
+// are no active references to it.
+
+
+
 func main() {
-	p := person{"Bob", 20}
-	fmt.Println(p)
+
+	// This syntax creates a new struct.
+
+	fmt.Println(person{"Bob", 20})
+
+	// You can name the fields when initializing a struct.
+
+	fmt.Println(person{name: "Alice", age: 30})
+
+	// Omitted fields will be zero-valued.
+
+	fmt.Println(person{name: "Fred"})
 
 	// An `&` prefix yields a pointer to the struct.
 
@@ -62,4 +79,5 @@ func main() {
 		isGood: true,
 	}
 	fmt.Println(dog)
+
 }

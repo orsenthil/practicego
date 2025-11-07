@@ -18,6 +18,7 @@ func hello(w http.ResponseWriter, req *http.Request) {
 	// the `net/http` machinery, and is available with
 	// the `Context()` method.
 
+	// TODO: Create ctx := req.Context()
 	ctx := req.Context()
 	fmt.Println("server: hello handler started")
 	defer fmt.Println("server: hello handler ended")
@@ -30,14 +31,13 @@ func hello(w http.ResponseWriter, req *http.Request) {
 
 	select {
 	case <- time.After(10 * time.Second):
-		fmt.Println("hello ")
+		fmt.Println("hello\n")
 	case <- ctx.Done():
-		err := ctx.Err()
-		fmt.Println("server:", err)
-		internalError := http.StatusInternalServerError
-		http.Error(w, err.Error(), internalError)
+		fmt.Println("server: ", ctx.Err())
+		http.Error(w, ctx.Err().Error(), http.StatusInternalServerError)
+		return
 	}
-	fmt.Println("hello handler completed")
+	fmt.Println("hello\n")
 }
 
 func main() {

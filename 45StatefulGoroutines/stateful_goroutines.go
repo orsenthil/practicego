@@ -36,7 +36,6 @@ type writeOp struct {
 	resp chan bool
 }
 
-
 func main() {
 
 	// As before we'll count how many operations we perform.
@@ -49,10 +48,10 @@ func main() {
 	// other goroutines to issue read and write requests,
 	// respectively.
 
-	// Create reads channel of readOp
 	reads := make(chan readOp)
 
-	// Create writes channel of writeOp
+	// TODO: Create writes channel of writeOp
+
 	writes := make(chan writeOp)
 
 	// Here is the goroutine that owns the `state`, which
@@ -66,7 +65,7 @@ func main() {
 	// value in the case of `reads`).
 
 	go func() {
-		state := make(map[int]int)
+		var state = make(map[int]int)
 		for {
 			select {
 			case read := <-reads:
@@ -78,12 +77,12 @@ func main() {
 		}
 	}()
 
+
 	// This starts 100 goroutines to issue reads to the
 	// state-owning goroutine via the `reads` channel.
 	// Each read requires constructing a `readOp`, sending
 	// it over the `reads` channel, and then receiving the
 	// result over the provided `resp` channel.
-
 
 	for r := 0; r < 100; r++ {
 		go func() {
@@ -91,13 +90,9 @@ func main() {
 			reads <- read
 			<-read.resp
 			atomic.AddUint64(&readOps, 1)
-			time.Sleep(time.Millisecond)
 		}()
 	}
 
-
-	// We start 10 writes as well, using a similar
-	// approach.
 
 
 	for w := 0; w < 10; w++ {
@@ -106,11 +101,12 @@ func main() {
 			writes <- write
 			<-write.resp
 			atomic.AddUint64(&writeOps, 1)
-			time.Sleep(time.Millisecond)
 		}()
 	}
 
+
 	// Let the goroutines work for a second.
+
 	time.Sleep(time.Second)
 
 	// Finally, capture and report the op counts.

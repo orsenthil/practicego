@@ -36,11 +36,17 @@ func main() {
 
 	// Print out the contents of `single_file.txt`.
 	fmt.Println(fileString)
+	// TODO: Print fileString
 	fmt.Println(string(fileByte))
+	// TODO: Print string(fileByte)
 
 	// Retrieve some files from the embedded folder.
+	// TODO: Create content1, _ := folder.ReadFile("folder/file1.hash")
 	content1, _ := folder.ReadFile("folder/file1.hash")
+	// TODO: Print string(content1)
 	fmt.Println(string(content1))
+	// TODO: Create content2, _ := folder.ReadFile("folder/file2.hash")
 	content2, _ := folder.ReadFile("folder/file2.hash")
 	fmt.Println(string(content2))
+	// TODO: Print string(content2)
 }

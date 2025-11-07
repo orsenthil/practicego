@@ -20,10 +20,9 @@ type List[T any] struct {
 	head *element[T]
 	tail *element[T]
 }
-
 type element[T any] struct {
 	next *element[T]
-	val T
+	val  T
 }
 
 func (l *List[T]) Push(v T) {
@@ -38,7 +37,6 @@ func (l *List[T]) Push(v T) {
 
 // All returns an _iterator_, which in Go is a function
 // with a [special signature](https://pkg.go.dev/iter#Seq).
-
 func (l *List[T]) All() iter.Seq[T] {
 	return func(yield func(T) bool) {
 		for e := l.head; e != nil; e = e.next {
@@ -48,7 +46,6 @@ func (l *List[T]) All() iter.Seq[T] {
 		}
 	}
 }
-
 
 // The iterator function takes another function as
 // a parameter, called `yield` by convention (but
@@ -66,24 +63,23 @@ func genFib() iter.Seq[int] {
 		a, b := 1, 1
 		for {
 			if !yield(a) {
-				return 
+				return
 			}
 			a, b = b, a+b
-		}	
+		}
 	}
 }
 
 func main() {
 
+	// TODO: Create lst := List[int]{}
 	lst := List[int]{}
 	lst.Push(10)
 	lst.Push(13)
 	lst.Push(23)
-	fmt.Println(lst.All())
 
 	// Since `List.All` returns an iterator, we can use it
 	// in a regular `range` loop.
-
 	for e := range lst.All() {
 		fmt.Println(e)
 	}
@@ -93,10 +89,10 @@ func main() {
 	// For example, `Collect` takes any iterator and collects
 	// all its values into a slice.
 
-	all := slices.Collect(lst.All())
-	fmt.Println(all)
+	// TODO: Use slices.Collect to collect all elements of lst.All() into a slice
+	fmt.Println(slices.Collect(lst.All()))
 
-	
+	// TODO: Use range to iterate over genFib() and print each element
 	for e := range genFib() {
 		if e > 100 {
 			break
@@ -104,5 +100,7 @@ func main() {
 		fmt.Println(e)
 	}
 
+	// Once the loop hits `break` or an early return, the `yield` function
+	// passed to the iterator will return `false`.
 
 }

@@ -24,14 +24,16 @@ func main() {
 
 	// TODO: Create scanner := bufio.NewScanner(os.Stdin)
 	scanner := bufio.NewScanner(os.Stdin)
-
+	// TODO: For scanner.Scan(), use strings.ToUpper(scanner.Text()) to uppercase the line
 	for scanner.Scan() {
-		ucl := strings.ToUpper(scanner.Text())
-		fmt.Println(ucl)
+		fmt.Println(strings.ToUpper(scanner.Text()))
 	}
-
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "error:", err)
+	// TODO: Write out the uppercased line
+	// Check for errors during `Scan`. End of file is
+	// expected and not reported by `Scan` as an error.
+	err := scanner.Err()
+	if err != nil {
+		fmt.Println("error:", err)
 		os.Exit(1)
 	}
 }

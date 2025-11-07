@@ -8,12 +8,14 @@ package main
 import (
 	"fmt"
 	"log"
+	"log/slog"
 )
 
 func main() {
-	fmt.Println("Practicing: Logging")
-	log.Println("Hello from log.Println")
-	log.Printf("Hello from log.Printf with %d\n", 42)
-	log.Fatalln("Hello from log.Fatalln")
-	log.Panicln("Hello from log.Panicln")
+	// TODO: Implement logging concepts
+	log.Println("Practicing: Logging")
+	slog.Info("Practicing: Logging")
+	slog.Error("Practicing: Logging")
+	slog.Warn("Practicing: Logging")
+	slog.Debug("Practicing: Logging")
 }

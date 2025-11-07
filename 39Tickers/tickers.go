@@ -18,13 +18,10 @@ func main() {
 	// `select` builtin on the channel to await the
 	// values as they arrive every 500ms.
 
-	// Create ticker with 500 milliseconds using NewTicker
-	ticker := time.NewTicker(500 * time.Millisecond)
+	ticker := time.NewTicker(time.Millisecond * 500)
 
-	// Create done channel of bool
 	done := make(chan bool)
 
-	// Creat a goroutine that receives from ticker.C and prints the result
 	go func() {
 		for {
 			select {
@@ -36,14 +33,13 @@ func main() {
 		}
 	}()
 
+
 	// Tickers can be stopped like timers. Once a ticker
 	// is stopped it won't receive any more values on its
 	// channel. We'll stop ours after 1600ms.
 
-	// Give the ticker enough time to fire, if it ever
-	// was going to, to show it is in fact stopped.
-	time.Sleep(1600 * time.Millisecond)
-	ticker.Stop()
-	fmt.Println("Ticker stopped")
+	time.Sleep(time.Millisecond * 1600)
 	done <- true
+	fmt.Println("Ticker stopped")
+
 }
