@@ -11,12 +11,7 @@ import (
 
 // This is the function we'll run in every goroutine.
 
-
-func worker(id int) {
-	fmt.Println("Worker", id, "starting")
-	time.Sleep(time.Second)
-	fmt.Println("Worker", id, "done")
-}
+// TODO: Define function worker(id int) that prints "Worker %d starting" and "Worker %d done" after sleeping for 1 second
 
 func main() {
 
@@ -24,19 +19,17 @@ func main() {
 	// goroutines launched here to finish. Note: if a WaitGroup is
 	// explicitly passed into functions, it should be done *by pointer*.
 
-	wg := sync.WaitGroup{}
+	// TODO: Create wg sync.WaitGroup
 
 	// Launch several goroutines using `WaitGroup.Go`
 
-	for i := 1; i <= 5; i++ {
-		wg.Add(1)
-		go worker(i)
-	}
+	// TODO: Launch 5 workers using worker function
 
 	// Block until all the goroutines started by `wg` are
 	// done. A goroutine is done when the function it invokes
 	// returns.
 
+	// TODO: Wait for all the goroutines to finish
 	wg.Wait()
 
 	// Note that this approach has no straightforward way

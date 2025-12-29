@@ -25,15 +25,13 @@ func main() {
 	// Since strings are equivalent to `[]byte`, this
 	// will produce the length of the raw bytes stored within.
 
-	fmt.Println("len(s) =", len(s))
+	// TODO: Print length of s
 
 	// Indexing into a string produces the raw byte values at
 	// each index. This loop generates the hex values of all
 	// the bytes that constitute the code points in `s`.
 
-	for i := range s {
-		fmt.Printf("%x ", s[i])
-	}
+	// TODO: Loop through s and print hex values
 
 	// To count how many _runes_ are in a string, we can use
 	// the `utf8` package. Note that the run-time of
@@ -43,36 +41,24 @@ func main() {
 	// that can span multiple bytes, so the result of this count
 	// may be surprising.
 
-	fmt.Println("utf8.RuneCountInString(s) =", utf8.RuneCountInString(s))
+	// TODO: Print rune count of s. Use utf8.RuneCountInString
 
 	// A `range` loop handles strings specially and decodes
 	// each `rune` along with its offset in the string.
 
-	for i, r := range s {
-		fmt.Printf("index = %d, rune = %c\n", i, r)
-	}
+	// TODO: Loop through s and print index and rune value
 
 	// We can achieve the same iteration by using the
 	// `utf8.DecodeRuneInString` function explicitly.
 
 
-	for i, w := 0, 0; i < len(s); i += w {
-		r, width := utf8.DecodeRuneInString(s[i:])
-		fmt.Printf("index = %d, rune = %c\n", i, r)
-		w = width
-	}
+	// TODO: Loop through s and print index and rune value using utf8.DecodeRuneInString
+	// Use for loop and i, w := 0, 0; i < len(s); i += w, where w is the width of the rune
+
+	// Also demonstrate passing a `rune` value to a function, examineRune
 
 	fmt.Println("\nUsing DecodeRuneInString")
 
-	examineRune('t')
-	examineRune('ส')
-
 }
 
-func examineRune(r rune) {
-	if r == 't' {
-		fmt.Println("found tee")
-	} else if r == 'ส' {
-		fmt.Println("found so sua")
-	}
-}
+// TODO: Create function examineRune(r rune) that prints "found tee" if r is 't' and "found so sua" if r is 'ส'

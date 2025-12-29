@@ -13,13 +13,21 @@ func main() {
 	// Here's a basic `switch`.
 
 	i := 2
-	fmt.Print("Write ", i, " as ")
+	switch i {
+	case 1:
+		fmt.Println("one")
+	case 2:
+		fmt.Println("two")
+	case 3:
+		fmt.Println("three")
+	}
 
 	// You can use commas to separate multiple expressions
 	// in the same `case` statement. We use the optional
 	// `default` case in this example as well.
 
-	switch time.Now().Weekday() {
+	t := time.Now()
+	switch t.Weekday() {
 	case time.Saturday, time.Sunday:
 		fmt.Println("It's the weekend")
 	default:
@@ -31,7 +39,8 @@ func main() {
 	// to express if/else logic. Here we also show how the
 	// `case` expressions can be non-constants.
 
-	t := time.Now()
+	t = time.Now()
+
 	switch {
 	case t.Hour() < 12:
 		fmt.Println("It's before noon")
@@ -39,25 +48,23 @@ func main() {
 		fmt.Println("It's after noon")
 	}
 
-
 	// A type `switch` compares types instead of values.  You
 	// can use this to discover the type of an interface
-	// value.  In this example, the variable `i` will have the
+	// value.  In this example, the variable `t` will have the
 	// type corresponding to its clause.
 
 	WhatAmI := func(i interface{}) {
-		switch i.(type) {
+		switch t := i.(type) {
+		case bool:
+			fmt.Println("I'm a bool")
 		case int:
 			fmt.Println("I'm an int")
-		case string:
-			fmt.Println("I'm a string")
 		default:
-			fmt.Println("I'm something else")
+			fmt.Printf("Don't know type %T\n", t)
 		}
 	}
-	WhatAmI(1)
-	WhatAmI("hello")
 	WhatAmI(true)
-
+	WhatAmI(1)
+	WhatAmI("hey")
 
 }

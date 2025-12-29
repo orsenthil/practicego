@@ -15,18 +15,18 @@ func main() {
 	// _ordered_ built-in type. For a list of ordered
 	// types, see [cmp.Ordered](https://pkg.go.dev/cmp#Ordered).
 
+	// TODO: Create slice strs of strings with values "c", "a", "b"
 
-	strs := []string{"c", "a", "b"}
-	slices.Sort(strs)
+	// TODO: Sort strs using slices.Sort
 
 	// TODO: Print Strings: strs
 
 
 	// An example of sorting `int`s.
 
-	ints := []int{7, 2, 4}
+	// TODO: Create slice ints of ints with values 7, 2, 4
 
-	slices.Sort(ints)
+	// TODO: Sort ints using slices.Sort
 
 	// TODO: Print Ints: ints
 
@@ -34,8 +34,8 @@ func main() {
 	// We can also use the `slices` package to check if
 	// a slice is already in sorted order.
 
-	fmt.Println(slices.IsSorted(ints))
+	// TODO: Check if ints is sorted using slices.IsSorted
 
-	fmt.Println(slices.IsSorted(strs))
+	// TODO: Print Sorted: s
 
 }

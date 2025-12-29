@@ -18,9 +18,7 @@ func main() {
 	// an empty string if the key isn't present in the
 	// environment.
 
-	os.Setenv("FOO", "1")
-	fmt.Println("FOO:", os.Getenv("FOO"))
-	fmt.Println("BAR:", os.Getenv("BAR"))
+	// TODO: Create os.Setenv("FOO", "1")
 	// TODO: Create fmt.Println("FOO:", os.Getenv("FOO"))
 	// TODO: Create fmt.Println("BAR:", os.Getenv("BAR"))
 

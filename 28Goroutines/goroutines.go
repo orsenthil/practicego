@@ -7,11 +7,8 @@ import (
 	"time"
 )
 
-func f(from string) {
-	for i := 0; i < 3; i++ {
-		fmt.Println(from, i)
-	}
-}
+// TODO: Define function f(from string) that prints from and i in each iteration
+// inside, use i:= range 3 to iterate
 
 
 func main() {
@@ -20,25 +17,26 @@ func main() {
 	// we'd call that in the usual way, running it
 	// synchronously.
 
-	f("direct")
+	// TODO: Call f("direct")
+
 
 	// To invoke this function in a goroutine, use
 	// `go f(s)`. This new goroutine will execute
 	// concurrently with the calling one.
 
-	go f("goroutine")
+	// TODO: Call go f("goroutine")
 
 
 	// You can also start a goroutine for an anonymous
 	// function call.
 
-	go func(msg string) {
-		fmt.Println(msg)
-	}("going")
+	// TODO: Call go func(msg string) {
+	// fmt.Println(msg)
+	// }("going")
 
 	// Our two function calls are running asynchronously in
 	// separate goroutines now. Wait for them to finish
 	// (for a more robust approach, use a [WaitGroup](waitgroups)).
 
-	time.Sleep(time.Second)
+	// TODO: Sleep for 1 second
 }

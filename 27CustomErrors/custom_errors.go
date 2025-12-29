@@ -12,25 +12,17 @@ import (
 
 // A custom error type usually has the suffix "Error".
 
-type argError struct {
-	arg  int
-	message string
-}
+// TODO: Define struct argError with arg int and message string fields
+
 
 // Adding this `Error` method makes `argError` implement
 // the `error` interface.
 
-func (e *argError) Error() string {
-	return fmt.Sprintf("%d - %s", e.arg, e.message)
-}
+// TODO: Define method Error() string on argError that returns fmt.Sprintf("%d - %s", e.arg, e.message)
 
 
-func f(arg int) (int, error) {
-	if arg == 42 {
-		return -1, &argError{arg, "can't work with it"}
-	}
-	return arg + 3, nil
-}
+// TODO: Define function f(arg int) (int, error) that returns -1, &argError{arg, "can't work with it"} if arg == 42,
+// otherwise returns arg + 3, nil
 
 
 func main() {
@@ -40,15 +32,10 @@ func main() {
 	// matches a specific error type and converts to a value
 	// of that type, returning `true`. If there's no match, it
 	// returns `false`.
-	for _, i := range []int{7, 42} {
-		if r, err := f(i); err != nil {
-			fmt.Println("f(", i, ") =", r, err)
-		}
-	}
+	_, err := f(42)
 	var ae *argError
-	if errors.As(err, &ae) {
-		fmt.Println(ae.arg)
-		fmt.Println(ae.message)
-	}
+
+	// TODO: Use errors.As to check if err is an argError
+	// TODO: Print arg and message
 
 }

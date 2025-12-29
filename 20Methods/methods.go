@@ -4,30 +4,24 @@ package main
 
 import "fmt"
 
-type rect struct {
-	width float64
-	height float64
-}
+// TODO: Define struct rect with width, height float64
 
-func (r *rect) area() float64 {
-	return r.width * r.height
-}
+// Here we define an `area` method which has a _receiver type_ of `*rect`.
+
+// TODO: Create method area() float64 on rect that returns width * height
 
 // Methods can be defined for either pointer or value receiver types.
 // Here's an example of a value receiver.
 
-func (r *rect) perim() float64 {
-	return 2*r.width + 2*r.height
-}
-
+// TODO: Create method perim() float64 on rect that returns 2*width + 2*height
 
 func main() {
 	r := rect{width: 10, height: 5}
 
 	// Here we call the 2 methods defined for our struct.
 
-	fmt.Println("area:", r.area())
-	fmt.Println("perim:", r.perim())
+	// TODO: Call r.area() and print the result
+	// TODO: Call r.perim() and print the result
 
 	// Go automatically handles conversion between values
 	// and pointers for method calls. You may want to use
@@ -35,7 +29,6 @@ func main() {
 	// calls or to allow the method to mutate the
 	// receiving struct.
 
-	rp := &r
-	fmt.Println("area:", rp.area())
-	fmt.Println("perim:", rp.perim())
+	// TODO: Create rp := &r
+	// TODO: Call rp.area() and rp.perim() and print results
 }

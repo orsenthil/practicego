@@ -15,22 +15,22 @@ import (
 
 func main() {
 	// TODO: Create s := "sha256 this string"
-	s := "sha256 this string"
+
 	// Here we start with a new hash.
 	// TODO: Create h := sha256.New()
-	h := sha256.New()
+
 	// `Write` expects bytes. If you have a string `s`,
 	// use `[]byte(s)` to coerce it to bytes.
 
 	// TODO: h.Write([]byte(s))
-	h.Write([]byte(s))
+
 	// This gets the finalized hash result as a byte
 	// slice. The argument to `Sum` can be used to append
 	// to an existing byte slice: it usually isn't needed.
 
 	// TODO: Create bs := h.Sum(nil)
-	bs := h.Sum(nil)
+
 	// TODO: Print s
-	// TODO: Print fmt.Printf("%x ", bs)
-	fmt.Printf("%x\n", bs)
+	// TODO: Print fmt.Printf("%x
+", bs)
 }

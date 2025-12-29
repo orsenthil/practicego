@@ -8,76 +8,61 @@ import "fmt"
 
 // This `person` struct type has `name` and `age` fields.
 
-type person struct {
-	name string
-	age int
-}
+// TODO: Define struct person with name (string) and age (int) fields
 
 // `newPerson` constructs a new person struct with the given name.
 
-func newPerson(name string) *person {
-	p := person{name: name}
-	p.age = 42
-	return &p
-}
-
+// TODO: Create function newPerson(name string) *person
 // Go is a garbage collected language; you can safely
 // return a pointer to a local variable - it will only
 // be cleaned up by the garbage collector when there
 // are no active references to it.
-
-
+// Create person p with the given name, set p.age = 42, return &p
 
 func main() {
 
 	// This syntax creates a new struct.
 
-	fmt.Println(person{"Bob", 20})
+	// TODO: Print person{"Bob", 20}
 
 	// You can name the fields when initializing a struct.
 
-	fmt.Println(person{name: "Alice", age: 30})
+	// TODO: Print person{name: "Alice", age: 30}
 
 	// Omitted fields will be zero-valued.
 
-	fmt.Println(person{name: "Fred"})
+	// TODO: Print person{name: "Fred"}
 
 	// An `&` prefix yields a pointer to the struct.
 
-	fmt.Println(&person{name: "Ann", age: 40})
+	// TODO: Print &person{name: "Ann", age: 40}
 
 	// It's idiomatic to encapsulate new struct creation in constructor functions
 
-	fmt.Println(newPerson("Jon"))
+	// TODO: Print newPerson("Jon")
 
 	// Access struct fields with a dot.
 
-	s := person{name: "Sean", age: 50}
-	fmt.Println(s.name)
+	// TODO: Create s := person{name: "Sean", age: 50}
+	// TODO: Print s.name
 
 	// You can also use dots with struct pointers - the
 	// pointers are automatically dereferenced.
 
-	sp := &s
-	fmt.Println(sp.age)
+	// TODO: Create sp := &s
+	// TODO: Print sp.age
 
 	// Structs are mutable.
 
-	sp.age = 51
-	fmt.Println(sp.age)
+	// TODO: Set sp.age = 51
+	// TODO: Print sp.age
 
 	// If a struct type is only used for a single value, we don't
 	// have to give it a name. The value can have an anonymous
 	// struct type. This technique is commonly used for
 	// [table-driven tests](testing-and-benchmarking).
 
-	dog := struct {
-		name string
-		isGood bool
-	}{
-		name: "Rex",
-		isGood: true,
-	}
-	fmt.Println(dog)
+	// TODO: Create anonymous struct dog with name (string) and isGood (bool) fields
+	// Initialize with "Rex" and true, then print it
 
 }

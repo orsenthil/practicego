@@ -13,7 +13,7 @@ func main() {
 	// unexpected errors. This is the only program on the
 	// site designed to panic.
 
-	panic("a problem")
+	// TODO: Panic with "a problem"
 
 
 	// A common use of panic is to abort if a function
@@ -21,10 +21,7 @@ func main() {
 	// (or want to) handle. Here's an example of
 	// `panic`king if we get an unexpected error when creating a new file.
 
-	f, err := os.Create("/tmp/file")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
+	// TODO: Create a new file with os.Create("/tmp/file")
+	// TODO: Check if err is not nil, panic with err
 
 }

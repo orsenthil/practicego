@@ -25,7 +25,6 @@ func main() {
 		fmt.Println("8 is divisible by 4")
 	}
 
-
 	// Logical operators like `&&` and `||` are often
 	// useful in conditions.
 
@@ -45,8 +44,5 @@ func main() {
 	} else {
 		fmt.Println(num, "has multiple digits")
 	}
-	// otherwise if num < 10, print num "has 1 digit"
-	// otherwise print num "has multiple digits"
-
 
 }

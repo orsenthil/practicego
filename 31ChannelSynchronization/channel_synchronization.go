@@ -15,12 +15,8 @@ import (
 // `done` channel will be used to notify another
 // goroutine that this function's work is done.
 
-func worker(done chan bool) {
-	fmt.Println("working...")
-	time.Sleep(time.Second)
-	fmt.Println("done")
-	done <- true
-}
+// TODO: Define function worker(done chan bool) that prints "working..." and sleeps for 1 second, 
+// then prints "done" and sends true to the done channel.
 
 
 func main() {
@@ -28,12 +24,12 @@ func main() {
 	// Start a worker goroutine, giving it the channel to
 	// notify on.
 
-	done := make(chan bool, 1)
+	// TODO: Create done channel of bool with buffer size 1
 
-	go worker(done)
+	// TODO: Call go worker(done)
 
 	// Block until we receive a notification from the
 	// worker on the channel.
 
-	<-done
+	// TODO: Receive from done channel
 }

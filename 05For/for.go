@@ -17,10 +17,8 @@ func main() {
 
 	// A classic initial/condition/after `for` loop.
 
-	j := 0
-	for j < 3 {
+	for j := 0; j < 3; j++ {
 		fmt.Println(j)
-		j++
 	}
 
 	// Another way of accomplishing the basic "do this
@@ -48,5 +46,4 @@ func main() {
 		}
 		fmt.Println(i)
 	}
-	
 }

@@ -12,9 +12,7 @@ import "fmt"
 // value. `zeroval` will get a copy of `ival` distinct
 // from the one in the calling function.
 
-func zeroval(ival int) {
-	ival = 0
-}
+// TODO: Create function zeroval(ival int) that sets ival = 0
 
 // `zeroptr` in contrast has an `*int` parameter, meaning
 // that it takes an `int` pointer. The `*iptr` code in the
@@ -23,24 +21,20 @@ func zeroval(ival int) {
 // Assigning a value to a dereferenced pointer changes the
 // value at the referenced address.
 
-func zeroptr(iptr *int) {
-	*iptr = 0
-}
+// TODO: Create function zeroptr(iptr *int) that sets *iptr = 0
 
 
 func main() {
 
-	i := 1
+	// TODO: Create variable i := 1
 
-	zeroval(i)
-	fmt.Println("zeroval(i) =", i)
+	// TODO: Call zeroval(i) and print result
 
 	// The `&i` syntax gives the memory address of `i`,
 	// i.e. a pointer to `i`.
 
-	zeroptr(&i)
-	fmt.Println("zeroptr(i) =", i)
+	// TODO: Call zeroptr(&i) and print result
 
 	// Pointers can be printed too
-	fmt.Println("&i =", &i)
+	// TODO: Print pointer of i using &i
 }

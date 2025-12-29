@@ -24,8 +24,6 @@ func main() {
 	// `/bin/ls`).
 
 	// TODO: Create binary, lookErr := exec.LookPath("ls")
-	binary, lookErr := exec.LookPath("ls")
-	fmt.Println(lookErr)
 	// TODO: Print lookErr
 
 	// `Exec` requires arguments in slice form (as
@@ -34,15 +32,13 @@ func main() {
 	// be the program name.
 
 	// TODO: Create args := []string{"ls", "-a", "-l", "-h"}
-	args := []string{"ls", "-a", "-l", "-h"}
+
 	// `Exec` also needs a set of [environment variables](environment-variables)
 	// to use. Here we just provide our current
 	// environment.
 
 	// TODO: Create env := os.Environ()
-	env := os.Environ()			
-	execErr := syscall.Exec(binary, args, env)
-	fmt.Println(execErr)
+
 	// Here's the actual `syscall.Exec` call. If this call is
 	// successful, the execution of our process will end
 	// here and be replaced by the `/bin/ls -a -l -h`
@@ -50,4 +46,5 @@ func main() {
 	// value.
 
 	// TODO: Create execErr := syscall.Exec(binary, args, env)
+	// TODO: Print execErr
 }

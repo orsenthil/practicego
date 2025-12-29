@@ -12,7 +12,6 @@ import (
 const s string = "constant"
 
 func main() {
-	fmt.Println(s)
 
 	// A `const` statement can appear anywhere a `var`
 	// statement can.
@@ -22,12 +21,13 @@ func main() {
 	// Constant expressions perform arithmetic with
 	// arbitrary precision.
 
-	const d = 3e20 / n
+	d := 3e20 / n
 	fmt.Println(d)
 
 	// A numeric constant has no type until it's given
 	// one, such as by an explicit conversion.
 
+	// TODO: Print d converted to int64
 	fmt.Println(int64(d))
 
 	// A number can be given a type by using it in a

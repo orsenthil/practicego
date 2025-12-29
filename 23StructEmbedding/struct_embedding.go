@@ -9,20 +9,13 @@ package main
 import "fmt"
 
 // TODO: Define struct base with num int field
-type base struct {
-	num int
-}
 
-func (b *base) describe() string {
-	return fmt.Sprintf("base with num=%v", b.num)
-}
+// TODO: Create method describe() string on base that returns fmt.Sprintf("base with num=%v", b.num)
+
 // A `container` _embeds_ a `base`. An embedding looks
 // like a field without a name.
 
-type container struct {
-	base
-	str string
-}
+// TODO: Define struct container that embeds base and has str string field
 
 func main() {
 
@@ -30,35 +23,31 @@ func main() {
 	// initialize the embedding explicitly; here the
 	// embedded type serves as the field name.
 
-	co := container{base: base{num: 1}, str: "some name"}
-	fmt.Printf("co={num: %v, str: %v}\n", co.num, co.str)
+	// TODO: Create co := container with base: base{num: 1} and str: "some name"
 
 	// We can access the base's fields directly on `co`,
 	// e.g. `co.num`.
 
-	fmt.Printf("also num: %v\n", co.base.num)
+	// TODO: Print "co={num: %v, str: %v}" with co.num and co.str
 
 	// Alternatively, we can spell out the full path using
 	// the embedded type name.
 
-	fmt.Printf("describe: %v\n", co.describe())
+	// TODO: Print "also num:" followed by co.base.num
 
 	// Since `container` embeds `base`, the methods of
 	// `base` also become methods of a `container`. Here
 	// we invoke a method that was embedded from `base`
 	// directly on `co`.
 
-	fmt.Printf("describe: %v\n", co.describe())
+	// TODO: Print "describe:" followed by co.describe()
 
-	type describer interface {
-		describe() string
-	}
+	// TODO: Define interface describer with describe() string method
 
 	// Embedding structs with methods may be used to bestow
 	// interface implementations onto other structs. Here
 	// we see that a `container` now implements the
 	// `describer` interface because it embeds `base`.
 
-	d := co
-	fmt.Printf("describer: %v\n", d.describe())
+	// TODO: Create var d describer = co and print "describer:" followed by d.describe()
 }

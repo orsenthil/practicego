@@ -19,54 +19,35 @@ import (
 
 // TODO: Define struct Container with mu (sync.Mutex) and counters (map[string]int) fields
 
-type Container struct {
-	mu sync.Mutex
-	counters map[string]int
-}
+// TODO: Create method inc(name string) on Container that locks the mutex and increments the counter for the given name
+// Lock the mutex before accessing `counters`; unlock
+// it at the end of the function using a [defer](defer)
+// statement.
 
-func (c *Container) inc(name string) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-	c.counters[name]++
-}
 
 func main() {
 	
 	// Note that the zero value of a mutex is usable as-is, so no
 	// initialization is required here.
 
-	c := Container{
-		counters: map[string]int{"a": 0, "b": 0},
-	}
+	// TODO: Create c Container with counters map[string]int{"a": 0, "b": 0}
 
-	wg := sync.WaitGroup{}
+	// TODO: Create wg sync.WaitGroup
 
 	// This function increments a named counter
 	// in a loop.
 
-	doIncrement := func(c *Container, name string, n int) {
-		for i := 0; i < n; i++ {
-			c.inc(name)
-		}
-	}
+	// TODO: Define function doIncrement(name string, n int) that increments the counter for the given name in a loop
 
 	// Run several goroutines concurrently; note
 	// that they all access the same `Container`,
 	// and two of them access the same counter.
 
-	for i := 0; i < 3; i++ {
-		wg.Add(1)
-		go func() {
-			doIncrement(&c, "a", 10000)
-			doIncrement(&c, "a", 10000)
-			doIncrement(&c, "b", 10000)
-			wg.Done()
-		}()
-	}
+	// TODO: Launch 3 goroutines using wg.Go that call doIncrement with "a" and 10000, "a" and 10000, and "b" and 10000
 
 	// Wait for the goroutines to finish
 
-	wg.Wait()
+	// TODO: Wait for all the goroutines to finish.
 
-	fmt.Println(c.counters)
+	// TODO: Print the result of the counters with c.counters
 }

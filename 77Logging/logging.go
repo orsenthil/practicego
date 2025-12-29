@@ -5,17 +5,9 @@
 
 package main
 
-import (
-	"fmt"
-	"log"
-	"log/slog"
-)
+import "fmt"
 
 func main() {
 	// TODO: Implement logging concepts
-	log.Println("Practicing: Logging")
-	slog.Info("Practicing: Logging")
-	slog.Error("Practicing: Logging")
-	slog.Warn("Practicing: Logging")
-	slog.Debug("Practicing: Logging")
+	fmt.Println("Practicing: Logging")
 }

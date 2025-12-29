@@ -19,36 +19,25 @@ func main() {
 	// function, and proceed to define new flags specific
 	// for this subcommand.
 
-	fooCmd := flag.NewFlagSet("foo", flag.ExitOnError)
-	fooEnable := fooCmd.Bool("enable", false, "enable")
-	fooName := fooCmd.String("name", "", "name")
+	// TODO: Create fooCmd := flag.NewFlagSet("foo", flag.ExitOnError)
+	// TODO: Create fooEnable := fooCmd.Bool("enable", false, "enable")
+	// TODO: Create fooName := fooCmd.String("name", "", "name")
 
 	// For a different subcommand we can define different
 	// supported flags.
 
-	barCmd := flag.NewFlagSet("bar", flag.ExitOnError)
-	barLevel := barCmd.Int("level", 0, "level")
+	// TODO: Create barCmd := flag.NewFlagSet("bar", flag.ExitOnError)
+	// TODO: Create barLevel := barCmd.Int("level", 0, "level")
 
 	// The subcommand is expected as the first argument
 	// to the program.
 
-	if len(os.Args) < 2 {
-		fmt.Println("expected 'foo' or 'bar' subcommands")
-		os.Exit(1)
-	}
+	// TODO: If len(os.Args) < 2, fmt.Println("expected 'foo' or 'bar' subcommands")
 	// TODO: os.Exit(1)
 
 	// Check which subcommand is invoked.
 
-	switch os.Args[1] {
-	case "foo":
-		fooCmd.Parse(os.Args[2:])
-		fmt.Println("enable:", *fooEnable)
-		fmt.Println("name:", *fooName)
-	case "bar":
-		barCmd.Parse(os.Args[2:])
-		fmt.Println("level:", *barLevel)
-	}
+	// TODO: switch os.Args[1] {
 	// If the case is "foo", parse the fooCmd flags, if the case is "bar", parse the barCmd flags.
 	// default print "expected 'foo' or 'bar' subcommands" and exit with 1
 
