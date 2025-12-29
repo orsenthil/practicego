@@ -8,16 +8,30 @@ https://gobyexample.com/
 
 # Keyboards
 
-To run the task, run command+shift+b
+* To run the task, run command+shift+b
+* Control + F5 will run the program.
+
 
 # How to use this?
 
-Run the python program
+1. Run the python program
 
-
+```sh
 python3 setup_go_practice.py
+```
 
 * This will create the template files.
-* You will have fill the template, run the program.
-* Test your understanding.
+
+2. Read the Program and complete them.
+
+
+3. Test your understanding by reading the completed programs.  
+
+4. Ask Questions with AI.
+
+5. Add Enhancements.
+
+6. Go Back to Step 1.
+
+
 
