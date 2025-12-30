@@ -4,6 +4,13 @@ This repository is for me to help practice Go.
 
 https://gobyexample.com/
 
+
+# References
+
+- Reference to Language Docs.
+- Reference to Language Implementation Code
+- Reference to Wikipedia or Research Papers for Concepts
+
 # Practice Log
 
 # Keyboards

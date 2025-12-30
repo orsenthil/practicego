@@ -13,23 +13,36 @@ func main() {
 
 	// For our example we'll select across two channels.
 
-	// TODO: Create c1 channel of strings
+	c1 := make(chan string)
 
-	// TODO: Create c2 channel of strings
+	c2 := make(chan string)
 
 
 	// Each channel will receive a value after some amount
 	// of time, to simulate e.g. blocking RPC operations
 	// executing in concurrent goroutines.
 
-	// TODO Creat a goroutine that sends "one" to c1 after 1 second
+	go func() {
+		time.Sleep(time.Second)
+		c1 <- "one"
+	}()
 
-	// TODO: Creat a goroutine that sends "two" to c2 after 2 seconds
+	go func() {
+		time.Sleep(2 * time.Second)
+		c2 <- "two"
+	}()
 
 
 	// We'll use `select` to await both of these values
 	// simultaneously, printing each one as it arrives.
 
-	// TODO: Use for range 2 to receive from c1 and c2
+	for i := 0; i < 2; i++ {
+		select {
+		case msg1 := <-c1:
+			fmt.Println("received", msg1)
+		case msg2 := <-c2:
+			fmt.Println("received", msg2)
+		}
+	}
 
 }

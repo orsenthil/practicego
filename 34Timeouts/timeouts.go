@@ -19,9 +19,12 @@ func main() {
 	// common pattern to prevent goroutine leaks in case the
 	// channel is never read.
 
-	// TODO: Create c1 channel of strings with buffer size 1
+	c1 := make(chan string, 1)
 
-	// TODO: Creat a goroutine that sends "result 1" to c1 after 2 seconds
+	go func() {
+		time.Sleep(2 * time.Second)
+		c1 <- "result 1"
+	}()
 
 
 	// Here's the `select` implementing a timeout.
@@ -31,18 +34,29 @@ func main() {
 	// receive that's ready, we'll take the timeout case
 	// if the operation takes more than the allowed 1s.
 
-	// TODO: Use select to receive from c1 and print the result
-	// or print "timeout 1" if the operation takes more than 1 second
+	select {
+	case msg := <-c1:
+		fmt.Println(msg)
+	case <-time.After(1 * time.Second):
+		fmt.Println("timeout 1")
+	}
 
 
 	// If we allow a longer timeout of 3s, then the receive
 	// from `c2` will succeed and we'll print the result.
 
-	// TODO: Create c2 channel of strings with buffer size 1
+	c2 := make(chan string, 1)
 
-	// TODO: Creat a goroutine that sends "result 2" to c2 after 2 seconds
+	go func() {
+		time.Sleep(2 * time.Second)
+		c2 <- "result 2"
+	}()
 
-	// TODO: Use select to receive from c2 and print the result
-	// or print "timeout 2" if the operation takes more than 3 seconds
+	select {
+	case msg := <-c2:
+		fmt.Println(msg)
+	case <-time.After(3 * time.Second):
+		fmt.Println("timeout 2")
+	}
 
 }

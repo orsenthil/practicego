@@ -10,32 +10,53 @@ import (
 
 // Here's a basic interface for geometric shapes.
 
-// TODO: Define interface geometry with area() float64 and perim() float64 methods
+type geometry interface {
+	area() float64
+	perim() float64
+}
 
 // For our example we'll implement this interface on
 // `rect` and `circle` types.
 
-// TODO: Define struct rect with width, height float64
-// TODO: Define struct circle with radius float64
+type rect struct {
+	width  float64
+	height float64
+}
+
+type circle struct {
+	radius float64
+}
 
 // To implement an interface in Go, we just need to
 // implement all the methods in the interface. Here we
 // implement `geometry` on `rect`s.
 
-// TODO: Implement area() method on rect that returns width * height
-// TODO: Implement perim() method on rect that returns 2*width + 2*height
+func (r *rect) area() float64 {
+	return r.width * r.height
+}
+func (r *rect) perim() float64 {
+	return 2*r.width + 2*r.height
+}
 
 // The implementation for `circle`s.
 
-// TODO: Implement area() method on circle that returns math.Pi * radius * radius
-// TODO: Implement perim() method on circle that returns 2 * math.Pi * radius
+func (c *circle) area() float64 {
+	return math.Pi * c.radius * c.radius
+}
+func (c *circle) perim() float64 {
+	return 2 * math.Pi * c.radius
+}
 
 // If a variable has an interface type, then we can call
 // methods that are in the named interface. Here's a
 // generic `measure` function taking advantage of this
 // to work on any `geometry`.
 
-// TODO: Create function measure(g geometry) that prints g, g.area(), and g.perim()
+func measure(g geometry) {
+	fmt.Println(g)
+	fmt.Println(g.area())
+	fmt.Println(g.perim())
+}
 
 func main() {
 	r := rect{width: 3, height: 4}
@@ -45,7 +66,8 @@ func main() {
 	// implement the `geometry` interface so we can use
 	// instances of these structs as arguments to `measure`.
 
-	// TODO: Call measure(r) and measure(c)
+	measure(&r)
+	measure(&c)
 
 	// Sometimes it's useful to know the runtime type of an
 	// interface value. One option is using a *type assertion*
@@ -56,5 +78,17 @@ func main() {
 	// Check if i is a rect, if so print "Rectangle" and dimensions
 	// Otherwise print "Unknown type"
 
-	// TODO: Call describe(r) and describe(c)
+	describe := func(i interface{}) {
+		switch t := i.(type) {
+		case *circle:
+			fmt.Println("Circle with radius", t.radius)
+		case *rect:
+			fmt.Println("Rectangle with width", t.width, "and height", t.height)
+		default:
+			fmt.Println("Unknown type")
+		}
+	}
+
+	describe(&r)
+	describe(&c)
 }

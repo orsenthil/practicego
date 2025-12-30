@@ -12,10 +12,13 @@ import "fmt"
 // returned function _closes over_ the variable `i` to
 // form a closure.
 
-// TODO: Create function intSeq() func() int
-// Inside, create variable i := 0
-// Return anonymous function that increments i and returns it
-
+func intSeq() func() int {
+	i := 0
+	return func() int {
+		i++
+		return i
+	}
+}
 
 func main() {
 
@@ -24,15 +27,17 @@ func main() {
 	// own `i` value, which will be updated each time
 	// we call `nextInt`.
 
-	// TODO: Call intSeq() and assign to nextInt
+	nextInt := intSeq()
 
 	// See the effect of the closure by calling `nextInt`
 	// a few times.
 
-	// TODO: Call nextInt() multiple times and print results for each call
+	fmt.Println(nextInt())
+	fmt.Println(nextInt())
 
 	// To confirm that the state is unique to that
 	// particular function, create and test a new one.
 
-	// TODO: Create newInts := intSeq() and call it to show separate state
+	newInts := intSeq()
+	fmt.Println(newInts())
 }

@@ -11,25 +11,30 @@ import "fmt"
 // values. It would be a compile-time error to try to
 // receive on this channel.
 
-// TODO: Define function ping(pings chan<- string, msg string) that sends msg to pings channel
+func ping(pings chan<- string, msg string) {
+	pings <- msg
+}
 
 
 // The `pong` function accepts one channel for receives
 // (`pings`) and a second for sends (`pongs`).
 
-// TODO: Define function pong(pings <-chan string, pongs chan<- string) that 
-// receives msg from pings channel and sends it to pongs channel
+func pong(pings <-chan string, pongs chan<- string) {
+	msg := <-pings
+	pongs <- msg
+}
 
 
 func main() {
 
-	// TODO: Create pings channel of strings with buffer size 1
+	pings := make(chan string, 1)
 
-	// TODO: Create pongs channel of strings with buffer size 1
+	pongs := make(chan string, 1)
 
-	// TODO: Call ping(pings, "passed message")
+	ping(pings, "passed message")
 
-	// TODO: Call pong(pings, pongs)
+	pong(pings, pongs)
 
-	// TODO: Receive from pongs channel and print it
+	msg := <-pongs
+	fmt.Println(msg)
 }

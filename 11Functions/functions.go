@@ -12,25 +12,20 @@ import "fmt"
 // automatically return the value of the last
 // expression.
 
+func plus(a, b int) int {
+	return a + b
+}
 
-// TODO: Create function plus(a, b int) int that returns a + b
-
-
-// When you have multiple consecutive parameters of
-// the same type, you may omit the type name for the
-// like-typed parameters up to the final parameter that
-// declares the type.
-
-// TODO: Create function plusPlus(a, b, c int) int that returns a + b + c
-
+func plusPlus(a, b, c int) int {
+	return a + b + c
+}
 
 func main() {
 
-	// Call a function just as you'd expect, with
-	// `name(args)`.
+	res := plus(1, 2)
+	fmt.Println(res)
 
-	// TODO: Call plus(1, 2) and store in res and print result
-
-	// TODO: Call plusPlus(1, 2, 3) and store in res and print result
+	res = plusPlus(1, 2, 3)
+	fmt.Println(res)
 
 }
