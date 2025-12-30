@@ -9,6 +9,7 @@ package main
 // identifiers from this package, you can do a blank import with `_ "embed"`.
 import (
 	"embed"
+	"fmt"
 )
 
 // `embed` directives accept paths relative to the directory containing the
@@ -34,12 +35,12 @@ var folder embed.FS
 func main() {
 
 	// Print out the contents of `single_file.txt`.
-	// TODO: Print fileString
-	// TODO: Print string(fileByte)
+	fmt.Println(fileString)
+	fmt.Println(string(fileByte))
 
 	// Retrieve some files from the embedded folder.
-	// TODO: Create content1, _ := folder.ReadFile("folder/file1.hash")
-	// TODO: Print string(content1)
-	// TODO: Create content2, _ := folder.ReadFile("folder/file2.hash")
-	// TODO: Print string(content2)
+	content1, _ := folder.ReadFile("folder/file1.hash")
+	fmt.Println(string(content1))
+	content2, _ := folder.ReadFile("folder/file2.hash")
+	fmt.Println(string(content2))
 }

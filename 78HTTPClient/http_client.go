@@ -18,22 +18,22 @@ func main() {
 	// `http.DefaultClient` object which has useful default
 	// settings.
 
-	// TODO: Create resp, err := http.Get("https://gobyexample.com")
-	// TODO: Print err
-	
+	resp, err := http.Get("https://gobyexample.com")
+	fmt.Println(err)
 
-	// TODO: Defer the closing of the response body with defer resp.Body.Close()
+	defer resp.Body.Close()
 
 	// Print the HTTP response status.
 
-	// TODO: Print fmt.Println("Response status:", resp.Status)
+	fmt.Println("Response status:", resp.Status)
 
 	// Print the first 5 lines of the response body.
 
-	// TODO: Create scanner := bufio.NewScanner(resp.Body)
-	// Iterate over the scanner with for i := 0; scanner.Scan() && i < 5; i++ {
-	// TODO: Print fmt.Println(scanner.Text())
-	// TODO: Print err
-
-	// Check for scanner.Err() and if it is not nil, panic with the error
+	scanner := bufio.NewScanner(resp.Body)
+	for i := 0; scanner.Scan() && i < 5; i++ {
+		fmt.Println(scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Println(err)
+	}
 }

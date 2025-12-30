@@ -17,16 +17,17 @@ func main() {
 	// stdout. The `exec.Command` helper creates an object
 	// to represent this external process.
 
-	// TODO: Create dateCmd := exec.Command("date")
+	dateCmd := exec.Command("date")
 
 	// The `Output` method runs the command, waits for it
 	// to finish and collects its standard output.
 	//  If there were no errors, `dateOut` will hold bytes
 	// with the date info.
 
-	// TODO: Create dateOut, err := dateCmd.Output()
+	dateOut, err := dateCmd.Output()
+	fmt.Println(err)
 	// TODO: Print err
-	// TODO: Print dateOut
+	fmt.Println(dateOut)
 	
 
 	// `Output` and other methods of `Command` will return
@@ -36,30 +37,41 @@ func main() {
 	// code.
 
 
-	// TODO: Create _, err = exec.Command("date", "-x").Output()
-	
-	// TODO: Create if err != nil {
-	// Create var execErr *exec.Error and var exitErr *exec.ExitError
-	// With switch, check if err is an execErr or exitErr
-	// If it is, print the error
-	// If it is not, panic with the error
+	_, err = exec.Command("date", "-x").Output()
+	fmt.Println(err)
+
+	if err != nil {
+		var execErr *exec.Error
+		var exitErr *exec.ExitError
+		switch {
+		case errors.Is(err, execErr):
+			fmt.Println("exec error:", err)
+		case errors.Is(err, exitErr):
+			fmt.Println("exit error:", err)
+		default:
+			fmt.Println("other error:", err)
+		}
+	}
 
 
 	// Next we'll look at a slightly more involved case
 	// where we pipe data to the external process on its
 	// `stdin` and collect the results from its `stdout`.
 
-	// TODO: Create grepCmd := exec.Command("grep", "hello")
+	grepCmd := exec.Command("grep", "hello")
+	grepIn, _ := grepCmd.StdinPipe()
+	grepOut, _ := grepCmd.StdoutPipe()
+	grepCmd.Start()
+	grepIn.Write([]byte("hello grep\nworld\n"))
+	grepIn.Close()
+	grepBytes, _ := io.ReadAll(grepOut)
+	fmt.Println(string(grepBytes))
+	grepCmd.Wait()
 
 	// Here we explicitly grab input/output pipes, start
 	// the process, write some input to it, read the
 	// resulting output, and finally wait for the process
 	// to exit.
-
-	// TODO: Create grepIn, _ := grepCmd.StdinPipe()
-	// TODO: Create grepOut, _ := grepCmd.StdoutPipe()
-	// Start the process, write some input to it, read the resulting output, and finally wait for the process to exit.
-
 
 	// We omitted error checks in the above example, but
 	// you could use the usual `if err != nil` pattern for
@@ -67,7 +79,8 @@ func main() {
 	// results, but you could collect the `StderrPipe` in
 	// exactly the same way.
 
-	// TODO: Print "> grep hello" and the result of grepBytes
+	fmt.Println("> grep hello")
+	fmt.Println(string(grepBytes))
 
 	// Note that when spawning commands we need to
 	// provide an explicitly delineated command and
@@ -76,6 +89,7 @@ func main() {
 	// command with a string, you can use `bash`'s `-c`
 	// option:
 
-	// TODO: Create lsCmd := exec.Command("bash", "-c", "ls -a -l -h")
-	// Call lsCmd.Output() and print the result 
+	lsCmd := exec.Command("bash", "-c", "ls -a -l -h")
+	lsOut, _ := lsCmd.Output()
+	fmt.Println(string(lsOut))
 }

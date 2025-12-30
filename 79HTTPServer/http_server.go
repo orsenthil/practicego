@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 // A fundamental concept in `net/http` servers is
@@ -13,18 +14,30 @@ import (
 // a handler is by using the `http.HandlerFunc` adapter
 // on functions with the appropriate signature.
 
-// TODO: Create function hello that takes a http.ResponseWriter and a http.Request
+func hello(w http.ResponseWriter, req *http.Request) {
+	fmt.Println("server: hello handler started")
+	defer fmt.Println("server: hello handler ended")
+
+	time.Sleep(10 * time.Second)
+	fmt.Fprintf(w, "hello\n")
+}
+
+func headers(w http.ResponseWriter, req *http.Request) {
+	fmt.Println("server: headers handler started")
+	defer fmt.Println("server: headers handler ended")
+
+	for name, headers := range req.Header {
+		for _, h := range headers {
+			fmt.Fprintf(w, "%v: %v\n", name, h)
+		}
+	}
+}
+
 // Functions serving as handlers take a
 // `http.ResponseWriter` and a `http.Request` as
 // arguments. The response writer is used to fill in the
 // HTTP response. Here our simple response is just
-// "hello
-".
-
-
-// TODO: Create function headers that takes a http.ResponseWriter and a http.Request
-// Inside the function, iterate over the request headers with range and print the name and value
-
+// "hello ".
 
 
 func main() {
@@ -34,12 +47,12 @@ func main() {
 	// the *default router* in the `net/http` package and
 	// takes a function as an argument.
 
-	// TODO: Create http.HandleFunc("/hello", hello)
-	// TODO: Create http.HandleFunc("/headers", headers)
+	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/headers", headers)
 
 	// Finally, we call the `ListenAndServe` with the port
 	// and a handler. `nil` tells it to use the default
 	// router we've just set up.
 
-	// TODO: Create http.ListenAndServe(":8090", nil)
+	http.ListenAndServe(":8090", nil)
 }

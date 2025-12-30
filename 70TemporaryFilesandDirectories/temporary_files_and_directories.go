@@ -13,7 +13,12 @@ import (
 )
 
 
-// TODO: Create function check(e error) that checks if e is not nil, panic with e
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
 
 func main() {
 
@@ -25,7 +30,8 @@ func main() {
 
 
 	// TODO: Create f, err := os.CreateTemp("", "sample")
-	// TODO: Print err
+	f, err := os.CreateTemp("", "sample")
+	check(err)
 
 	// Display the name of the temporary file. On
 	// Unix-based OSes the directory will likely be `/tmp`.
@@ -34,19 +40,19 @@ func main() {
 	// is chosen automatically to ensure that concurrent
 	// calls will always create different file names.
 
-	// TODO: Print fmt.Println("Temp file name:", f.Name())
+	fmt.Println("Temp file name:", f.Name())
 
 	// Clean up the file after we're done. The OS is
 	// likely to clean up temporary files by itself after
 	// some time, but it's good practice to do this
 	// explicitly.
 
-	// TODO: Defer the removal of the file with defer os.Remove(f.Name())
+	defer os.Remove(f.Name())
 
 	// We can write some data to the file.
 
-	// TODO: Create _, err = f.Write([]byte{1, 2, 3, 4})
-	// TODO: Print err
+	_, err = f.Write([]byte{1, 2, 3, 4})
+	check(err)
 
 	// If we intend to write many temporary files, we may
 	// prefer to create a temporary *directory*.
@@ -54,15 +60,15 @@ func main() {
 	// `CreateTemp`'s, but it returns a directory *name*
 	// rather than an open file.
 
-	// TODO: Create dname, err := os.MkdirTemp("", "sampledir")
-	// TODO: Print err
+	dname, err := os.MkdirTemp("", "sampledir")
+	check(err)
 
-	// TODO: Defer the removal of the directory with defer os.RemoveAll(dname)
+	defer os.RemoveAll(dname)
 
 	// Now we can synthesize temporary file names by
 	// prefixing them with our temporary directory.
 
-	// TODO: Create fname := filepath.Join(dname, "file1")
-	// TODO: Create err = os.WriteFile(fname, []byte{1, 2}, 0666)
-	// TODO: Print err
+	fname := filepath.Join(dname, "file1")
+	err = os.WriteFile(fname, []byte{1, 2}, 0666)
+	check(err)
 }

@@ -15,39 +15,39 @@ func main() {
 	// scheme, authentication info, host, port, path,
 	// query params, and query fragment.
 
-	// TODO: Create s := "postgres://user:pass@host.com:5432/path?k=v#f"
+	s := "postgres://user:pass@host.com:5432/path?k=v#f"
 
 	// Parse the URL and ensure there are no errors.
 
-	// TODO: Create u, err := url.Parse(s)
-	// TODO: Print err
+	u, err := url.Parse(s)
+	fmt.Println(err)
 
 	// Accessing the scheme is straightforward.
 
-	// TODO: Print u.Scheme
+	fmt.Println(u.Scheme)
 
 	// `User` contains all authentication info; call
 	// `Username` and `Password` on this for individual
 	// values.
 
-	// TODO: Print u.User
-	// TODO: Print u.User.Username()
-	// TODO: Create p, _ := u.User.Password()
-	// TODO: Print p
+	fmt.Println(u.User)
+	fmt.Println(u.User.Username())
+	p, _ := u.User.Password()
+	fmt.Println(p)
 
 	// The `Host` contains both the hostname and the port,
 	// if present. Use `SplitHostPort` to extract them.
 
-	// TODO: Print u.Host
-	// TODO: Create host, port, _ := net.SplitHostPort(u.Host)
-	// TODO: Print host
-	// TODO: Print port
+	fmt.Println(u.Host)
+	host, port, _ := net.SplitHostPort(u.Host)
+	fmt.Println(host)
+	fmt.Println(port)
 
 	// Here we extract the `path` and the fragment after
 	// the `#`.
 
-	// TODO: Print u.Path
-	// TODO: Print u.Fragment
+	fmt.Println(u.Path)
+	fmt.Println(u.Fragment)
 
 	// To get query params in a string of `k=v` format,
 	// use `RawQuery`. You can also parse query params
@@ -55,8 +55,8 @@ func main() {
 	// strings to slices of strings, so index into `[0]`
 	// if you only want the first value.
 
-	// TODO: Print u.RawQuery
-	// TODO: Create m, _ := url.ParseQuery(u.RawQuery)
-	// TODO: Print m
-	// TODO: Print m["k"][0]
+	fmt.Println(u.RawQuery)
+	m, _ := url.ParseQuery(u.RawQuery)
+	fmt.Println(m)
+	fmt.Println(m["k"][0])
 }

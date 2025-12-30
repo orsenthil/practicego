@@ -11,6 +11,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"syscall"
@@ -23,21 +24,21 @@ func main() {
 	// we'll use `exec.LookPath` to find it (probably
 	// `/bin/ls`).
 
-	// TODO: Create binary, lookErr := exec.LookPath("ls")
-	// TODO: Print lookErr
+	binary, lookErr := exec.LookPath("ls")
+	fmt.Println(lookErr)
 
 	// `Exec` requires arguments in slice form (as
 	// opposed to one big string). We'll give `ls` a few
 	// common arguments. Note that the first argument should
 	// be the program name.
 
-	// TODO: Create args := []string{"ls", "-a", "-l", "-h"}
+	args := []string{"ls", "-a", "-l", "-h"}
 
 	// `Exec` also needs a set of [environment variables](environment-variables)
 	// to use. Here we just provide our current
 	// environment.
 
-	// TODO: Create env := os.Environ()
+	env := os.Environ()
 
 	// Here's the actual `syscall.Exec` call. If this call is
 	// successful, the execution of our process will end
@@ -45,6 +46,6 @@ func main() {
 	// process. If there is an error we'll get a return
 	// value.
 
-	// TODO: Create execErr := syscall.Exec(binary, args, env)
-	// TODO: Print execErr
+	execErr := syscall.Exec(binary, args, env)
+	fmt.Println(execErr)
 }

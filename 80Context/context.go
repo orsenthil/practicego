@@ -18,9 +18,10 @@ func hello(w http.ResponseWriter, req *http.Request) {
 	// the `net/http` machinery, and is available with
 	// the `Context()` method.
 
-	// TODO: Create ctx := req.Context()
-	// TODO: Print "server: hello handler started"
-	// TODO: Defer "server: hello handler ended"
+	ctx := req.Context()
+	fmt.Println("server: hello handler started")
+	defer fmt.Println("server: hello handler ended")
+
 
 	// Wait for a few seconds before sending a reply to the
 	// client. This could simulate some work the server is
@@ -28,12 +29,13 @@ func hello(w http.ResponseWriter, req *http.Request) {
 	// `Done()` channel for a signal that we should cancel
 	// the work and return as soon as possible.
 
-	// TODO: Use select to wait for 10 seconds or the context's Done() channel
-	// When context is <- time.After(10 * time.Second), print "hello
-"
-	// When context is <- ctx.Done(), print "server: " and the context's Err()
-	// and set the status code to http.StatusInternalServerError and call http.Error(w, err.Error(), internalError)
-	
+	select {
+	case <-time.After(10 * time.Second):
+		fmt.Fprintf(w, "hello\n")
+	case <-ctx.Done():
+		err := ctx.Err()
+		fmt.Println("server:", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
@@ -42,6 +44,6 @@ func main() {
 	// As before, we register our handler on the "/hello"
 	// route, and start serving.
 
-	// TODO: Create http.HandleFunc("/hello", hello)
-	// TODO: Create http.ListenAndServe(":8090", nil)
+	http.HandleFunc("/hello", hello)
+	http.ListenAndServe(":8090", nil)
 }

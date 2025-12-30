@@ -18,15 +18,16 @@ func main() {
 	// an empty string if the key isn't present in the
 	// environment.
 
-	// TODO: Create os.Setenv("FOO", "1")
-	// TODO: Create fmt.Println("FOO:", os.Getenv("FOO"))
-	// TODO: Create fmt.Println("BAR:", os.Getenv("BAR"))
+	os.Setenv("FOO", "1")	
+	fmt.Println("FOO:", os.Getenv("FOO"))
+	fmt.Println("BAR:", os.Getenv("BAR"))
 
 	// Use `os.Environ` to list all key/value pairs in the
 	// environment. This returns a slice of strings in the
 	// form `KEY=value`. You can `strings.SplitN` them to
 	// get the key and value. Here we print all the keys.
-	fmt.Println()
-	// TODO: iterate over os.Environ() with range and print the key
-	// Use strings.SplitN(e, "=", 2) to get the key and value
+	for _, e := range os.Environ() {
+		pair := strings.SplitN(e, "=", 2)
+		fmt.Println(pair[0], pair[1])
+	}
 }

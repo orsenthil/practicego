@@ -5,9 +5,14 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 func main() {
-	// TODO: Implement logging concepts
+	log.Println("Practicing: Logging")
 	fmt.Println("Practicing: Logging")
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	log.Println("This will be logged with the file and line number")
 }

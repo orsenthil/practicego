@@ -16,7 +16,9 @@ import "fmt"
 
 // This function panics.
 
-// TODO: Create function mayPanic that panics with "a problem"
+func mayPanic() {
+	panic("a problem")
+}
 
 func main() {
 	// `recover` must be called within a deferred function.
@@ -24,17 +26,21 @@ func main() {
 	// activate and a `recover` call within it will catch
 	// the panic.
 
-	// TODO: Defer a function that recovers from a panic
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered. Error:\n", r)
+		}
+	}()
 	// Inside, check if recover is not nil, print the error
 
 	// The return value of `recover` is the error raised in
 	// the call to `panic`.
 
-	// TODO: Call mayPanic
+	mayPanic()
 
 	// This code will not run, because `mayPanic` panics.
 	// The execution of `main` stops at the point of the
 	// panic and resumes in the deferred closure.
 
-	// TODO: Print "After mayPanic()"
+	fmt.Println("After mayPanic()")
 }

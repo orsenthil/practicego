@@ -21,22 +21,24 @@ func main() {
 	// of the enclosing function (`main`), after
 	// `writeFile` has finished.
 
-	// TODO: Create a file with createFile("/tmp/defer.txt")
-	// TODO: Defer the closing of the file with defer closeFile(f)
-	// TODO: Write to the file with writeFile(f)
+	f := createFile("/tmp/defer.txt")
+	defer closeFile(f)
+	writeFile(f)
 
 }
 
-// TODO: Create function createFile(p string) *os.File that creates a file at the given path and returns the file
-// Inside, create a file with os.Create(p) and check if err is not nil, panic with err
-// Return the file
+func createFile(p string) *os.File {
+	f, err := os.Create(p)
+	if err != nil {
+		panic(err)
+	}
+	return f
+}
 
-// TODO: Create function writeFile(f *os.File) that writes "data" to the file
-// Inside, use fmt.Fprintln(f, "data")
+func writeFile(f *os.File) {
+	fmt.Fprintln(f, "data")
+}
 
-
-// TODO: Create function closeFile(f *os.File) that closes the file
-// Inside, use f.Close() and check if err is not nil, panic with err
-
-// It's important to check for errors when closing a
-// file, even in a deferred function.
+func closeFile(f *os.File) {
+	f.Close()
+}

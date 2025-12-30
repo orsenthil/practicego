@@ -18,25 +18,32 @@ func main() {
 	// We'll use an atomic integer type to represent our
 	// (always-positive) counter.
 
-	// TODO: Create ops atomic.Uint64
+	var ops atomic.Uint64
+
 
 	// A WaitGroup will help us wait for all goroutines
 	// to finish their work.
 
-	// TODO: Create wg sync.WaitGroup
+	wg := sync.WaitGroup{}
 
 	// We'll start 50 goroutines that each increment the
 	// counter exactly 1000 times.
 
-	// TODO: Iterate over 50 and create a goroutine that increments the counter exactly 1000 times
+	for i := 0; i < 50; i++ {
+		wg.Go(func() {
+			for i := 0; i < 1000; i++ {
+				ops.Add(1)
+			}
+		})
+	}
 
 	// Wait until all the goroutines are done.
 
-	// TODO: Wait for all the goroutines to finish
+	wg.Wait()
 
 	// Here no goroutines are writing to 'ops', but using
 	// `Load` it's safe to atomically read a value even while
 	// other goroutines are (atomically) updating it.
 
-	// TODO: Print the result of the counter with ops.Load()
+	fmt.Println("ops:", ops.Load())
 }

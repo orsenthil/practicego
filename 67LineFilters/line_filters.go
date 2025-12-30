@@ -22,15 +22,20 @@ func main() {
 	// advances the scanner to the next token; which is
 	// the next line in the default scanner.
 
-	// TODO: Create scanner := bufio.NewScanner(os.Stdin)
+	scanner := bufio.NewScanner(os.Stdin)
 
-	// TODO: For scanner.Scan(), use strings.ToUpper(scanner.Text()) to uppercase the line
-	// TODO: Write out the uppercased line
+	for scanner.Scan() {
+		ucl := strings.ToUpper(scanner.Text())
+		fmt.Println(ucl)
+	}
 
 
 	// Check for errors during `Scan`. End of file is
 	// expected and not reported by `Scan` as an error.
 
-	// TODO: Create err := scanner.Err()
-	// TODO: If err is not nil, print "error:", err and exit with 1
+	err := scanner.Err()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "error:", err)
+		os.Exit(1)
+	}
 }

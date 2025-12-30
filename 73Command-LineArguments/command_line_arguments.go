@@ -17,15 +17,15 @@ func main() {
 	// is the path to the program, and `os.Args[1:]`
 	// holds the arguments to the program.
 
-	// TODO: Create argsWithProg := os.Args
-	// TODO: Create argsWithoutProg := os.Args[1:]
+	argsWithProg := os.Args
+	argsWithoutProg := os.Args[1:]
 
 	// You can get individual args with normal indexing.
 
-	// TODO: Create arg := os.Args[3]	
-	// TODO: Print arg
+	arg := os.Args[3]	
+	fmt.Println(arg)
 
-	// TODO: Print argsWithProg
-	// TODO: Print argsWithoutProg
-	// TODO: Print arg
+	fmt.Println(argsWithProg)
+	fmt.Println(argsWithoutProg)
+	fmt.Println(arg)
 }
