@@ -29,12 +29,11 @@ func hello(w http.ResponseWriter, req *http.Request) {
 	// the work and return as soon as possible.
 
 	// TODO: Use select to wait for 10 seconds or the context's Done() channel
-	// When context is <- time.After(10 * time.Second), print "hello
-"
+	// When context is <- time.After(10 * time.Second), print "hello"
+
 	// When context is <- ctx.Done(), print "server: " and the context's Err()
 	// and set the status code to http.StatusInternalServerError and call http.Error(w, err.Error(), internalError)
 	
-	}
 }
 
 func main() {

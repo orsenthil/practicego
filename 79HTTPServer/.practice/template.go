@@ -18,8 +18,7 @@ import (
 // `http.ResponseWriter` and a `http.Request` as
 // arguments. The response writer is used to fill in the
 // HTTP response. Here our simple response is just
-// "hello
-".
+// "hello".
 
 
 // TODO: Create function headers that takes a http.ResponseWriter and a http.Request
