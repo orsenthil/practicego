@@ -146,3 +146,7 @@ func main() {
 // - fx.WithLogger configures custom logging for FX events
 // - Each handler gets the logger injected automatically
 
+
+
+
+
